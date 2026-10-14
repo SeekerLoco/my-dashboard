@@ -18,6 +18,22 @@ const DEFAULT_LAT = 39.55;
 const DEFAULT_LON = -104.97;
 const DEFAULT_NAME = 'Highlands Ranch';
 
+const STOCK_SYMBOLS = [
+  { symbol: '^GSPC', name: 'S&P 500' },
+  { symbol: '^DJI', name: 'Dow Jones' },
+  { symbol: '^IXIC', name: 'Nasdaq' },
+  { symbol: 'GC=F', name: 'Gold' },
+  { symbol: 'SI=F', name: 'Silver' },
+  { symbol: 'SPCX', name: 'SPCX' },
+];
+
+type StockQuote = {
+  name: string;
+  price: number;
+  change: number;
+  changePercent: number;
+};
+
 export default function Home() {
   const [dark, setDark] = useState(true);
   const [locationName, setLocationName] = useState(DEFAULT_NAME);
@@ -30,6 +46,7 @@ export default function Home() {
     low: number;
     forecast: { day: string; high: number; low: number; icon: string; label: string }[];
   } | null>(null);
+  const [stocks, setStocks] = useState<StockQuote[]>([]);
 
   useEffect(() => {
     const saved = localStorage.getItem('theme');
@@ -70,6 +87,24 @@ export default function Home() {
   useEffect(() => {
     fetchWeather(DEFAULT_LAT, DEFAULT_LON, DEFAULT_NAME);
   }, []);
+
+    // Fetch stock quotes from our own API route
+  async function fetchStocks() {
+    try {
+      const res = await fetch('/api/stocks');
+      const data = await res.json();
+      setStocks(data);
+    } catch (err) {
+      console.error('Failed to load stocks', err);
+    }
+  }
+
+  useEffect(() => {
+    fetchStocks();
+    const interval = setInterval(fetchStocks, 15 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, []);
+
 
   async function handleSearch(e: React.FormEvent) {
     e.preventDefault();
@@ -119,7 +154,6 @@ export default function Home() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {/* Weather card */}
         <div className={`rounded-xl p-5 border ${dark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
-          {/* Compact search row */}
           <form onSubmit={handleSearch} className="mb-3 flex items-center gap-1.5">
             <input
               type="text"
@@ -186,13 +220,41 @@ export default function Home() {
           )}
         </div>
 
-        {/* Other cards */}
+                {/* Stocks card — now live */}
         <div className={`rounded-xl p-5 border ${dark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
-          <div className="font-semibold">S&P 500</div>
-          <div className="text-2xl mt-1">7,805</div>
-          <div className={`text-sm ${dark ? 'text-red-400' : 'text-red-600'}`}>-6.09</div>
+          <div className="flex justify-between items-center mb-3">
+            <div className="font-semibold">Markets</div>
+            <button
+              onClick={fetchStocks}
+              title="Refresh"
+              className={`w-7 h-7 flex items-center justify-center rounded-md text-sm ${
+                dark ? 'bg-slate-700 hover:bg-slate-600' : 'bg-slate-200 hover:bg-slate-300'
+              }`}
+            >
+              🔄
+            </button>
+          </div>
+          {stocks.length === 0 ? (
+            <div className="text-sm opacity-70">Loading...</div>
+          ) : (
+            <div className="space-y-2 text-sm">
+              {stocks.map((s) => (
+                <div key={s.name} className="flex justify-between items-baseline">
+                  <span className="font-medium">{s.name}</span>
+                  <div className="text-right">
+                    <div>{s.price.toLocaleString(undefined, { maximumFractionDigits: 2 })}</div>
+                    <div className={s.change >= 0 ? 'text-green-400' : 'text-red-400'}>
+                      {s.change >= 0 ? '+' : ''}
+                      {s.change.toFixed(2)} ({s.changePercent.toFixed(2)}%)
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
+        {/* Other cards */}
         <div className={`rounded-xl p-5 border ${dark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
           <div className="font-semibold">Food diary</div>
           <div className="text-2xl mt-1">1,352</div>
