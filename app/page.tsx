@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 
-// Helper: turn a weather code into a label + emoji
 function getWeatherInfo(code: number) {
   if (code === 0) return { label: 'Clear', icon: '☀️' };
   if (code >= 1 && code <= 3) return { label: 'Partly cloudy', icon: '⛅' };
@@ -15,8 +14,14 @@ function getWeatherInfo(code: number) {
   return { label: 'Unknown', icon: '❓' };
 }
 
+const DEFAULT_LAT = 39.55;
+const DEFAULT_LON = -104.97;
+const DEFAULT_NAME = 'Highlands Ranch';
+
 export default function Home() {
   const [dark, setDark] = useState(true);
+  const [locationName, setLocationName] = useState(DEFAULT_NAME);
+  const [searchInput, setSearchInput] = useState('');
   const [weather, setWeather] = useState<{
     temp: number;
     description: string;
@@ -28,45 +33,66 @@ export default function Home() {
 
   useEffect(() => {
     const saved = localStorage.getItem('theme');
-    if (saved !== null) {
-      setDark(saved === 'dark');
-    }
+    if (saved !== null) setDark(saved === 'dark');
   }, []);
+
+  async function fetchWeather(lat: number, lon: number, name: string) {
+    const res = await fetch(
+      `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min,weather_code&temperature_unit=fahrenheit&timezone=auto&forecast_days=4`
+    );
+    const data = await res.json();
+
+    const currentInfo = getWeatherInfo(data.current.weather_code);
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const forecast = data.daily.time.slice(1, 4).map((dateStr: string, i: number) => {
+      const date = new Date(dateStr);
+      const info = getWeatherInfo(data.daily.weather_code[i + 1]);
+      return {
+        day: days[date.getDay()],
+        high: Math.round(data.daily.temperature_2m_max[i + 1]),
+        low: Math.round(data.daily.temperature_2m_min[i + 1]),
+        icon: info.icon,
+        label: info.label,
+      };
+    });
+
+    setWeather({
+      temp: Math.round(data.current.temperature_2m),
+      description: currentInfo.label,
+      icon: currentInfo.icon,
+      high: Math.round(data.daily.temperature_2m_max[0]),
+      low: Math.round(data.daily.temperature_2m_min[0]),
+      forecast,
+    });
+    setLocationName(name);
+  }
 
   useEffect(() => {
-    async function fetchWeather() {
-      const res = await fetch(
-        'https://api.open-meteo.com/v1/forecast?latitude=39.55&longitude=-104.97&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min,weather_code&temperature_unit=fahrenheit&timezone=America/Denver&forecast_days=4'
-      );
-      const data = await res.json();
-
-      const currentInfo = getWeatherInfo(data.current.weather_code);
-
-      const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-      const forecast = data.daily.time.slice(1, 4).map((dateStr: string, i: number) => {
-        const date = new Date(dateStr);
-        const info = getWeatherInfo(data.daily.weather_code[i + 1]);
-        return {
-          day: days[date.getDay()],
-          high: Math.round(data.daily.temperature_2m_max[i + 1]),
-          low: Math.round(data.daily.temperature_2m_min[i + 1]),
-          icon: info.icon,
-          label: info.label,
-        };
-      });
-
-      setWeather({
-        temp: Math.round(data.current.temperature_2m),
-        description: currentInfo.label,
-        icon: currentInfo.icon,
-        high: Math.round(data.daily.temperature_2m_max[0]),
-        low: Math.round(data.daily.temperature_2m_min[0]),
-        forecast,
-      });
-    }
-
-    fetchWeather();
+    fetchWeather(DEFAULT_LAT, DEFAULT_LON, DEFAULT_NAME);
   }, []);
+
+  async function handleSearch(e: React.FormEvent) {
+    e.preventDefault();
+    if (!searchInput.trim()) return;
+
+    const geoRes = await fetch(
+      `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(searchInput)}&count=1&language=en&format=json`
+    );
+    const geoData = await geoRes.json();
+
+    if (geoData.results && geoData.results.length > 0) {
+      const place = geoData.results[0];
+      fetchWeather(place.latitude, place.longitude, place.name);
+      setSearchInput('');
+    } else {
+      alert('Location not found. Try a different spelling.');
+    }
+  }
+
+  function goHome() {
+    fetchWeather(DEFAULT_LAT, DEFAULT_LON, DEFAULT_NAME);
+    setSearchInput('');
+  }
 
   function toggleTheme() {
     const newDark = !dark;
@@ -93,7 +119,41 @@ export default function Home() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {/* Weather card */}
         <div className={`rounded-xl p-5 border ${dark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
-          <div className={`text-sm ${dark ? 'text-slate-400' : 'text-slate-500'}`}>Highlands Ranch</div>
+          {/* Compact search row */}
+          <form onSubmit={handleSearch} className="mb-3 flex items-center gap-1.5">
+            <input
+              type="text"
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+              placeholder="Search city..."
+              className={`flex-1 min-w-0 px-3 py-1.5 rounded-md border text-sm ${
+                dark
+                  ? 'bg-slate-800 border-slate-700 text-white placeholder-slate-400'
+                  : 'bg-white border-slate-300 text-slate-900 placeholder-slate-500'
+              }`}
+            />
+            <button
+              type="submit"
+              title="Search"
+              className={`shrink-0 w-8 h-8 flex items-center justify-center rounded-md text-sm ${
+                dark ? 'bg-slate-700 hover:bg-slate-600' : 'bg-slate-200 hover:bg-slate-300'
+              }`}
+            >
+              🔍
+            </button>
+            <button
+              type="button"
+              onClick={goHome}
+              title="Reset to Highlands Ranch"
+              className={`shrink-0 w-8 h-8 flex items-center justify-center rounded-md text-sm ${
+                dark ? 'bg-slate-700 hover:bg-slate-600' : 'bg-slate-200 hover:bg-slate-300'
+              }`}
+            >
+              🏠
+            </button>
+          </form>
+
+          <div className={`text-sm ${dark ? 'text-slate-400' : 'text-slate-500'}`}>{locationName}</div>
 
           {weather ? (
             <>
@@ -126,7 +186,7 @@ export default function Home() {
           )}
         </div>
 
-        {/* Other cards unchanged */}
+        {/* Other cards */}
         <div className={`rounded-xl p-5 border ${dark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
           <div className="font-semibold">S&P 500</div>
           <div className="text-2xl mt-1">7,805</div>
