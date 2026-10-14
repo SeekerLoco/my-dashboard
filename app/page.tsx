@@ -35,7 +35,37 @@ type StockQuote = {
   price: number;
   change: number;
   changePercent: number;
+  history: number[];
 };
+
+function Sparkline({ data, positive }: { data: number[]; positive: boolean }) {
+  if (!data || data.length < 2) return null;
+
+  const min = Math.min(...data);
+  const max = Math.max(...data);
+  const range = max - min || 1;
+  const width = 60;
+  const height = 20;
+
+  const points = data
+    .map((val, i) => {
+      const x = (i / (data.length - 1)) * width;
+      const y = height - ((val - min) / range) * height;
+      return `${x},${y}`;
+    })
+    .join(' ');
+
+  return (
+    <svg width={width} height={height} className="inline-block ml-2">
+      <polyline
+        fill="none"
+        stroke={positive ? '#4ade80' : '#f87171'}
+        strokeWidth="1.5"
+        points={points}
+      />
+    </svg>
+  );
+}
 
 export default function Home() {
   const [dark, setDark] = useState(true);
@@ -50,6 +80,7 @@ export default function Home() {
     forecast: { day: string; high: number; low: number; icon: string; label: string }[];
   } | null>(null);
   const [stocks, setStocks] = useState<StockQuote[]>([]);
+  const [stocksUpdatedAt, setStocksUpdatedAt] = useState<string | null>(null);
   const [habits, setHabits] = useState<{ id: string; name: string }[]>([]);
   const [todayCompletions, setTodayCompletions] = useState<string[]>([]);
   const [newHabitName, setNewHabitName] = useState('');
@@ -99,7 +130,8 @@ export default function Home() {
     try {
       const res = await fetch('/api/stocks');
       const data = await res.json();
-      setStocks(data);
+      setStocks(data.quotes);
+      setStocksUpdatedAt(data.updatedAt);
     } catch (err) {
       console.error('Failed to load stocks', err);
     }
@@ -280,7 +312,7 @@ export default function Home() {
           )}
         </div>
 
-                {/* Stocks card — now live */}
+                {/* Stocks card */}
         <div className={`rounded-xl p-5 border ${dark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
           <div className="flex justify-between items-center mb-3">
             <a
@@ -301,26 +333,35 @@ export default function Home() {
               🔄
             </button>
           </div>
+
           {stocks.length === 0 ? (
             <div className="text-sm opacity-70">Loading...</div>
           ) : (
             <div className="space-y-2 text-sm">
               {stocks.map((s) => (
-                <div key={s.name} className="flex justify-between items-baseline">
+                <div key={s.name} className="flex justify-between items-center">
                   <span className="font-medium">{s.name}</span>
-                  <div className="text-right">
-                    <div>{s.price.toLocaleString(undefined, { maximumFractionDigits: 2 })}</div>
-                    <div className={s.change >= 0 ? 'text-green-400' : 'text-red-400'}>
-                      {s.change >= 0 ? '+' : ''}
-                      {s.change.toFixed(2)} ({s.changePercent.toFixed(2)}%)
+                  <div className="flex items-center">
+                    <div className="text-right">
+                      <div>{s.price.toLocaleString(undefined, { maximumFractionDigits: 2 })}</div>
+                      <div className={s.change >= 0 ? 'text-green-400' : 'text-red-400'}>
+                        {s.change >= 0 ? '+' : ''}
+                        {s.change.toFixed(2)} ({s.changePercent.toFixed(2)}%)
+                      </div>
                     </div>
+                    <Sparkline data={s.history} positive={s.change >= 0} />
                   </div>
                 </div>
               ))}
             </div>
           )}
-        </div>
 
+          {stocksUpdatedAt && (
+            <div className="mt-3 text-xs opacity-50">
+              Updated {new Date(stocksUpdatedAt).toLocaleTimeString()}
+            </div>
+          )}
+        </div>
                 {/* Habits card */}
         <div className={`rounded-xl p-5 border ${dark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
           <div className="font-semibold mb-3">Habits</div>

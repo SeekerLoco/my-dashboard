@@ -11,15 +11,18 @@ const SYMBOLS = [
 
 export async function GET() {
   const results = [];
+  const updatedAt = new Date().toISOString();
 
   for (const item of SYMBOLS) {
     try {
       const res = await fetch(
-        `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(item.symbol)}?interval=1d&range=1d`,
-        { next: { revalidate: 900 } } // cache for 15 minutes
+        `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(item.symbol)}?interval=1d&range=5d`,
+        { next: { revalidate: 900 } }
       );
       const data = await res.json();
-      const meta = data.chart?.result?.[0]?.meta;
+      const result = data.chart?.result?.[0];
+      const meta = result?.meta;
+      const closes = result?.indicators?.quote?.[0]?.close || [];
 
       if (meta?.regularMarketPrice) {
         const price = meta.regularMarketPrice;
@@ -27,11 +30,15 @@ export async function GET() {
         const change = price - prev;
         const changePercent = (change / prev) * 100;
 
+        // Clean the closes array (remove nulls) for the sparkline
+        const history = closes.filter((c: number | null) => c != null) as number[];
+
         results.push({
           name: item.name,
           price,
           change,
           changePercent,
+          history,
         });
       }
     } catch (err) {
@@ -39,5 +46,5 @@ export async function GET() {
     }
   }
 
-  return NextResponse.json(results);
+  return NextResponse.json({ quotes: results, updatedAt });
 }
