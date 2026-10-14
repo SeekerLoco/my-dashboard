@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { supabase } from '@/lib/supabase';
 
 function getWeatherInfo(code: number) {
   if (code === 0) return { label: 'Clear', icon: '☀️' };
@@ -27,6 +28,8 @@ const STOCK_SYMBOLS = [
   { symbol: 'SPCX', name: 'SPCX' },
 ];
 
+
+
 type StockQuote = {
   name: string;
   price: number;
@@ -47,6 +50,9 @@ export default function Home() {
     forecast: { day: string; high: number; low: number; icon: string; label: string }[];
   } | null>(null);
   const [stocks, setStocks] = useState<StockQuote[]>([]);
+  const [habits, setHabits] = useState<{ id: string; name: string }[]>([]);
+  const [todayCompletions, setTodayCompletions] = useState<string[]>([]);
+  const [newHabitName, setNewHabitName] = useState('');
 
   useEffect(() => {
     const saved = localStorage.getItem('theme');
@@ -134,6 +140,60 @@ export default function Home() {
     setDark(newDark);
     localStorage.setItem('theme', newDark ? 'dark' : 'light');
   }
+
+
+    // Load habits and today's completions
+    
+  async function loadHabits() {
+    const { data: habitsData } = await supabase.from('habits').select('id, name').eq('active', true).order('created_at');
+    setHabits(habitsData || []);
+
+    const today = new Date().toISOString().split('T')[0];
+    const { data: completionsData } = await supabase
+      .from('habits_completions')
+      .select('habit_id')
+      .eq('completed_date', today);
+
+    setTodayCompletions(completionsData?.map(c => c.habit_id) || []);
+  }
+
+  useEffect(() => {
+    loadHabits();
+  }, []);
+
+  async function toggleHabit(habitId: string) {
+    const today = new Date().toISOString().split('T')[0];
+    const isCompleted = todayCompletions.includes(habitId);
+
+    if (isCompleted) {
+      await supabase
+        .from('habits_completions')
+        .delete()
+        .eq('habit_id', habitId)
+        .eq('completed_date', today);
+    } else {
+      await supabase
+        .from('habits_completions')
+        .insert({ habit_id: habitId, completed_date: today });
+    }
+
+    loadHabits(); // refresh
+  }
+
+  async function addHabit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!newHabitName.trim()) return;
+
+    await supabase.from('habits').insert({ name: newHabitName.trim() });
+    setNewHabitName('');
+    loadHabits();
+  }
+
+   async function archiveHabit(habitId: string) {
+    await supabase.from('habits').update({ active: false }).eq('id', habitId);
+    loadHabits();
+  }
+  
 
   return (
     <main className={`min-h-screen p-6 transition-colors ${dark ? 'bg-slate-950 text-white' : 'bg-slate-100 text-slate-900'}`}>
@@ -261,14 +321,73 @@ export default function Home() {
           )}
         </div>
 
+                {/* Habits card */}
+        <div className={`rounded-xl p-5 border ${dark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
+          <div className="font-semibold mb-3">Habits</div>
+
+          {/* Add new habit */}
+          <form onSubmit={addHabit} className="mb-4 flex gap-2">
+            <input
+              type="text"
+              value={newHabitName}
+              onChange={(e) => setNewHabitName(e.target.value)}
+              placeholder="New habit..."
+              className={`flex-1 px-3 py-1.5 rounded-md border text-sm ${
+                dark
+                  ? 'bg-slate-800 border-slate-700 text-white placeholder-slate-400'
+                  : 'bg-white border-slate-300 text-slate-900'
+              }`}
+            />
+            <button
+              type="submit"
+              className={`px-3 py-1.5 rounded-md text-sm ${
+                dark ? 'bg-slate-700 hover:bg-slate-600' : 'bg-slate-200 hover:bg-slate-300'
+              }`}
+            >
+              Add
+            </button>
+          </form>
+
+          {/* Today's habits */}
+          <div className="space-y-2">
+            {habits.length === 0 ? (
+              <div className="text-sm opacity-70">No habits yet</div>
+            ) : (
+              habits.map((habit) => {
+                const done = todayCompletions.includes(habit.id);
+                return (
+                  <div key={habit.id} className="flex items-center justify-between gap-2">
+                    <label className="flex items-center gap-2 cursor-pointer flex-1">
+                      <input
+                        type="checkbox"
+                        checked={done}
+                        onChange={() => toggleHabit(habit.id)}
+                        className="rounded"
+                      />
+                      <span className={done ? 'line-through opacity-60' : ''}>{habit.name}</span>
+                    </label>
+                    <button
+                      onClick={() => archiveHabit(habit.id)}
+                      className="text-xs opacity-50 hover:opacity-100"
+                      title="Archive habit"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                );
+              })
+            )}
+          </div>
+
+          <div className="mt-3 text-xs opacity-60">
+            {todayCompletions.length} / {habits.length} done today
+          </div>
+        </div>
+
         {/* Other cards */}
         
 
-        <div className={`rounded-xl p-5 border ${dark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
-          <div className="font-semibold">Habits</div>
-          <div className="text-2xl mt-1">0/5</div>
-          <div className={`text-sm ${dark ? 'text-slate-400' : 'text-slate-500'}`}>not logged yet</div>
-        </div>
+        
       </div>
     </main>
   );
