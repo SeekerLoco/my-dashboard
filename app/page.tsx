@@ -101,6 +101,7 @@ export default function Home() {
   const [todayCompletions, setTodayCompletions] = useState<string[]>([]);
   const [newHabitName, setNewHabitName] = useState('');
   const [showBalance, setShowBalance] = useState(false);
+  const [checkbookBalance, setCheckbookBalance] = useState<number | null>(null);
 
   useEffect(() => {
     const saved = localStorage.getItem('theme');
@@ -269,6 +270,22 @@ export default function Home() {
     loadHabits();
   }
   
+  async function fetchCheckbookBalance() {
+    const today = new Date().toISOString().split('T')[0];
+    const { data, error } = await supabase
+      .from('daily_balances')
+      .select('verified_balance')
+      .eq('calendar_date', today)
+      .single();
+
+    if (!error && data) {
+      setCheckbookBalance(data.verified_balance);
+    }
+  }
+
+  useEffect(() => {
+    fetchCheckbookBalance();
+  }, []);
 
   return (
     <main className={`min-h-screen p-6 transition-colors ${dark ? 'bg-slate-950 text-white' : 'bg-slate-100 text-slate-900'}`}>
@@ -430,10 +447,11 @@ export default function Home() {
           </div>
 
           <div className="text-3xl font-bold mt-1">
-            {showBalance ? '$6.00' : '******'}
-          </div>
-          <div className={`text-sm mt-1 ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
-            Verified balance
+            {checkbookBalance === null
+              ? '...'
+              : showBalance
+              ? `$${checkbookBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+              : '******'}
           </div>
         </div>
 
