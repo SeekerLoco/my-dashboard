@@ -2,7 +2,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-slate-950 text-white p-6">
       <header className="mb-8 flex justify-between items-center">
-        <h1 className="text-2xl font-bold">SeekerLoco Hub Hi Trey!</h1>
+        <h1 className="text-2xl font-bold">Johnny's Hub</h1>
         <div className="text-sm opacity-70">Personal Dashboard</div>
       </header>
 
