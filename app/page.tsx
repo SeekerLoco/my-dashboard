@@ -47,6 +47,10 @@ function Sparkline({ data, positive }: { data: number[]; positive: boolean }) {
   const width = 60;
   const height = 20;
 
+  // Opening / reference price is the first point
+  const open = data[0];
+  const openY = height - ((open - min) / range) * height;
+
   const points = data
     .map((val, i) => {
       const x = (i / (data.length - 1)) * width;
@@ -57,6 +61,18 @@ function Sparkline({ data, positive }: { data: number[]; positive: boolean }) {
 
   return (
     <svg width={width} height={height} className="inline-block ml-2">
+      {/* Dotted line at opening price */}
+      <line
+        x1="0"
+        y1={openY}
+        x2={width}
+        y2={openY}
+        stroke={positive ? '#4ade80' : '#f87171'}
+        strokeWidth="0.75"
+        strokeDasharray="2 2"
+        opacity="0.6"
+      />
+      {/* Price line */}
       <polyline
         fill="none"
         stroke={positive ? '#4ade80' : '#f87171'}
