@@ -223,7 +223,14 @@ export default function Home() {
                 {/* Stocks card — now live */}
         <div className={`rounded-xl p-5 border ${dark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
           <div className="flex justify-between items-center mb-3">
-            <div className="font-semibold">Markets</div>
+            <a
+              href="https://finviz.com/futures"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold hover:underline"
+            >
+              Markets
+            </a>
             <button
               onClick={fetchStocks}
               title="Refresh"
@@ -255,11 +262,7 @@ export default function Home() {
         </div>
 
         {/* Other cards */}
-        <div className={`rounded-xl p-5 border ${dark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
-          <div className="font-semibold">Food diary</div>
-          <div className="text-2xl mt-1">1,352</div>
-          <div className={`text-sm ${dark ? 'text-slate-400' : 'text-slate-500'}`}>kcal today</div>
-        </div>
+        
 
         <div className={`rounded-xl p-5 border ${dark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
           <div className="font-semibold">Habits</div>
