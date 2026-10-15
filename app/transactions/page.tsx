@@ -23,6 +23,7 @@ export default function TransactionsPage() {
     Status: 'Verified',
   });
   const [categories, setCategories] = useState<string[]>([]);
+  const [editingAmountId, setEditingAmountId] = useState<string | null>(null);
 
   // Set today's date only on the client
   useEffect(() => {
@@ -207,9 +208,39 @@ export default function TransactionsPage() {
                 />
                 <span className="w-32 truncate">{tx.Category}</span>
                 <span className="w-16 text-sm opacity-70">{tx.Type}</span>
-                <span className={`w-24 text-right ${tx.Amount < 0 ? 'text-red-400' : 'text-green-400'}`}>
-                  {tx.Amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                {editingAmountId === tx.id ? (
+                <input
+                    type="number"
+                    step="0.01"
+                    autoFocus
+                    defaultValue={tx.Amount}
+                    onBlur={(e) => {
+                    const newAmount = parseFloat(e.target.value);
+                    if (!isNaN(newAmount) && newAmount !== tx.Amount) {
+                        updateTransaction(tx.id, { Amount: newAmount });
+                    }
+                    setEditingAmountId(null);
+                    }}
+                    onKeyDown={(e) => {
+                    if (e.key === 'Enter') e.currentTarget.blur();
+                    }}
+                    className={`w-24 text-right bg-slate-800 border border-slate-700 rounded px-2 py-1 text-sm ${
+                    tx.Amount < 0 ? 'text-red-400' : 'text-green-400'
+                    }`}
+                />
+                ) : (
+                <span
+                    onClick={() => setEditingAmountId(tx.id)}
+                    className={`w-24 text-right cursor-pointer ${
+                    tx.Amount < 0 ? 'text-red-400' : 'text-green-400'
+                    }`}
+                >
+                    {tx.Amount.toLocaleString('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                    })}
                 </span>
+                )}
                 <select
                   value={tx.Status}
                   onChange={(e) => updateTransaction(tx.id, { Status: e.target.value })}
