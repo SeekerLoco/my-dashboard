@@ -123,9 +123,9 @@ export default function SDLTPage() {
 
         {/* Header links for future pages */}
         <div className="flex gap-4 mb-6 text-sm">
-          <a href="/sdlt/redemptions" className="hover:underline opacity-70">Redemptions</a>
-          <a href="/sdlt/interest" className="hover:underline opacity-70">Interest Details</a>
-          <a href="/sdlt/new-purchase" className="hover:underline opacity-70">New Purchase</a>
+          <a href="/sdlt/charts" className="hover:underline opacity-70">| Charts</a>
+          
+          <a href="/sdlt/new-purchase" className="hover:underline opacity-70">| New Purchase</a>
         </div>
 
         {/* Add form */}

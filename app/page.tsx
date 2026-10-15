@@ -400,9 +400,10 @@ export default function Home() {
     const data = await res.json();
 
     const currentInfo = getWeatherInfo(data.current.weather_code);
-    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const days = ['Sun.', 'Mon.', 'Tue.', 'Wed.', 'Thu.', 'Fri.', 'Sat.'];
     const forecast = data.daily.time.slice(1, 4).map((dateStr: string, i: number) => {
-      const date = new Date(dateStr);
+      const [y, m, d] = dateStr.split('-').map(Number);
+      const date = new Date(y, m - 1, d); // local date, no UTC shift
       const info = getWeatherInfo(data.daily.weather_code[i + 1]);
       return {
         day: days[date.getDay()],
