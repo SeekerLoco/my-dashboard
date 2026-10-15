@@ -16,45 +16,53 @@ function getWeatherInfo(code: number) {
   return { label: 'Unknown', icon: '❓' };
 }
 
-  function DonutChart({ progress }: { progress: number }) {
-    const size = 60;  //was 80
-    const stroke = 6;  //was 8
-    const radius = (size - stroke) / 2;
-    const circumference = 2 * Math.PI * radius;
-    const clamped = Math.min(Math.max(progress, 0), 1);
-    const offset = circumference * (1 - clamped);
-    const percent = Math.round(clamped * 100);
 
-    return (
-      <div className="relative inline-flex items-center justify-center mt-3">
-        <svg width={size} height={size} className="-rotate-90">
-          {/* Background circle */}
-          <circle
-            cx={size / 2}
-            cy={size / 2}
-            r={radius}
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={stroke}
-            opacity="0.15"
-          />
-          {/* Progress circle */}
-          <circle
-            cx={size / 2}
-            cy={size / 2}
-            r={radius}
-            fill="none"
-            stroke="#60a5fa"
-            strokeWidth={stroke}
-            strokeDasharray={circumference}
-            strokeDashoffset={offset}
-            strokeLinecap="round"
-          />
-        </svg>
-        <div className="absolute text-sm font-semibold">{percent}%</div>
-      </div>
-    );
-  }
+function getLocalDateString(date = new Date()) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+function DonutChart({ progress }: { progress: number }) {
+  const size = 60;  //was 80
+  const stroke = 6;  //was 8
+  const radius = (size - stroke) / 2;
+  const circumference = 2 * Math.PI * radius;
+  const clamped = Math.min(Math.max(progress, 0), 1);
+  const offset = circumference * (1 - clamped);
+  const percent = Math.round(clamped * 100);
+
+  return (
+    <div className="relative inline-flex items-center justify-center mt-3">
+      <svg width={size} height={size} className="-rotate-90">
+        {/* Background circle */}
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={stroke}
+          opacity="0.15"
+        />
+        {/* Progress circle */}
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={radius}
+          fill="none"
+          stroke="#60a5fa"
+          strokeWidth={stroke}
+          strokeDasharray={circumference}
+          strokeDashoffset={offset}
+          strokeLinecap="round"
+        />
+      </svg>
+      <div className="absolute text-sm font-semibold">{percent}%</div>
+    </div>
+  );
+}
 
 const DEFAULT_LAT = 39.55;
 const DEFAULT_LON = -104.97;
@@ -218,8 +226,8 @@ function ProjectionChart({ data }: { data: { date: string; balance: number }[] }
         x={toX(firstNegativeIndex)}
         y={toY(firstNegative.balance) - 6}
         textAnchor="middle"
-        fontSize="8"
-        fill="#f87171"
+        fontSize="10"
+        fill="#ffffff"
     >
       {new Date(firstNegative.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
     </text>
@@ -439,7 +447,7 @@ export default function Home() {
   }, []);
 
   async function fetchSdltProgress() {
-  const today = new Date().toISOString().split('T')[0];
+  const today = getLocalDateString();
 
   const { data, error } = await supabase
     .from('sdlt_progress_summary')
@@ -536,7 +544,7 @@ async function fetchInterestHistory() {
     const { data: habitsData } = await supabase.from('habits').select('id, name').eq('active', true).order('created_at');
     setHabits(habitsData || []);
 
-    const today = new Date().toISOString().split('T')[0];
+    const today = getLocalDateString();
     const { data: completionsData } = await supabase
       .from('habits_completions')
       .select('habit_id')
@@ -550,7 +558,7 @@ async function fetchInterestHistory() {
   }, []);
 
   async function toggleHabit(habitId: string) {
-    const today = new Date().toISOString().split('T')[0];
+    const today = getLocalDateString();
     const isCompleted = todayCompletions.includes(habitId);
 
     if (isCompleted) {
@@ -583,7 +591,7 @@ async function fetchInterestHistory() {
   }
   
   async function fetchCheckbookBalance() {
-    const today = new Date().toISOString().split('T')[0];
+    const today = getLocalDateString();
     const { data, error } = await supabase
       .from('daily_balances')
       .select('verified_balance')
@@ -597,10 +605,10 @@ async function fetchInterestHistory() {
 
 
   async function fetchProjection() {
-    const today = new Date().toISOString().split('T')[0];
+    const today = getLocalDateString();
     const end = new Date();
     end.setDate(end.getDate() + 90);
-    const endStr = end.toISOString().split('T')[0];
+    const endStr =  getLocalDateString(end);
 
     const { data } = await supabase
       .from('daily_balances')
