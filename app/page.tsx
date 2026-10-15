@@ -672,7 +672,7 @@ async function fetchInterestHistory() {
               </div>
 
               <div className={`text-sm mt-3 ${dark ? 'text-slate-300' : 'text-slate-600'}`}>
-                H: {weather.high}° &nbsp; L: {weather.low}°
+                H: <span className="text-red-400">{weather.high}°</span> &nbsp; L: <span className="text-blue-400">{weather.low}°</span>
               </div>
 
               <div className="mt-4 space-y-2 text-sm">
@@ -681,7 +681,7 @@ async function fetchInterestHistory() {
                     <span className="w-10">{day.day}</span>
                     <span className="text-lg">{day.icon}</span>
                     <span className="flex-1 text-right">
-                      {day.high}° / {day.low}°
+                      <span className="text-red-400">{day.high}°</span> / <span className="text-blue-400">{day.low}°</span>
                     </span>
                   </div>
                 ))}
