@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 
+
 type Transaction = {
   id: string;
   Transaction_Date: string;
@@ -24,6 +25,8 @@ export default function TransactionsPage() {
   });
   const [categories, setCategories] = useState<string[]>([]);
   const [editingAmountId, setEditingAmountId] = useState<string | null>(null);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
 
   // Set today's date only on the client
   useEffect(() => {
@@ -33,30 +36,32 @@ export default function TransactionsPage() {
     }));
   }, []);
 
+  useEffect(() => {
+  const today = new Date();
+  const start = new Date(today);
+  start.setDate(today.getDate() - 7);
+  const end = new Date(today);
+  end.setDate(today.getDate() + 7);
+
+  setStartDate(start.toISOString().split('T')[0]);
+  setEndDate(end.toISOString().split('T')[0]);
+}, []);
+
   async function loadTransactions() {
-    setLoading(true);
-    const today = new Date();
-    const start = new Date(today);
-    start.setDate(today.getDate() - 7);
-    const end = new Date(today);
-    end.setDate(today.getDate() + 7);
+  if (!startDate || !endDate) return;
+  setLoading(true);
 
-    const startStr = start.toISOString().split('T')[0];
-    const endStr = end.toISOString().split('T')[0];
+  const { data, error } = await supabase
+    .from('Checkbook_Transactions')
+    .select('id, Transaction_Date, Category, Type, Amount, Status')
+    .gte('Transaction_Date', startDate)
+    .lte('Transaction_Date', endDate)
+    .order('Transaction_Date', { ascending: true });
 
-    const { data, error } = await supabase
-      .from('Checkbook_Transactions')
-      .select('id, Transaction_Date, Category, Type, Amount, Status')
-      .gte('Transaction_Date', startStr)
-      .lte('Transaction_Date', endStr)
-      .order('Transaction_Date', { ascending: true })
-      //.limit(20);
-      
-
-    if (error) console.error(error);
-    if (data) setTransactions(data);
-    setLoading(false);
-  }
+  if (error) console.error(error);
+  if (data) setTransactions(data);
+  setLoading(false);
+}
   
   async function loadCategories() {
         console.log('loadCategories called');
@@ -76,7 +81,7 @@ export default function TransactionsPage() {
     useEffect(() => {
     loadCategories();
     loadTransactions();
-    }, []);
+    }, [startDate, endDate]);
 
   // ... keep the rest of the functions (updateTransaction, deleteTransaction, addTransaction) and the return exactly as they were
 
@@ -134,6 +139,7 @@ export default function TransactionsPage() {
           <h1 className="text-2xl font-bold">Transactions</h1>
           <a href="/" className="text-blue-400 hover:underline">← Dashboard</a>
         </div>
+        
 
         {/* Add form */}
         <form onSubmit={addTransaction} className="mb-8 p-4 bg-slate-900 rounded-xl border border-slate-800">
@@ -186,6 +192,31 @@ export default function TransactionsPage() {
             Add
           </button>
         </form>
+    
+    
+    
+    
+     
+        <div className="flex gap-3 mb-6 items-center text-sm">
+  <label>
+    Start
+    <input
+      type="date"
+      value={startDate}
+      onChange={(e) => setStartDate(e.target.value)}
+      className="ml-2 bg-slate-800 border border-slate-700 rounded px-2 py-1"
+    />
+  </label>
+  <label>
+    End
+    <input
+      type="date"
+      value={endDate}
+      onChange={(e) => setEndDate(e.target.value)}
+      className="ml-2 bg-slate-800 border border-slate-700 rounded px-2 py-1"
+    />
+  </label>
+</div>
 
         {/* List */}
         {loading ? (
