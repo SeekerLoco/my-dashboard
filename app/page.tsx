@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
+import { useRouter } from 'next/navigation';
 
 function getWeatherInfo(code: number) {
   if (code === 0) return { label: 'Clear', icon: '☀️' };
@@ -341,6 +342,8 @@ function InterestChart({ data }: { data: { date: string; interest: number }[] })
   );
 }
 
+//*********************************Home******************************* */
+
 export default function Home() {
   const [dark, setDark] = useState(true);
   const [locationName, setLocationName] = useState(DEFAULT_NAME);
@@ -363,6 +366,19 @@ export default function Home() {
   const [projection, setProjection] = useState<{ date: string; balance: number }[]>([]);
   const [sdltProgress, setSdltProgress] = useState<number | null>(null);
   const [interestData, setInterestData] = useState<{ date: string; interest: number }[]>([]);
+
+//  import { useRouter } from 'next/navigation';
+
+  // inside Home():
+  const router = useRouter();
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (!session) {
+        router.push('/login');
+      }
+    });
+  }, [router]);
 
   useEffect(() => {
     const saved = localStorage.getItem('theme');
