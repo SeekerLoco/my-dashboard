@@ -21,6 +21,8 @@ export default function SDLTPage() {
     Action: 'Redemption',
     Amount: '',
   });
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
 
   useEffect(() => {
     setNewTx((prev) => ({
@@ -29,8 +31,28 @@ export default function SDLTPage() {
     }));
   }, []);
 
+  useEffect(() => {
+  const today = new Date();
+  const start = new Date(today);
+  start.setDate(today.getDate() - 15);
+  const end = new Date(today);
+  end.setDate(today.getDate() + 15);
+
+  const toLocal = (d: Date) => {
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
+  setStartDate(toLocal(start));
+  setEndDate(toLocal(end));
+}, []);
+
   async function loadTransactions() {
+    if(!startDate || !endDate) return;
     setLoading(true);
+    
     const today = new Date();
     const start = new Date(today);
     start.setDate(today.getDate() - 15);
@@ -43,8 +65,8 @@ export default function SDLTPage() {
     const { data, error } = await supabase
       .from('SDLT_Transactions')
       .select('id, "Action Date", Action, Amount, Verified, Issue')
-      .gte('Action Date', startStr)
-      .lte('Action Date', endStr)
+      .gte('Action Date', startDate)
+      .lte('Action Date', endDate)
       .order('Action Date', { ascending: true });
 
     if (error) console.error('SDLT load error:', error.message, error);
@@ -54,7 +76,7 @@ export default function SDLTPage() {
 
   useEffect(() => {
     loadTransactions();
-  }, []);
+  }, [startDate, endDate]);
 
   async function updateTransaction(id: string, updates: Partial<SDLTTransaction>) {
     await supabase.from('SDLT_Transactions').update(updates).eq('id', id);
@@ -103,7 +125,7 @@ export default function SDLTPage() {
         <div className="flex gap-4 mb-6 text-sm">
           <a href="/sdlt/redemptions" className="hover:underline opacity-70">Redemptions</a>
           <a href="/sdlt/interest" className="hover:underline opacity-70">Interest Details</a>
-          <a href="/sdlt/placeholder" className="hover:underline opacity-70">Placeholder</a>
+          <a href="/sdlt/new-purchase" className="hover:underline opacity-70">New Purchase</a>
         </div>
 
         {/* Add form */}
@@ -138,6 +160,27 @@ export default function SDLTPage() {
             </button>
           </div>
         </form>
+
+        <div className="flex gap-3 mb-6 items-center text-sm">
+  <label>
+    Start
+    <input
+      type="date"
+      value={startDate}
+      onChange={(e) => setStartDate(e.target.value)}
+      className="ml-2 bg-slate-800 border border-slate-700 rounded px-2 py-1"
+    />
+  </label>
+  <label>
+    End
+    <input
+      type="date"
+      value={endDate}
+      onChange={(e) => setEndDate(e.target.value)}
+      className="ml-2 bg-slate-800 border border-slate-700 rounded px-2 py-1"
+    />
+  </label>
+</div>
 
         {/* List */}
         {loading ? (
