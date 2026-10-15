@@ -172,17 +172,17 @@ function ProjectionChart({ data }: { data: { date: string; balance: number }[] }
       />
 
       {/* First negative date label */}
-      {firstNegativeIndex >= 0 && (
-        <text
-          x={toX(firstNegativeIndex)}
-          y={toY(firstNegative.balance) - 6}
-          textAnchor="middle"
-          fontSize="8"
-          fill="#f87171"
-        >
-          {new Date(firstNegative.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-        </text>
-      )}
+    {firstNegative && firstNegativeIndex >= 0 && (
+      <text
+        x={toX(firstNegativeIndex)}
+        y={toY(firstNegative.balance) - 6}
+        textAnchor="middle"
+        fontSize="8"
+        fill="#f87171"
+    >
+      {new Date(firstNegative.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+    </text>
+)}
     </svg>
   );
 }
