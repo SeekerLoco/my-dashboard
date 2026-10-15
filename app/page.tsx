@@ -15,6 +15,46 @@ function getWeatherInfo(code: number) {
   return { label: 'Unknown', icon: '❓' };
 }
 
+  function DonutChart({ progress }: { progress: number }) {
+    const size = 60;  //was 80
+    const stroke = 6;  //was 8
+    const radius = (size - stroke) / 2;
+    const circumference = 2 * Math.PI * radius;
+    const clamped = Math.min(Math.max(progress, 0), 1);
+    const offset = circumference * (1 - clamped);
+    const percent = Math.round(clamped * 100);
+
+    return (
+      <div className="relative inline-flex items-center justify-center mt-3">
+        <svg width={size} height={size} className="-rotate-90">
+          {/* Background circle */}
+          <circle
+            cx={size / 2}
+            cy={size / 2}
+            r={radius}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={stroke}
+            opacity="0.15"
+          />
+          {/* Progress circle */}
+          <circle
+            cx={size / 2}
+            cy={size / 2}
+            r={radius}
+            fill="none"
+            stroke="#60a5fa"
+            strokeWidth={stroke}
+            strokeDasharray={circumference}
+            strokeDashoffset={offset}
+            strokeLinecap="round"
+          />
+        </svg>
+        <div className="absolute text-sm font-semibold">{percent}%</div>
+      </div>
+    );
+  }
+
 const DEFAULT_LAT = 39.55;
 const DEFAULT_LON = -104.97;
 const DEFAULT_NAME = 'Highlands Ranch';
@@ -187,6 +227,120 @@ function ProjectionChart({ data }: { data: { date: string; balance: number }[] }
   );
 }
 
+function InterestChart({ data }: { data: { date: string; interest: number }[] }) {
+  if (!data || data.length < 2) return null;
+
+  const width = 280;
+  const height = 100;
+  const paddingLeft = 40;
+  const paddingRight = 12;
+  const paddingTop = 16;
+  const paddingBottom = 36;
+
+  const values = data.map(d => d.interest);
+  const min = Math.min(...values, 0);
+  const max = Math.max(...values);
+  const range = max - min || 1;
+
+  const toX = (i: number) =>
+    paddingLeft + (i / (data.length - 1)) * (width - paddingLeft - paddingRight);
+  const toY = (val: number) =>
+    paddingTop + (1 - (val - min) / range) * (height - paddingTop - paddingBottom);
+
+  const points = data.map((d, i) => `${toX(i)},${toY(d.interest)}`).join(' ');
+
+  const maxIndex = values.indexOf(max);
+  const ticks = [max, Math.round((max + min) / 2), min].filter((v, i, arr) => arr.indexOf(v) === i);
+
+  // Find the first occurrence of each year for x-axis labels
+  const yearLabels: { year: string; index: number }[] = [];
+  let lastYear = '';
+  data.forEach((d, i) => {
+    const year = d.date.slice(0, 4);
+    if (year !== lastYear) {
+      yearLabels.push({ year, index: i });
+      lastYear = year;
+    }
+  });
+
+  return (
+    <svg width="100%" height={height} viewBox={`0 0 ${width} ${height}`} className="mt-3">
+      {/* Y-axis */}
+      <line
+        x1={paddingLeft}
+        y1={paddingTop}
+        x2={paddingLeft}
+        y2={height - paddingBottom}
+        stroke="currentColor"
+        strokeWidth="0.75"
+        opacity="0.5"
+      />
+
+      {/* Y ticks */}
+      {ticks.map((tick) => (
+        <g key={tick}>
+          <line
+            x1={paddingLeft - 4}
+            y1={toY(tick)}
+            x2={paddingLeft}
+            y2={toY(tick)}
+            stroke="currentColor"
+            strokeWidth="0.75"
+            opacity="0.5"
+          />
+          <text
+            x={paddingLeft - 6}
+            y={toY(tick) + 3}
+            textAnchor="end"
+            fontSize="8"
+            fill="currentColor"
+            opacity="0.7"
+          >
+            ${Math.round(tick)}
+          </text>
+        </g>
+      ))}
+
+      
+      {/* X-axis year labels (vertical)(short form) */}
+      {/* X-axis year labels (short form) */}
+      {yearLabels.map(({ year, index }) => (
+        <text
+          key={year}
+          x={toX(index)}
+          y={height - 4}
+          textAnchor="middle"
+          fontSize="8"
+          fill="currentColor"
+          opacity="0.6"
+        >
+          '{year.slice(2)}
+        </text>
+      ))}
+      {/* Line */}
+      <polyline
+        fill="none"
+        stroke="#34d399"
+        strokeWidth="1.5"
+        points={points}
+      />
+
+      {/* Max value label */}
+      {/* Max value label */}
+    <text
+      x={toX(maxIndex)}
+      y={toY(max) - 6}
+      textAnchor="middle"
+      fontSize="9"
+      fill="#34d399"
+      fontWeight="600"
+    >
+      ${Math.round(max)}, {new Date(data[maxIndex].date).toLocaleDateString('en-US', { month: 'short', year: '2-digit' })}
+    </text>
+    </svg>
+  );
+}
+
 export default function Home() {
   const [dark, setDark] = useState(true);
   const [locationName, setLocationName] = useState(DEFAULT_NAME);
@@ -207,6 +361,8 @@ export default function Home() {
   const [showBalance, setShowBalance] = useState(false);
   const [checkbookBalance, setCheckbookBalance] = useState<number | null>(null);
   const [projection, setProjection] = useState<{ date: string; balance: number }[]>([]);
+  const [sdltProgress, setSdltProgress] = useState<number | null>(null);
+  const [interestData, setInterestData] = useState<{ date: string; interest: number }[]>([]);
 
   useEffect(() => {
     const saved = localStorage.getItem('theme');
@@ -262,9 +418,44 @@ export default function Home() {
 
   useEffect(() => {
     fetchStocks();
-    const interval = setInterval(fetchStocks, 15 * 60 * 1000);
+    const interval = setInterval(fetchStocks, 120 * 60 * 1000);
     return () => clearInterval(interval);
   }, []);
+
+  async function fetchSdltProgress() {
+  const today = new Date().toISOString().split('T')[0];
+
+  const { data, error } = await supabase
+    .from('sdlt_progress_summary')
+    .select('progress_to_goal, "End of Month"')
+    .lte('End of Month', today)
+    .order('End of Month', { ascending: false })
+    .limit(1)
+    .single();
+
+  //console.log('sdlt data:', data);
+  //console.log('sdlt error:', error);
+
+  if (data) setSdltProgress(data.progress_to_goal);
+}
+
+async function fetchInterestHistory() {
+  const { data } = await supabase
+    .from('sdlt_progress_summary')
+    .select('"End of Month", monthly_interest_from_tx')
+    .order('End of Month');
+
+  if (data) {
+    setInterestData(
+      data.map(row => ({
+        date: row['End of Month'],
+        interest: row.monthly_interest_from_tx || 0,
+      }))
+    );
+  }
+}
+
+
 {/* Checkbook card */}
 <div className={`rounded-xl p-5 border ${dark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
   <div className="flex justify-between items-center mb-2">
@@ -412,6 +603,8 @@ export default function Home() {
     useEffect(() => {
       fetchCheckbookBalance();
       fetchProjection();
+      fetchSdltProgress();
+      fetchInterestHistory();
   }, []);
 
   return (
@@ -583,7 +776,26 @@ export default function Home() {
           </div>
         </div>
 
-
+        {/* SDLT card */}
+        <div className={`rounded-xl p-5 border ${dark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
+          <a
+            href="/sdlt"
+            className="font-semibold hover:underline"
+          >
+            SDLT
+          </a>
+          <div className={`text-sm mt-2 ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
+            Self Directed Long Term
+          </div>
+          <div className="flex items-center gap-2 mt-2">
+            {sdltProgress !== null && <DonutChart progress={sdltProgress} />}
+            {interestData.length > 0 && (
+              <div className="flex-1 min-w-0 overflow-visible">
+                <InterestChart data={interestData} />
+              </div>
+            )}
+          </div>
+        </div>
 
 
 
