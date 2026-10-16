@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
+import PageHeader from '@/components/PageHeader';
 import { getLocalDateString } from '@/lib/dates';
 import { formatUSD } from '@/lib/format';
 import ProgressChart, {
@@ -114,12 +115,13 @@ export default function ProgressPage() {
   return (
     <main className="min-h-screen text-white p-6">
       <div className="max-w-4xl mx-auto">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold">SDLT Progress</h1>
-          <a href="/sdlt" className="text-blue-400 hover:underline">
-            ← SDLT
-          </a>
-        </div>
+        <PageHeader
+          title="SDLT Progress"
+          icon="🎯"
+          accent="violet"
+          backHref="/sdlt"
+          backLabel="SDLT"
+        />
 
         <div className="panel p-4 mb-8">
           <div className="flex items-center gap-4 text-xs mb-2 opacity-70">

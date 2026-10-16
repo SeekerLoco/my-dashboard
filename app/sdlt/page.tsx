@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
+import PageHeader from '@/components/PageHeader';
 import { getLocalDateString } from '@/lib/dates';
 import { formatUSD } from '@/lib/format';
 import DateRangeFilter from '@/components/DateRangeFilter';
@@ -109,12 +110,7 @@ export default function SDLTPage() {
   return (
     <main className="min-h-screen text-white p-6">
       <div className="max-w-4xl mx-auto">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold">SDLT</h1>
-          <a href="/" className="text-blue-400 hover:underline">
-            ← Dashboard
-          </a>
-        </div>
+        <PageHeader title="SDLT" icon="🏦" accent="violet" />
 
         {/* Links to SDLT sub-pages */}
         <div className="flex gap-4 mb-6 text-sm">

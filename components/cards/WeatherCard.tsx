@@ -6,6 +6,7 @@ import Card from '@/components/Card';
 import CardTitle from '@/components/CardTitle';
 import StatusPill from '@/components/StatusPill';
 import { getWeatherInfo } from '@/lib/weather';
+import { useCountUp } from '@/lib/useCountUp';
 
 const DEFAULT_LAT = 39.55;
 const DEFAULT_LON = -104.97;
@@ -32,6 +33,8 @@ export default function WeatherCard() {
   const [locationName, setLocationName] = useState(DEFAULT_NAME);
   const [searchInput, setSearchInput] = useState('');
   const [weather, setWeather] = useState<WeatherData | null>(null);
+  // Count-up animation for the headline temperature
+  const animatedTemp = useCountUp(weather?.temp ?? null);
 
   // Reads the Open-Meteo forecast API (api.open-meteo.com)
   async function fetchWeather(lat: number, lon: number, name: string) {
@@ -137,7 +140,7 @@ export default function WeatherCard() {
             <span className="text-5xl">{weather.icon}</span>
             <div>
               <div className="text-5xl font-extrabold tracking-tight">
-                {weather.temp}°
+                {Math.round(animatedTemp ?? weather.temp)}°
               </div>
               <div className="text-sm text-slate-400">
                 {weather.description}

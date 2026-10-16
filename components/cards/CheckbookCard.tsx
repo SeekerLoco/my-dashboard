@@ -4,6 +4,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import { getLocalDateString } from '@/lib/dates';
+import { useCountUp } from '@/lib/useCountUp';
 import Card from '@/components/Card';
 import CardTitle from '@/components/CardTitle';
 import StatusPill from '@/components/StatusPill';
@@ -14,6 +15,8 @@ import type { ProjectionPoint } from '@/lib/types';
 export default function CheckbookCard() {
   const [showBalance, setShowBalance] = useState(true);
   const [checkbookBalance, setCheckbookBalance] = useState<number | null>(null);
+  // Count-up animation for the headline balance (only displayed when not masked)
+  const animatedBalance = useCountUp(checkbookBalance);
   const [projection, setProjection] = useState<ProjectionPoint[]>([]);
 
   // Reads Supabase table daily_balances (verified_balance for today)
@@ -82,7 +85,7 @@ export default function CheckbookCard() {
         {checkbookBalance === null
           ? '...'
           : showBalance
-            ? `$${checkbookBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+            ? `$${(animatedBalance ?? checkbookBalance).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
             : '******'}
       </div>
       <div className="text-xs text-slate-400">verified balance</div>

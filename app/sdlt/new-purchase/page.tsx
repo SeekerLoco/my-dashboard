@@ -3,6 +3,7 @@
 
 import { useState } from 'react';
 import { supabase } from '@/lib/supabase';
+import PageHeader from '@/components/PageHeader';
 import Field from '@/components/Field';
 import { addMonths, getLocalDateString, parseLocalDate } from '@/lib/dates';
 import { useRouter } from 'next/navigation';
@@ -128,12 +129,13 @@ export default function NewPurchasePage() {
   return (
     <main className="min-h-screen text-white p-6">
       <div className="max-w-xl mx-auto">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold">New Purchase</h1>
-          <a href="/sdlt" className="text-blue-400 hover:underline">
-            ← SDLT
-          </a>
-        </div>
+        <PageHeader
+          title="New Purchase"
+          icon="🧾"
+          accent="violet"
+          backHref="/sdlt"
+          backLabel="SDLT"
+        />
 
         <form onSubmit={handleSubmit} className="panel space-y-4 p-6">
           <Field label="CUSIP / Issue">

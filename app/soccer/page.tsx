@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
+import PageHeader from '@/components/PageHeader';
 import { groupByPeriod, nextLevel, type Level } from '@/lib/drilldown';
 import BarChart from '@/components/charts/BarChart';
 
@@ -88,12 +89,7 @@ export default function SoccerPage() {
   return (
     <main className="min-h-screen text-white p-6">
       <div className="max-w-5xl mx-auto">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold">Soccer</h1>
-          <a href="/" className="text-blue-400 hover:underline">
-            ← Dashboard
-          </a>
-        </div>
+        <PageHeader title="Soccer" icon="⚽" accent="orange" />
 
         {/* Missing venues alert */}
         <div className="panel mb-6 p-4">

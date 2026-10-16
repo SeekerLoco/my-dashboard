@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
+import PageHeader from '@/components/PageHeader';
 import { getLocalDateString } from '@/lib/dates';
 import { groupByPeriod, nextLevel, type Level } from '@/lib/drilldown';
 import BarChart from '@/components/charts/BarChart';
@@ -78,12 +79,13 @@ export default function ChartsPage() {
   return (
     <main className="min-h-screen text-white p-6">
       <div className="max-w-4xl mx-auto">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold">SDLT Charts</h1>
-          <a href="/sdlt" className="text-blue-400 hover:underline">
-            ← SDLT
-          </a>
-        </div>
+        <PageHeader
+          title="SDLT Charts"
+          icon="📊"
+          accent="violet"
+          backHref="/sdlt"
+          backLabel="SDLT"
+        />
 
         <DateRangeFilter
           startDate={startDate}

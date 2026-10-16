@@ -1,6 +1,7 @@
 // Habits card: add, check off, and archive daily habits.
 'use client';
 
+import { useCountUp } from '@/lib/useCountUp';
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import { getLocalDateString } from '@/lib/dates';
@@ -14,6 +15,8 @@ export default function HabitsCard() {
   const [habits, setHabits] = useState<Habit[]>([]);
   const [todayCompletions, setTodayCompletions] = useState<string[]>([]);
   const [newHabitName, setNewHabitName] = useState('');
+  // Count-up animation for the headline done count
+  const animatedDone = useCountUp(todayCompletions.length);
 
   // Reads Supabase tables habits (active habits) and habits_completions (today's check-offs)
   async function loadHabits() {
@@ -84,7 +87,7 @@ export default function HabitsCard() {
 
       <div className="mb-4">
         <div className="text-4xl font-extrabold tracking-tight">
-          {todayCompletions.length}/{habits.length}
+          {Math.round(animatedDone ?? todayCompletions.length)}/{habits.length}
         </div>
         <div className="text-xs text-slate-400">done today</div>
       </div>

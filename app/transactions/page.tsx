@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
+import PageHeader from '@/components/PageHeader';
 import { getLocalDateString } from '@/lib/dates';
 import { formatUSD } from '@/lib/format';
 import DateRangeFilter from '@/components/DateRangeFilter';
@@ -135,12 +136,7 @@ export default function TransactionsPage() {
   return (
     <main className="min-h-screen text-white p-6">
       <div className="max-w-4xl mx-auto">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold">Transactions</h1>
-          <a href="/" className="text-blue-400 hover:underline">
-            ← Dashboard
-          </a>
-        </div>
+        <PageHeader title="Transactions" icon="💵" accent="teal" />
 
         {/* Add form */}
         <form onSubmit={addTransaction} className="panel mb-8 p-4">
