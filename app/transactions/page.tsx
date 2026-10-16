@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import { getLocalDateString } from '@/lib/dates';
+import { formatUSD } from '@/lib/format';
+import DateRangeFilter from '@/components/DateRangeFilter';
 
 type Transaction = {
   id: string;
@@ -193,26 +195,12 @@ export default function TransactionsPage() {
           </button>
         </form>
 
-        <div className="flex gap-3 mb-6 items-center text-sm">
-          <label>
-            Start
-            <input
-              type="date"
-              value={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
-              className="ml-2 bg-slate-800 border border-slate-700 rounded px-2 py-1"
-            />
-          </label>
-          <label>
-            End
-            <input
-              type="date"
-              value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
-              className="ml-2 bg-slate-800 border border-slate-700 rounded px-2 py-1"
-            />
-          </label>
-        </div>
+        <DateRangeFilter
+          startDate={startDate}
+          endDate={endDate}
+          onStartChange={setStartDate}
+          onEndChange={setEndDate}
+        />
 
         {/* List */}
         {loading ? (
@@ -267,10 +255,7 @@ export default function TransactionsPage() {
                       tx.Amount < 0 ? 'text-red-400' : 'text-green-400'
                     }`}
                   >
-                    {tx.Amount.toLocaleString('en-US', {
-                      style: 'currency',
-                      currency: 'USD',
-                    })}
+                    {formatUSD(tx.Amount)}
                   </span>
                 )}
                 <select

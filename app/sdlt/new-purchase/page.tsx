@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { supabase } from '@/lib/supabase';
+import Field from '@/components/Field';
 import { addMonths, getLocalDateString, parseLocalDate } from '@/lib/dates';
 import { useRouter } from 'next/navigation';
 
@@ -129,19 +130,17 @@ export default function NewPurchasePage() {
           onSubmit={handleSubmit}
           className="space-y-4 bg-slate-900 p-6 rounded-xl border border-slate-800"
         >
-          <div>
-            <label className="block text-sm mb-1">CUSIP / Issue</label>
+          <Field label="CUSIP / Issue">
             <input
               value={form.issue}
               onChange={(e) => setForm({ ...form, issue: e.target.value })}
               className="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2"
               required
             />
-          </div>
+          </Field>
 
           <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm mb-1">Type</label>
+            <Field label="Type">
               <select
                 value={form.type}
                 onChange={(e) => setForm({ ...form, type: e.target.value })}
@@ -150,9 +149,8 @@ export default function NewPurchasePage() {
                 <option>Bond</option>
                 <option>Stock</option>
               </select>
-            </div>
-            <div>
-              <label className="block text-sm mb-1">Account</label>
+            </Field>
+            <Field label="Account">
               <select
                 value={form.account}
                 onChange={(e) => setForm({ ...form, account: e.target.value })}
@@ -161,12 +159,11 @@ export default function NewPurchasePage() {
                 <option>Manutes Trust</option>
                 <option>J5Trades</option>
               </select>
-            </div>
+            </Field>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm mb-1">Purchase Date</label>
+            <Field label="Purchase Date">
               <input
                 type="date"
                 value={form.purchaseDate}
@@ -176,9 +173,8 @@ export default function NewPurchasePage() {
                 className="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2"
                 required
               />
-            </div>
-            <div>
-              <label className="block text-sm mb-1">Maturity Date</label>
+            </Field>
+            <Field label="Maturity Date">
               <input
                 type="date"
                 value={form.maturityDate}
@@ -188,12 +184,11 @@ export default function NewPurchasePage() {
                 className="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2"
                 required
               />
-            </div>
+            </Field>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm mb-1">Coupon (%)</label>
+            <Field label="Coupon (%)">
               <input
                 type="number"
                 step="0.001"
@@ -202,9 +197,8 @@ export default function NewPurchasePage() {
                 className="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2"
                 required
               />
-            </div>
-            <div>
-              <label className="block text-sm mb-1">Frequency</label>
+            </Field>
+            <Field label="Frequency">
               <select
                 value={form.frequency}
                 onChange={(e) =>
@@ -217,14 +211,11 @@ export default function NewPurchasePage() {
                 <option>Annually</option>
                 <option>At-Maturity</option>
               </select>
-            </div>
+            </Field>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm mb-1">
-                Cost (purchase amount)
-              </label>
+            <Field label="Cost (purchase amount)">
               <input
                 type="number"
                 step="0.01"
@@ -233,9 +224,8 @@ export default function NewPurchasePage() {
                 className="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2"
                 required
               />
-            </div>
-            <div>
-              <label className="block text-sm mb-1">Capital at Maturity</label>
+            </Field>
+            <Field label="Capital at Maturity">
               <input
                 type="number"
                 step="0.01"
@@ -246,7 +236,7 @@ export default function NewPurchasePage() {
                 className="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2"
                 required
               />
-            </div>
+            </Field>
           </div>
 
           <button

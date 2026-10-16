@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
+import { groupByPeriod, nextLevel, type Level } from '@/lib/drilldown';
+import BarChart from '@/components/charts/BarChart';
 
 type Game = {
   id: string;
@@ -12,8 +14,6 @@ type Game = {
   Gender: string;
   mileage?: number;
 };
-
-type Level = 'year' | 'month' | 'day';
 
 export default function SoccerPage() {
   const [games, setGames] = useState<Game[]>([]);
@@ -45,121 +45,17 @@ export default function SoccerPage() {
     load();
   }, []);
 
+  // Totals a field per year/month/day for the drill-down charts
   function groupBy(
     field: 'Final Fee' | 'mileage',
     level: Level,
     filter: string | null,
   ) {
-    let filtered = games;
-    if (filter) {
-      if (level === 'month')
-        filtered = filtered.filter((g) => g.Date?.startsWith(filter));
-      if (level === 'day')
-        filtered = filtered.filter((g) => g.Date?.startsWith(filter));
-    }
-    const groups: Record<string, number> = {};
-    filtered.forEach((g) => {
-      const d = g.Date || '';
-      let key = d.slice(0, 4);
-      if (level === 'month') key = d.slice(0, 7);
-      if (level === 'day') key = d;
-      groups[key] = (groups[key] || 0) + (g[field] || 0);
-    });
-    return Object.entries(groups)
-      .sort(([a], [b]) => a.localeCompare(b))
-      .map(([key, total]) => ({ key, total }));
-  }
-
-  function BarChart({
-    data,
-    onBarClick,
-    color = '#60a5fa',
-  }: {
-    data: { key: string; total: number }[];
-    onBarClick?: (key: string) => void;
-    color?: string;
-  }) {
-    if (!data.length) return <div className="text-sm opacity-60">No data</div>;
-    const max = Math.max(...data.map((d) => d.total), 1);
-    const barWidth = Math.min(40, 480 / data.length);
-    const w = data.length * (barWidth + 12) + 60;
-    const h = 220;
-    const padL = 50;
-    const padB = 30;
-    const toY = (v: number) => h - padB - (v / max) * (h - padB - 15);
-
-    return (
-      <svg width="100%" height={h} viewBox={`0 0 ${w} ${h}`}>
-        <line
-          x1={padL}
-          y1={15}
-          x2={padL}
-          y2={h - padB}
-          stroke="currentColor"
-          strokeWidth="0.75"
-          opacity="0.4"
-        />
-        {[0, max / 2, max].map((tick, i) => (
-          <g key={i}>
-            <line
-              x1={padL - 4}
-              y1={toY(tick)}
-              x2={padL}
-              y2={toY(tick)}
-              stroke="currentColor"
-              strokeWidth="0.75"
-              opacity="0.4"
-            />
-            <text
-              x={padL - 6}
-              y={toY(tick) + 3}
-              textAnchor="end"
-              fontSize="9"
-              fill="currentColor"
-              opacity="0.7"
-            >
-              {Math.round(tick).toLocaleString()}
-            </text>
-          </g>
-        ))}
-        {data.map((d, i) => {
-          const x = padL + 8 + i * (barWidth + 12);
-          const barH = h - padB - toY(d.total);
-          return (
-            <g
-              key={d.key}
-              onClick={() => onBarClick?.(d.key)}
-              className={onBarClick ? 'cursor-pointer' : ''}
-            >
-              <rect
-                x={x}
-                y={toY(d.total)}
-                width={barWidth}
-                height={barH}
-                fill={color}
-              />
-              <text
-                x={x + barWidth / 2}
-                y={toY(d.total) - 4}
-                textAnchor="middle"
-                fontSize="8"
-                fill="currentColor"
-              >
-                {Math.round(d.total).toLocaleString()}
-              </text>
-              <text
-                x={x + barWidth / 2}
-                y={h - 8}
-                textAnchor="middle"
-                fontSize="9"
-                fill="currentColor"
-              >
-                {d.key.length > 7 ? d.key.slice(5) : d.key}
-              </text>
-            </g>
-          );
-        })}
-      </svg>
+    return groupByPeriod(games, (g) => g.Date || '', level, filter).map(
+      ({ key, items }) => ({
+        key,
+        total: items.reduce((sum, g) => sum + (g[field] || 0), 0),
+      }),
     );
   }
 
@@ -228,11 +124,9 @@ export default function SoccerPage() {
             <BarChart
               data={earningsData}
               onBarClick={(key) => {
-                if (earningsLevel === 'year') {
-                  setEarningsLevel('month');
-                  setEarningsFilter(key);
-                } else if (earningsLevel === 'month') {
-                  setEarningsLevel('day');
+                const next = nextLevel(earningsLevel);
+                if (next) {
+                  setEarningsLevel(next);
                   setEarningsFilter(key);
                 }
               }}
@@ -259,11 +153,9 @@ export default function SoccerPage() {
               data={mileageData}
               color="#34d399"
               onBarClick={(key) => {
-                if (mileageLevel === 'year') {
-                  setMileageLevel('month');
-                  setMileageFilter(key);
-                } else if (mileageLevel === 'month') {
-                  setMileageLevel('day');
+                const next = nextLevel(mileageLevel);
+                if (next) {
+                  setMileageLevel(next);
                   setMileageFilter(key);
                 }
               }}
