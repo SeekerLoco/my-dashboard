@@ -1,9 +1,7 @@
-// Main dashboard page: theme toggle, auth check, and the grid of cards.
+// Main dashboard page: theme toggle and the grid of cards.
 'use client';
 
 import { useState, useEffect } from 'react';
-import { supabase } from '@/lib/supabase';
-import { useRouter } from 'next/navigation';
 import WeatherCard from '@/components/cards/WeatherCard';
 import MarketsCard from '@/components/cards/MarketsCard';
 import CheckbookCard from '@/components/cards/CheckbookCard';
@@ -13,16 +11,6 @@ import SoccerCard from '@/components/cards/SoccerCard';
 
 export default function Home() {
   const [dark, setDark] = useState(true);
-
-  const router = useRouter();
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (!session) {
-        router.push('/login');
-      }
-    });
-  }, [router]);
 
   useEffect(() => {
     const saved = localStorage.getItem('theme');
