@@ -8,6 +8,7 @@ import { getLocalDateString } from '@/lib/dates';
 import { groupByPeriod, nextLevel, type Level } from '@/lib/drilldown';
 import BarChart from '@/components/charts/BarChart';
 import DateRangeFilter from '@/components/DateRangeFilter';
+import HoldingsChart from '@/components/charts/HoldingsChart';
 
 type Tx = {
   'Action Date': string;
@@ -86,6 +87,9 @@ export default function ChartsPage() {
           backHref="/sdlt"
           backLabel="SDLT"
         />
+
+        {/* Moon Shots: single-stock holdings vs cost basis and the interest limit */}
+        <HoldingsChart />
 
         <DateRangeFilter
           startDate={startDate}

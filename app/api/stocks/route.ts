@@ -1,5 +1,7 @@
 // API route /api/stocks: returns market quotes and recent closes for the Markets card.
-import { NextResponse } from 'next/server';
+// With ?symbols=A,B it returns quotes for just those symbols (Markets symbols or SDLT holdings tickers only).
+import { NextResponse, type NextRequest } from 'next/server';
+import { HOLDING_TICKERS } from '@/lib/holdings';
 
 // Symbols shown on the Markets card, in display order
 const SYMBOLS = [
@@ -14,11 +16,12 @@ const SYMBOLS = [
 ];
 
 // Reads Yahoo Finance chart data for each symbol (cached 15 minutes)
-export async function GET() {
+async function fetchQuotes(
+  items: { symbol: string; name: string }[],
+  withSymbol: boolean,
+) {
   const results = [];
-  const updatedAt = new Date().toISOString();
-
-  for (const item of SYMBOLS) {
+  for (const item of items) {
     try {
       const res = await fetch(
         `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(item.symbol)}?interval=1d&range=5d`,
@@ -41,6 +44,7 @@ export async function GET() {
         ) as number[];
 
         results.push({
+          ...(withSymbol ? { symbol: item.symbol } : {}),
           name: item.name,
           price,
           change,
@@ -52,6 +56,33 @@ export async function GET() {
       console.error(`Failed ${item.symbol}`, err);
     }
   }
+  return results;
+}
 
-  return NextResponse.json({ quotes: results, updatedAt });
+export async function GET(request: NextRequest) {
+  const updatedAt = new Date().toISOString();
+  const requested = request.nextUrl.searchParams.get('symbols');
+
+  // No ?symbols= : the Markets card list, output unchanged
+  if (!requested) {
+    return NextResponse.json({
+      quotes: await fetchQuotes(SYMBOLS, false),
+      updatedAt,
+    });
+  }
+
+  // Only allow known symbols so the route can't be used as an open proxy
+  const allowed = new Set([
+    ...SYMBOLS.map((s) => s.symbol),
+    ...HOLDING_TICKERS,
+  ]);
+  const items = [
+    ...new Set(requested.split(',').map((s) => s.trim().toUpperCase())),
+  ]
+    .filter((s) => allowed.has(s))
+    .map((symbol) => ({ symbol, name: symbol }));
+  return NextResponse.json({
+    quotes: await fetchQuotes(items, true),
+    updatedAt,
+  });
 }
