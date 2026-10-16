@@ -48,6 +48,7 @@ export default function ProgressChart({ data }: { data: ChartRow[] }) {
     })
     .join(' ');
 
+  // Straight-line (least-squares) fit through the actual values, extended to the end date
   const n = data.length;
   const sumX = data.reduce((s, _, i) => s + i, 0);
   const sumY = data.reduce((s, d) => s + d.running_actual, 0);

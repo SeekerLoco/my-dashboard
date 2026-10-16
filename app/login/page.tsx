@@ -1,3 +1,4 @@
+// Login page: email/password sign-in, then back to the dashboard.
 'use client';
 
 import { useState } from 'react';
@@ -10,6 +11,7 @@ export default function LoginPage() {
   const [message, setMessage] = useState('');
   const router = useRouter();
 
+  // Signs in with Supabase Auth (email + password)
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
     setMessage('');

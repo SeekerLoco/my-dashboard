@@ -1,3 +1,4 @@
+// SDLT Progress page: progress-toward-goal chart and an editable table of monthly account values.
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -24,6 +25,7 @@ export default function ProgressPage() {
     null,
   );
 
+  // Reads Supabase view sdlt_progress_summary (running total up to today) for the chart
   async function loadChart() {
     const today = getLocalDateString();
     const { data } = await supabase
@@ -34,6 +36,7 @@ export default function ProgressPage() {
     if (data) setChartRows(data);
   }
 
+  // Reads Supabase table SDLT_Progress for the monthly values table
   async function loadProgress() {
     const { data } = await supabase
       .from('SDLT_Progress')
@@ -49,6 +52,7 @@ export default function ProgressPage() {
     loadProgress();
   }, []);
 
+  // Writes an edited value to Supabase table SDLT_Progress (blank saves as empty), then reloads
   async function updateProgress(id: string, field: string, value: string) {
     const num = value === '' ? null : parseFloat(value);
     await supabase
@@ -59,6 +63,7 @@ export default function ProgressPage() {
     loadChart();
   }
 
+  // Adds total value, 12-month average interest, and APY columns to each month
   function calcExtras(rows: ProgressRow[]) {
     return rows.map((row, idx) => {
       const totalValue =
@@ -79,11 +84,13 @@ export default function ProgressPage() {
           0,
         ) / (window.length || 1);
 
+      // This month's interest as a yearly rate of total value
       const monthlyAPY =
         totalValue > 0
           ? ((row['Actual Interest'] ?? 0) / totalValue) * 12 * 100
           : 0;
 
+      // Last 12 months of interest as a rate of the average value over that period
       const averageAPY = avgValue > 0 ? (interestSum / avgValue) * 100 : 0;
 
       return {

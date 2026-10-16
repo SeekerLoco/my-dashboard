@@ -1,3 +1,4 @@
+// SDLT Charts page: redemption and interest totals by year, drilling into months and days.
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -23,6 +24,7 @@ export default function ChartsPage() {
   const [interestLevel, setInterestLevel] = useState<Level>('year');
   const [interestFilter, setInterestFilter] = useState<string | null>(null);
 
+  // Default the date window to 36 months before and after today
   useEffect(() => {
     const today = new Date();
     const start = new Date(today);
@@ -36,6 +38,7 @@ export default function ChartsPage() {
 
   useEffect(() => {
     if (!startDate || !endDate) return;
+    // Reads Supabase table SDLT_Transactions for the selected date window
     async function load() {
       const { data } = await supabase
         .from('SDLT_Transactions')

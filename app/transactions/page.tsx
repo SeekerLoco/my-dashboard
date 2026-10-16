@@ -1,3 +1,4 @@
+// Transactions page: add, edit, and delete checkbook transactions within a date window.
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -38,6 +39,7 @@ export default function TransactionsPage() {
     }));
   }, []);
 
+  // Default the date window to one week before and after today
   useEffect(() => {
     const today = new Date();
     const start = new Date(today);
@@ -49,6 +51,7 @@ export default function TransactionsPage() {
     setEndDate(getLocalDateString(end));
   }, []);
 
+  // Reads Supabase table Checkbook_Transactions for the selected date window
   async function loadTransactions() {
     if (!startDate || !endDate) return;
     setLoading(true);
@@ -65,6 +68,7 @@ export default function TransactionsPage() {
     setLoading(false);
   }
 
+  // Reads Supabase table Checkbook_CategoryList for the category dropdown
   async function loadCategories() {
     const { data } = await supabase
       .from('Checkbook_CategoryList')
@@ -81,17 +85,20 @@ export default function TransactionsPage() {
     loadTransactions();
   }, [startDate, endDate]);
 
+  // Writes one field change to Supabase table Checkbook_Transactions
   async function updateTransaction(id: string, updates: Partial<Transaction>) {
     await supabase.from('Checkbook_Transactions').update(updates).eq('id', id);
     loadTransactions();
   }
 
+  // Deletes a row from Supabase table Checkbook_Transactions (after confirming)
   async function deleteTransaction(id: string) {
     if (!confirm('Delete this transaction?')) return;
     await supabase.from('Checkbook_Transactions').delete().eq('id', id);
     loadTransactions();
   }
 
+  // Inserts a new row into Supabase table Checkbook_Transactions
   async function addTransaction(e: React.FormEvent) {
     e.preventDefault();
     let amount = parseFloat(newTx.Amount);

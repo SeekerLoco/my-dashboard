@@ -1,3 +1,4 @@
+// New Purchase page: enter a bond and create its expected purchase, redemption, and interest rows.
 'use client';
 
 import { useState } from 'react';
@@ -22,6 +23,7 @@ export default function NewPurchasePage() {
   const [message, setMessage] = useState('');
   const [saving, setSaving] = useState(false);
 
+  // Builds the expected rows and inserts them into Supabase table SDLT_Transactions
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setSaving(true);
@@ -64,6 +66,7 @@ export default function NewPurchasePage() {
     });
 
     // Interest lines
+    // Months between interest payments (0 = one payment at maturity)
     const freqMap: Record<string, number> = {
       Monthly: 1,
       'Semi-Annually': 6,
@@ -88,6 +91,7 @@ export default function NewPurchasePage() {
       // Step back from maturity; each date is computed from maturity so month-end clamping doesn't drift
       let step = 0;
       let current = maturityDate;
+      // Each payment is the yearly coupon split across the payments per year
       const interest = (coupon / (12 / monthsStep)) * redemptionAmount;
 
       while (current > purchaseDate) {

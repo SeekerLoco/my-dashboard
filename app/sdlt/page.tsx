@@ -1,3 +1,4 @@
+// SDLT page: add, edit, and delete SDLT (bond/interest) transactions within a date window.
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -34,6 +35,7 @@ export default function SDLTPage() {
     }));
   }, []);
 
+  // Default the date window to 15 days before and after today
   useEffect(() => {
     const today = new Date();
     const start = new Date(today);
@@ -45,6 +47,7 @@ export default function SDLTPage() {
     setEndDate(getLocalDateString(end));
   }, []);
 
+  // Reads Supabase table SDLT_Transactions for the selected date window
   async function loadTransactions() {
     if (!startDate || !endDate) return;
     setLoading(true);
@@ -65,6 +68,7 @@ export default function SDLTPage() {
     loadTransactions();
   }, [startDate, endDate]);
 
+  // Writes one field change to Supabase table SDLT_Transactions
   async function updateTransaction(
     id: string,
     updates: Partial<SDLTTransaction>,
@@ -73,12 +77,14 @@ export default function SDLTPage() {
     loadTransactions();
   }
 
+  // Deletes a row from Supabase table SDLT_Transactions (after confirming)
   async function deleteTransaction(id: string) {
     if (!confirm('Delete this transaction?')) return;
     await supabase.from('SDLT_Transactions').delete().eq('id', id);
     loadTransactions();
   }
 
+  // Inserts a new row into Supabase table SDLT_Transactions (amount saved as entered)
   async function addTransaction(e: React.FormEvent) {
     e.preventDefault();
     const amount = parseFloat(newTx.Amount);

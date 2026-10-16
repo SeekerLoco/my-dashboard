@@ -1,3 +1,4 @@
+// Soccer page: referee earnings, mileage, age-group and gender charts, plus venues missing mileage.
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -24,12 +25,14 @@ export default function SoccerPage() {
   const [mileageFilter, setMileageFilter] = useState<string | null>(null);
 
   useEffect(() => {
+    // Reads Supabase view soccer_games_with_mileage and table soccer_Venues_Mileage
     async function load() {
       const { data } = await supabase
         .from('soccer_games_with_mileage')
         .select('id, Date, Venue, "Final Fee", "Age Group", Gender, mileage');
       if (data) setGames(data);
 
+      // Venues that appear in games but have no row in the mileage table
       // Missing venues
       const { data: venues } = await supabase
         .from('soccer_Venues_Mileage')

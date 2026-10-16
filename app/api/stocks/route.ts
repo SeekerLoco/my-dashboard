@@ -1,5 +1,7 @@
+// API route /api/stocks: returns market quotes and recent closes for the Markets card.
 import { NextResponse } from 'next/server';
 
+// Symbols shown on the Markets card, in display order
 const SYMBOLS = [
   { symbol: '^GSPC', name: 'S&P 500' },
   { symbol: '^DJI', name: 'Dow Jones' },
@@ -9,6 +11,7 @@ const SYMBOLS = [
   { symbol: 'SPCX', name: 'SPCX' },
 ];
 
+// Reads Yahoo Finance chart data for each symbol (cached 15 minutes)
 export async function GET() {
   const results = [];
   const updatedAt = new Date().toISOString();

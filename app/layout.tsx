@@ -1,3 +1,4 @@
+// Root layout: page title, fonts, and the <html>/<body> wrapper for every page.
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
