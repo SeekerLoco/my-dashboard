@@ -17,7 +17,7 @@ export async function GET() {
     try {
       const res = await fetch(
         `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(item.symbol)}?interval=1d&range=5d`,
-        { next: { revalidate: 900 } }
+        { next: { revalidate: 900 } },
       );
       const data = await res.json();
       const result = data.chart?.result?.[0];
@@ -31,7 +31,9 @@ export async function GET() {
         const changePercent = (change / prev) * 100;
 
         // Clean the closes array (remove nulls) for the sparkline
-        const history = closes.filter((c: number | null) => c != null) as number[];
+        const history = closes.filter(
+          (c: number | null) => c != null,
+        ) as number[];
 
         results.push({
           name: item.name,

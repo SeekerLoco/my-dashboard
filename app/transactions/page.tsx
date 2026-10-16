@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import { getLocalDateString } from '@/lib/dates';
 
-
 type Transaction = {
   id: string;
   Transaction_Date: string;
@@ -38,53 +37,47 @@ export default function TransactionsPage() {
   }, []);
 
   useEffect(() => {
-  const today = new Date();
-  const start = new Date(today);
-  start.setDate(today.getDate() - 7);
-  const end = new Date(today);
-  end.setDate(today.getDate() + 7);
+    const today = new Date();
+    const start = new Date(today);
+    start.setDate(today.getDate() - 7);
+    const end = new Date(today);
+    end.setDate(today.getDate() + 7);
 
-  setStartDate(getLocalDateString(start));
-  setEndDate(getLocalDateString(end));
-}, []);
+    setStartDate(getLocalDateString(start));
+    setEndDate(getLocalDateString(end));
+  }, []);
 
   async function loadTransactions() {
-  if (!startDate || !endDate) return;
-  setLoading(true);
+    if (!startDate || !endDate) return;
+    setLoading(true);
 
-  const { data, error } = await supabase
-    .from('Checkbook_Transactions')
-    .select('id, Transaction_Date, Category, Type, Amount, Status')
-    .gte('Transaction_Date', startDate)
-    .lte('Transaction_Date', endDate)
-    .order('Transaction_Date', { ascending: true });
+    const { data, error } = await supabase
+      .from('Checkbook_Transactions')
+      .select('id, Transaction_Date, Category, Type, Amount, Status')
+      .gte('Transaction_Date', startDate)
+      .lte('Transaction_Date', endDate)
+      .order('Transaction_Date', { ascending: true });
 
-  if (error) console.error(error);
-  if (data) setTransactions(data);
-  setLoading(false);
-}
-  
+    if (error) console.error(error);
+    if (data) setTransactions(data);
+    setLoading(false);
+  }
+
   async function loadCategories() {
-        console.log('loadCategories called');
-        const { data, error } = await supabase
-            .from('Checkbook_CategoryList')
-            .select('Category_Name')
-            .order('Category_Name');
+    const { data } = await supabase
+      .from('Checkbook_CategoryList')
+      .select('Category_Name')
+      .order('Category_Name');
 
-        console.log('categories data:', data);
-        console.log('categories error:', error);
-
-        if (data) {
-            setCategories(data.map((row) => row.Category_Name));
-        }
+    if (data) {
+      setCategories(data.map((row) => row.Category_Name));
     }
+  }
 
-    useEffect(() => {
+  useEffect(() => {
     loadCategories();
     loadTransactions();
-    }, [startDate, endDate]);
-
-  // ... keep the rest of the functions (updateTransaction, deleteTransaction, addTransaction) and the return exactly as they were
+  }, [startDate, endDate]);
 
   async function updateTransaction(id: string, updates: Partial<Transaction>) {
     await supabase.from('Checkbook_Transactions').update(updates).eq('id', id);
@@ -98,71 +91,74 @@ export default function TransactionsPage() {
   }
 
   async function addTransaction(e: React.FormEvent) {
-  e.preventDefault();
-  let amount = parseFloat(newTx.Amount);
-  if (!newTx.Category || isNaN(amount)) return;
+    e.preventDefault();
+    let amount = parseFloat(newTx.Amount);
+    if (!newTx.Category || isNaN(amount)) return;
 
-  // Normalize sign based on Type
-  if (newTx.Type === 'Debit' && amount > 0) {
-    amount = amount * -1;
-  }
-  if (newTx.Type === 'Credit' && amount < 0) {
-    amount = amount * -1;
-  }
+    // Normalize sign based on Type
+    if (newTx.Type === 'Debit' && amount > 0) {
+      amount = amount * -1;
+    }
+    if (newTx.Type === 'Credit' && amount < 0) {
+      amount = amount * -1;
+    }
 
-  const { data, error } = await supabase.from('Checkbook_Transactions').insert({
-    Transaction_Date: newTx.Transaction_Date,
-    Category: newTx.Category,
-    Type: newTx.Type,
-    Amount: amount,
-    Status: newTx.Status,
-  });
-
-  console.log('insert data:', data);
-  console.log('insert error:', error);
-
-  if (!error) {
-    setNewTx({
-      Transaction_Date: getLocalDateString(),
-      Category: '',
-      Type: 'Debit',
-      Amount: '',
-      Status: 'Verified',
+    const { error } = await supabase.from('Checkbook_Transactions').insert({
+      Transaction_Date: newTx.Transaction_Date,
+      Category: newTx.Category,
+      Type: newTx.Type,
+      Amount: amount,
+      Status: newTx.Status,
     });
-    loadTransactions();
+
+    if (!error) {
+      setNewTx({
+        Transaction_Date: getLocalDateString(),
+        Category: '',
+        Type: 'Debit',
+        Amount: '',
+        Status: 'Verified',
+      });
+      loadTransactions();
+    }
   }
-}
 
   return (
     <main className="min-h-screen bg-slate-950 text-white p-6">
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold">Transactions</h1>
-          <a href="/" className="text-blue-400 hover:underline">← Dashboard</a>
+          <a href="/" className="text-blue-400 hover:underline">
+            ← Dashboard
+          </a>
         </div>
-        
 
         {/* Add form */}
-        <form onSubmit={addTransaction} className="mb-8 p-4 bg-slate-900 rounded-xl border border-slate-800">
+        <form
+          onSubmit={addTransaction}
+          className="mb-8 p-4 bg-slate-900 rounded-xl border border-slate-800"
+        >
           <div className="font-semibold mb-3">Add transaction</div>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
             <input
               type="date"
               value={newTx.Transaction_Date}
-              onChange={(e) => setNewTx({ ...newTx, Transaction_Date: e.target.value })}
+              onChange={(e) =>
+                setNewTx({ ...newTx, Transaction_Date: e.target.value })
+              }
               className="bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm"
             />
             <select
-                value={newTx.Category}
-                onChange={(e) => setNewTx({ ...newTx, Category: e.target.value })}
-                className="bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm"
-                >
-                <option value="">Category</option>
-                {categories.map((cat) => (
-                    <option key={cat} value={cat}>
-                    {cat}
-                    </option>
-                ))}
+              value={newTx.Category}
+              onChange={(e) => setNewTx({ ...newTx, Category: e.target.value })}
+              className="bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm"
+            >
+              <option value="">Category</option>
+              {categories.map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat}
+                </option>
+              ))}
             </select>
             <select
               value={newTx.Type}
@@ -189,35 +185,34 @@ export default function TransactionsPage() {
               <option>Expected</option>
             </select>
           </div>
-          <button type="submit" className="mt-3 px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded text-sm">
+          <button
+            type="submit"
+            className="mt-3 px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded text-sm"
+          >
             Add
           </button>
         </form>
-    
-    
-    
-    
-     
+
         <div className="flex gap-3 mb-6 items-center text-sm">
-  <label>
-    Start
-    <input
-      type="date"
-      value={startDate}
-      onChange={(e) => setStartDate(e.target.value)}
-      className="ml-2 bg-slate-800 border border-slate-700 rounded px-2 py-1"
-    />
-  </label>
-  <label>
-    End
-    <input
-      type="date"
-      value={endDate}
-      onChange={(e) => setEndDate(e.target.value)}
-      className="ml-2 bg-slate-800 border border-slate-700 rounded px-2 py-1"
-    />
-  </label>
-</div>
+          <label>
+            Start
+            <input
+              type="date"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+              className="ml-2 bg-slate-800 border border-slate-700 rounded px-2 py-1"
+            />
+          </label>
+          <label>
+            End
+            <input
+              type="date"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+              className="ml-2 bg-slate-800 border border-slate-700 rounded px-2 py-1"
+            />
+          </label>
+        </div>
 
         {/* List */}
         {loading ? (
@@ -227,13 +222,18 @@ export default function TransactionsPage() {
         ) : (
           <div className="space-y-2">
             {transactions.map((tx) => (
-              <div key={tx.id} className="flex flex-wrap items-center gap-3 p-3 bg-slate-900 rounded-lg border border-slate-800">
+              <div
+                key={tx.id}
+                className="flex flex-wrap items-center gap-3 p-3 bg-slate-900 rounded-lg border border-slate-800"
+              >
                 <input
                   type="date"
                   defaultValue={tx.Transaction_Date}
                   onBlur={(e) => {
                     if (e.target.value !== tx.Transaction_Date) {
-                      updateTransaction(tx.id, { Transaction_Date: e.target.value });
+                      updateTransaction(tx.id, {
+                        Transaction_Date: e.target.value,
+                      });
                     }
                   }}
                   className="bg-slate-800 border border-slate-700 rounded px-2 py-1 text-sm"
@@ -241,41 +241,43 @@ export default function TransactionsPage() {
                 <span className="w-32 truncate">{tx.Category}</span>
                 <span className="w-16 text-sm opacity-70">{tx.Type}</span>
                 {editingAmountId === tx.id ? (
-                <input
+                  <input
                     type="number"
                     step="0.01"
                     autoFocus
                     defaultValue={tx.Amount}
                     onBlur={(e) => {
-                    const newAmount = parseFloat(e.target.value);
-                    if (!isNaN(newAmount) && newAmount !== tx.Amount) {
+                      const newAmount = parseFloat(e.target.value);
+                      if (!isNaN(newAmount) && newAmount !== tx.Amount) {
                         updateTransaction(tx.id, { Amount: newAmount });
-                    }
-                    setEditingAmountId(null);
+                      }
+                      setEditingAmountId(null);
                     }}
                     onKeyDown={(e) => {
-                    if (e.key === 'Enter') e.currentTarget.blur();
+                      if (e.key === 'Enter') e.currentTarget.blur();
                     }}
                     className={`w-24 text-right bg-slate-800 border border-slate-700 rounded px-2 py-1 text-sm ${
-                    tx.Amount < 0 ? 'text-red-400' : 'text-green-400'
+                      tx.Amount < 0 ? 'text-red-400' : 'text-green-400'
                     }`}
-                />
+                  />
                 ) : (
-                <span
+                  <span
                     onClick={() => setEditingAmountId(tx.id)}
                     className={`w-24 text-right cursor-pointer ${
-                    tx.Amount < 0 ? 'text-red-400' : 'text-green-400'
+                      tx.Amount < 0 ? 'text-red-400' : 'text-green-400'
                     }`}
-                >
+                  >
                     {tx.Amount.toLocaleString('en-US', {
-                    style: 'currency',
-                    currency: 'USD',
+                      style: 'currency',
+                      currency: 'USD',
                     })}
-                </span>
+                  </span>
                 )}
                 <select
                   value={tx.Status}
-                  onChange={(e) => updateTransaction(tx.id, { Status: e.target.value })}
+                  onChange={(e) =>
+                    updateTransaction(tx.id, { Status: e.target.value })
+                  }
                   className="bg-slate-800 border border-slate-700 rounded px-2 py-1 text-sm"
                 >
                   <option>Expected</option>

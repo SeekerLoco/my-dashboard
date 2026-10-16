@@ -21,7 +21,9 @@ type ProgressRow = {
 export default function ProgressPage() {
   const [chartRows, setChartRows] = useState<ChartRow[]>([]);
   const [progressRows, setProgressRows] = useState<ProgressRow[]>([]);
-  const [editing, setEditing] = useState<{ id: string; field: string } | null>(null);
+  const [editing, setEditing] = useState<{ id: string; field: string } | null>(
+    null,
+  );
 
   async function loadChart() {
     const today = getLocalDateString();
@@ -36,7 +38,9 @@ export default function ProgressPage() {
   async function loadProgress() {
     const { data } = await supabase
       .from('SDLT_Progress')
-      .select('id, "End of Month", "Actual Contribution", "Actual Interest", "Actual Value IRA", "Actual Value Trust"')
+      .select(
+        'id, "End of Month", "Actual Contribution", "Actual Interest", "Actual Value IRA", "Actual Value Trust"',
+      )
       .order('End of Month');
     if (data) setProgressRows(data);
   }
@@ -48,13 +52,17 @@ export default function ProgressPage() {
 
   async function updateProgress(id: string, field: string, value: string) {
     const num = value === '' ? null : parseFloat(value);
-    await supabase.from('SDLT_Progress').update({ [field]: num }).eq('id', id);
+    await supabase
+      .from('SDLT_Progress')
+      .update({ [field]: num })
+      .eq('id', id);
     loadProgress();
     loadChart();
   }
 
   function ProgressChart({ data }: { data: ChartRow[] }) {
-    if (data.length < 2) return <div className="text-sm opacity-60">Not enough data</div>;
+    if (data.length < 2)
+      return <div className="text-sm opacity-60">Not enough data</div>;
 
     const width = 700;
     const height = 320;
@@ -74,9 +82,12 @@ export default function ProgressPage() {
       (endDate.getMonth() - firstDate.getMonth());
 
     const toX = (monthIndex: number) =>
-      paddingLeft + (monthIndex / totalMonths) * (width - paddingLeft - paddingRight);
+      paddingLeft +
+      (monthIndex / totalMonths) * (width - paddingLeft - paddingRight);
     const toY = (val: number) =>
-      paddingTop + (1 - (val - yMin) / (yMax - yMin)) * (height - paddingTop - paddingBottom);
+      paddingTop +
+      (1 - (val - yMin) / (yMax - yMin)) *
+        (height - paddingTop - paddingBottom);
 
     const points = data
       .map((d) => {
@@ -101,71 +112,159 @@ export default function ProgressPage() {
 
     return (
       <svg width="100%" height={height} viewBox={`0 0 ${width} ${height}`}>
-        <line x1={paddingLeft} y1={paddingTop} x2={paddingLeft} y2={height - paddingBottom} stroke="currentColor" strokeWidth="0.75" opacity="0.4" />
+        <line
+          x1={paddingLeft}
+          y1={paddingTop}
+          x2={paddingLeft}
+          y2={height - paddingBottom}
+          stroke="currentColor"
+          strokeWidth="0.75"
+          opacity="0.4"
+        />
         {ticks.map((tick) => (
           <g key={tick}>
-            <line x1={paddingLeft - 4} y1={toY(tick)} x2={paddingLeft} y2={toY(tick)} stroke="currentColor" strokeWidth="0.75" opacity="0.4" />
-            <text x={paddingLeft - 8} y={toY(tick) + 3} textAnchor="end" fontSize="10" fill="currentColor" opacity="0.7">
+            <line
+              x1={paddingLeft - 4}
+              y1={toY(tick)}
+              x2={paddingLeft}
+              y2={toY(tick)}
+              stroke="currentColor"
+              strokeWidth="0.75"
+              opacity="0.4"
+            />
+            <text
+              x={paddingLeft - 8}
+              y={toY(tick) + 3}
+              textAnchor="end"
+              fontSize="10"
+              fill="currentColor"
+              opacity="0.7"
+            >
               ${(tick / 1000).toFixed(0)}k
             </text>
           </g>
         ))}
-        <line x1={paddingLeft} y1={toY(goal)} x2={width - paddingRight} y2={toY(goal)} stroke="#f87171" strokeWidth="1.5" strokeDasharray="4 3" />
-        <text x={width - paddingRight - 4} y={toY(goal) - 6} textAnchor="end" fontSize="10" fill="#f87171">$100k goal</text>
-        <line x1={toX(0)} y1={toY(intercept)} x2={toX(totalMonths)} y2={toY(trendEndVal)} stroke="#a78bfa" strokeWidth="1.5" strokeDasharray="3 2" />
-        <polyline fill="none" stroke="#60a5fa" strokeWidth="2" points={points} />
-        <text x={toX(0)} y={height - 10} fontSize="10" fill="currentColor" opacity="0.7">{data[0]['End of Month'].slice(0, 4)}</text>
-        <text x={toX(totalMonths)} y={height - 10} textAnchor="end" fontSize="10" fill="currentColor" opacity="0.7">2040</text>
+        <line
+          x1={paddingLeft}
+          y1={toY(goal)}
+          x2={width - paddingRight}
+          y2={toY(goal)}
+          stroke="#f87171"
+          strokeWidth="1.5"
+          strokeDasharray="4 3"
+        />
+        <text
+          x={width - paddingRight - 4}
+          y={toY(goal) - 6}
+          textAnchor="end"
+          fontSize="10"
+          fill="#f87171"
+        >
+          $100k goal
+        </text>
+        <line
+          x1={toX(0)}
+          y1={toY(intercept)}
+          x2={toX(totalMonths)}
+          y2={toY(trendEndVal)}
+          stroke="#a78bfa"
+          strokeWidth="1.5"
+          strokeDasharray="3 2"
+        />
+        <polyline
+          fill="none"
+          stroke="#60a5fa"
+          strokeWidth="2"
+          points={points}
+        />
+        <text
+          x={toX(0)}
+          y={height - 10}
+          fontSize="10"
+          fill="currentColor"
+          opacity="0.7"
+        >
+          {data[0]['End of Month'].slice(0, 4)}
+        </text>
+        <text
+          x={toX(totalMonths)}
+          y={height - 10}
+          textAnchor="end"
+          fontSize="10"
+          fill="currentColor"
+          opacity="0.7"
+        >
+          2040
+        </text>
       </svg>
     );
   }
-function calcExtras(rows: ProgressRow[]) {
-  return rows.map((row, idx) => {
-    const totalValue =
-      (row['Actual Value IRA'] ?? 0) + (row['Actual Value Trust'] ?? 0);
+  function calcExtras(rows: ProgressRow[]) {
+    return rows.map((row, idx) => {
+      const totalValue =
+        (row['Actual Value IRA'] ?? 0) + (row['Actual Value Trust'] ?? 0);
 
-    // Last 12 months window (including current)
-    const window = rows.slice(Math.max(0, idx - 11), idx + 1);
-    const interestSum = window.reduce((s, r) => s + (r['Actual Interest'] ?? 0), 0);
-    const avgInterest = window.length ? interestSum / window.length : 0;
+      // Last 12 months window (including current)
+      const window = rows.slice(Math.max(0, idx - 11), idx + 1);
+      const interestSum = window.reduce(
+        (s, r) => s + (r['Actual Interest'] ?? 0),
+        0,
+      );
+      const avgInterest = window.length ? interestSum / window.length : 0;
 
-    const avgValue =
-      window.reduce(
-        (s, r) => s + (r['Actual Value IRA'] ?? 0) + (r['Actual Value Trust'] ?? 0),
-        0
-      ) / (window.length || 1);
+      const avgValue =
+        window.reduce(
+          (s, r) =>
+            s + (r['Actual Value IRA'] ?? 0) + (r['Actual Value Trust'] ?? 0),
+          0,
+        ) / (window.length || 1);
 
-    const monthlyAPY =
-      totalValue > 0 ? ((row['Actual Interest'] ?? 0) / totalValue) * 12 * 100 : 0;
+      const monthlyAPY =
+        totalValue > 0
+          ? ((row['Actual Interest'] ?? 0) / totalValue) * 12 * 100
+          : 0;
 
-    const averageAPY = avgValue > 0 ? (interestSum / avgValue) * 100 : 0;
+      const averageAPY = avgValue > 0 ? (interestSum / avgValue) * 100 : 0;
 
-    return {
-      ...row,
-      totalValue,
-      avgInterest,
-      monthlyAPY,
-      averageAPY,
-    };
-  });
-}
+      return {
+        ...row,
+        totalValue,
+        avgInterest,
+        monthlyAPY,
+        averageAPY,
+      };
+    });
+  }
 
-const rowsWithCalcs = calcExtras(progressRows);
-  const fields = ['Actual Contribution', 'Actual Interest', 'Actual Value IRA', 'Actual Value Trust'] as const;
+  const rowsWithCalcs = calcExtras(progressRows);
+  const fields = [
+    'Actual Contribution',
+    'Actual Interest',
+    'Actual Value IRA',
+    'Actual Value Trust',
+  ] as const;
 
   return (
     <main className="min-h-screen bg-slate-950 text-white p-6">
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold">SDLT Progress</h1>
-          <a href="/sdlt" className="text-blue-400 hover:underline">← SDLT</a>
+          <a href="/sdlt" className="text-blue-400 hover:underline">
+            ← SDLT
+          </a>
         </div>
 
         <div className="p-4 bg-slate-900 rounded-xl border border-slate-800 mb-8">
           <div className="flex items-center gap-4 text-xs mb-2 opacity-70">
-            <span className="flex items-center gap-1"><span className="w-3 h-0.5 bg-blue-400 inline-block" /> Actual</span>
-            <span className="flex items-center gap-1"><span className="w-3 h-0.5 bg-purple-400 inline-block" /> Trend</span>
-            <span className="flex items-center gap-1"><span className="w-3 h-0.5 bg-red-400 inline-block" /> Goal</span>
+            <span className="flex items-center gap-1">
+              <span className="w-3 h-0.5 bg-blue-400 inline-block" /> Actual
+            </span>
+            <span className="flex items-center gap-1">
+              <span className="w-3 h-0.5 bg-purple-400 inline-block" /> Trend
+            </span>
+            <span className="flex items-center gap-1">
+              <span className="w-3 h-0.5 bg-red-400 inline-block" /> Goal
+            </span>
           </div>
           <ProgressChart data={chartRows} />
         </div>
@@ -187,60 +286,71 @@ const rowsWithCalcs = calcExtras(progressRows);
               </tr>
             </thead>
             <tbody>
-  {rowsWithCalcs.map((row) => (
-    <tr key={row.id} className="border-b border-slate-800/50">
-      <td className="py-2 pr-4">{row['End of Month']?.slice(0, 7)}</td>
+              {rowsWithCalcs.map((row) => (
+                <tr key={row.id} className="border-b border-slate-800/50">
+                  <td className="py-2 pr-4">
+                    {row['End of Month']?.slice(0, 7)}
+                  </td>
 
-      {fields.map((field) => (
-        <td key={field} className="py-2 pr-4">
-          {editing?.id === row.id && editing?.field === field ? (
-            <input
-              type="number"
-              step="0.01"
-              autoFocus
-              defaultValue={row[field] ?? ''}
-              onBlur={(e) => {
-                updateProgress(row.id, field, e.target.value);
-                setEditing(null);
-              }}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') e.currentTarget.blur();
-              }}
-              className="w-24 bg-slate-800 border border-slate-700 rounded px-2 py-1"
-            />
-          ) : (
-            <span
-              onClick={() => setEditing({ id: row.id, field })}
-              className="cursor-pointer"
-            >
-              {row[field] != null
-                ? row[field].toLocaleString('en-US', { style: 'currency', currency: 'USD' })
-                : '—'}
-            </span>
-          )}
-        </td>
-      ))}
+                  {fields.map((field) => (
+                    <td key={field} className="py-2 pr-4">
+                      {editing?.id === row.id && editing?.field === field ? (
+                        <input
+                          type="number"
+                          step="0.01"
+                          autoFocus
+                          defaultValue={row[field] ?? ''}
+                          onBlur={(e) => {
+                            updateProgress(row.id, field, e.target.value);
+                            setEditing(null);
+                          }}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter') e.currentTarget.blur();
+                          }}
+                          className="w-24 bg-slate-800 border border-slate-700 rounded px-2 py-1"
+                        />
+                      ) : (
+                        <span
+                          onClick={() => setEditing({ id: row.id, field })}
+                          className="cursor-pointer"
+                        >
+                          {row[field] != null
+                            ? row[field].toLocaleString('en-US', {
+                                style: 'currency',
+                                currency: 'USD',
+                              })
+                            : '—'}
+                        </span>
+                      )}
+                    </td>
+                  ))}
 
-      {/* New calculated columns */}
-      <td className="py-2 pr-4">
-        {row.totalValue
-          ? row.totalValue.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
-          : '—'}
-      </td>
-      <td className="py-2 pr-4">
-        {row.avgInterest
-          ? row.avgInterest.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
-          : '—'}
-      </td>
-      <td className="py-2 pr-4">
-        {row.monthlyAPY ? row.monthlyAPY.toFixed(2) + '%' : '—'}
-      </td>
-      <td className="py-2">
-        {row.averageAPY ? row.averageAPY.toFixed(2) + '%' : '—'}
-      </td>
-    </tr>
-  ))}
-</tbody>
+                  {/* Calculated columns */}
+                  <td className="py-2 pr-4">
+                    {row.totalValue
+                      ? row.totalValue.toLocaleString('en-US', {
+                          style: 'currency',
+                          currency: 'USD',
+                        })
+                      : '—'}
+                  </td>
+                  <td className="py-2 pr-4">
+                    {row.avgInterest
+                      ? row.avgInterest.toLocaleString('en-US', {
+                          style: 'currency',
+                          currency: 'USD',
+                        })
+                      : '—'}
+                  </td>
+                  <td className="py-2 pr-4">
+                    {row.monthlyAPY ? row.monthlyAPY.toFixed(2) + '%' : '—'}
+                  </td>
+                  <td className="py-2">
+                    {row.averageAPY ? row.averageAPY.toFixed(2) + '%' : '—'}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           </table>
         </div>
       </div>

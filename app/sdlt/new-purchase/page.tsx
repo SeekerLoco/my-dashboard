@@ -120,10 +120,15 @@ export default function NewPurchasePage() {
       <div className="max-w-xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold">New Purchase</h1>
-          <a href="/sdlt" className="text-blue-400 hover:underline">← SDLT</a>
+          <a href="/sdlt" className="text-blue-400 hover:underline">
+            ← SDLT
+          </a>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4 bg-slate-900 p-6 rounded-xl border border-slate-800">
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-4 bg-slate-900 p-6 rounded-xl border border-slate-800"
+        >
           <div>
             <label className="block text-sm mb-1">CUSIP / Issue</label>
             <input
@@ -165,7 +170,9 @@ export default function NewPurchasePage() {
               <input
                 type="date"
                 value={form.purchaseDate}
-                onChange={(e) => setForm({ ...form, purchaseDate: e.target.value })}
+                onChange={(e) =>
+                  setForm({ ...form, purchaseDate: e.target.value })
+                }
                 className="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2"
                 required
               />
@@ -175,7 +182,9 @@ export default function NewPurchasePage() {
               <input
                 type="date"
                 value={form.maturityDate}
-                onChange={(e) => setForm({ ...form, maturityDate: e.target.value })}
+                onChange={(e) =>
+                  setForm({ ...form, maturityDate: e.target.value })
+                }
                 className="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2"
                 required
               />
@@ -198,7 +207,9 @@ export default function NewPurchasePage() {
               <label className="block text-sm mb-1">Frequency</label>
               <select
                 value={form.frequency}
-                onChange={(e) => setForm({ ...form, frequency: e.target.value })}
+                onChange={(e) =>
+                  setForm({ ...form, frequency: e.target.value })
+                }
                 className="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2"
               >
                 <option>Monthly</option>
@@ -211,7 +222,9 @@ export default function NewPurchasePage() {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm mb-1">Cost (purchase amount)</label>
+              <label className="block text-sm mb-1">
+                Cost (purchase amount)
+              </label>
               <input
                 type="number"
                 step="0.01"
@@ -227,7 +240,9 @@ export default function NewPurchasePage() {
                 type="number"
                 step="0.01"
                 value={form.redemptionAmount}
-                onChange={(e) => setForm({ ...form, redemptionAmount: e.target.value })}
+                onChange={(e) =>
+                  setForm({ ...form, redemptionAmount: e.target.value })
+                }
                 className="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2"
                 required
               />

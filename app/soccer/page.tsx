@@ -34,28 +34,31 @@ export default function SoccerPage() {
       const { data: venues } = await supabase
         .from('soccer_Venues_Mileage')
         .select('Venue');
-      const venueSet = new Set((venues || []).map(v => v.Venue));
-      const missing = [...new Set(
-        (data || [])
-          .map(g => g.Venue)
-          .filter(v => v && !venueSet.has(v))
-      )];
+      const venueSet = new Set((venues || []).map((v) => v.Venue));
+      const missing = [
+        ...new Set(
+          (data || []).map((g) => g.Venue).filter((v) => v && !venueSet.has(v)),
+        ),
+      ];
       setMissingVenues(missing);
-    console.log('venues from table:', venues);
-    console.log('sample game venues:', (data || []).slice(0, 5).map(g => g.Venue));
-    
     }
     load();
   }, []);
 
-  function groupBy(field: 'Final Fee' | 'mileage', level: Level, filter: string | null) {
+  function groupBy(
+    field: 'Final Fee' | 'mileage',
+    level: Level,
+    filter: string | null,
+  ) {
     let filtered = games;
     if (filter) {
-      if (level === 'month') filtered = filtered.filter(g => g.Date?.startsWith(filter));
-      if (level === 'day') filtered = filtered.filter(g => g.Date?.startsWith(filter));
+      if (level === 'month')
+        filtered = filtered.filter((g) => g.Date?.startsWith(filter));
+      if (level === 'day')
+        filtered = filtered.filter((g) => g.Date?.startsWith(filter));
     }
     const groups: Record<string, number> = {};
-    filtered.forEach(g => {
+    filtered.forEach((g) => {
       const d = g.Date || '';
       let key = d.slice(0, 4);
       if (level === 'month') key = d.slice(0, 7);
@@ -77,7 +80,7 @@ export default function SoccerPage() {
     color?: string;
   }) {
     if (!data.length) return <div className="text-sm opacity-60">No data</div>;
-    const max = Math.max(...data.map(d => d.total), 1);
+    const max = Math.max(...data.map((d) => d.total), 1);
     const barWidth = Math.min(40, 480 / data.length);
     const w = data.length * (barWidth + 12) + 60;
     const h = 220;
@@ -87,11 +90,34 @@ export default function SoccerPage() {
 
     return (
       <svg width="100%" height={h} viewBox={`0 0 ${w} ${h}`}>
-        <line x1={padL} y1={15} x2={padL} y2={h - padB} stroke="currentColor" strokeWidth="0.75" opacity="0.4" />
+        <line
+          x1={padL}
+          y1={15}
+          x2={padL}
+          y2={h - padB}
+          stroke="currentColor"
+          strokeWidth="0.75"
+          opacity="0.4"
+        />
         {[0, max / 2, max].map((tick, i) => (
           <g key={i}>
-            <line x1={padL - 4} y1={toY(tick)} x2={padL} y2={toY(tick)} stroke="currentColor" strokeWidth="0.75" opacity="0.4" />
-            <text x={padL - 6} y={toY(tick) + 3} textAnchor="end" fontSize="9" fill="currentColor" opacity="0.7">
+            <line
+              x1={padL - 4}
+              y1={toY(tick)}
+              x2={padL}
+              y2={toY(tick)}
+              stroke="currentColor"
+              strokeWidth="0.75"
+              opacity="0.4"
+            />
+            <text
+              x={padL - 6}
+              y={toY(tick) + 3}
+              textAnchor="end"
+              fontSize="9"
+              fill="currentColor"
+              opacity="0.7"
+            >
               {Math.round(tick).toLocaleString()}
             </text>
           </g>
@@ -100,12 +126,34 @@ export default function SoccerPage() {
           const x = padL + 8 + i * (barWidth + 12);
           const barH = h - padB - toY(d.total);
           return (
-            <g key={d.key} onClick={() => onBarClick?.(d.key)} className={onBarClick ? 'cursor-pointer' : ''}>
-              <rect x={x} y={toY(d.total)} width={barWidth} height={barH} fill={color} />
-              <text x={x + barWidth / 2} y={toY(d.total) - 4} textAnchor="middle" fontSize="8" fill="currentColor">
+            <g
+              key={d.key}
+              onClick={() => onBarClick?.(d.key)}
+              className={onBarClick ? 'cursor-pointer' : ''}
+            >
+              <rect
+                x={x}
+                y={toY(d.total)}
+                width={barWidth}
+                height={barH}
+                fill={color}
+              />
+              <text
+                x={x + barWidth / 2}
+                y={toY(d.total) - 4}
+                textAnchor="middle"
+                fontSize="8"
+                fill="currentColor"
+              >
                 {Math.round(d.total).toLocaleString()}
               </text>
-              <text x={x + barWidth / 2} y={h - 8} textAnchor="middle" fontSize="9" fill="currentColor">
+              <text
+                x={x + barWidth / 2}
+                y={h - 8}
+                textAnchor="middle"
+                fontSize="9"
+                fill="currentColor"
+              >
                 {d.key.length > 7 ? d.key.slice(5) : d.key}
               </text>
             </g>
@@ -115,21 +163,25 @@ export default function SoccerPage() {
     );
   }
 
-  // Age groups and gender (simple counts, optionally stacked later)
+  // Age group and gender counts
   const ageCounts: Record<string, number> = {};
   const genderCounts: Record<string, number> = {};
-  games.forEach(g => {
-    if (g['Age Group']) ageCounts[g['Age Group']] = (ageCounts[g['Age Group']] || 0) + 1;
+  games.forEach((g) => {
+    if (g['Age Group'])
+      ageCounts[g['Age Group']] = (ageCounts[g['Age Group']] || 0) + 1;
     if (g.Gender) genderCounts[g.Gender] = (genderCounts[g.Gender] || 0) + 1;
   });
   const ageData = Object.entries(ageCounts)
-  .sort(([a], [b]) => {
-    const numA = parseInt(a.replace(/\D/g, '')) || 0;
-    const numB = parseInt(b.replace(/\D/g, '')) || 0;
-    return numA - numB || a.localeCompare(b);
-  })
-  .map(([key, total]) => ({ key, total }));
-  const genderData = Object.entries(genderCounts).map(([key, total]) => ({ key, total }));
+    .sort(([a], [b]) => {
+      const numA = parseInt(a.replace(/\D/g, '')) || 0;
+      const numB = parseInt(b.replace(/\D/g, '')) || 0;
+      return numA - numB || a.localeCompare(b);
+    })
+    .map(([key, total]) => ({ key, total }));
+  const genderData = Object.entries(genderCounts).map(([key, total]) => ({
+    key,
+    total,
+  }));
 
   const earningsData = groupBy('Final Fee', earningsLevel, earningsFilter);
   const mileageData = groupBy('mileage', mileageLevel, mileageFilter);
@@ -139,7 +191,9 @@ export default function SoccerPage() {
       <div className="max-w-5xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold">Soccer</h1>
-          <a href="/" className="text-blue-400 hover:underline">← Dashboard</a>
+          <a href="/" className="text-blue-400 hover:underline">
+            ← Dashboard
+          </a>
         </div>
 
         {/* Missing venues alert */}
@@ -160,7 +214,13 @@ export default function SoccerPage() {
             <div className="flex justify-between items-center mb-2">
               <h2 className="font-semibold">Referee - Earnings</h2>
               {earningsLevel !== 'year' && (
-                <button onClick={() => { setEarningsLevel('year'); setEarningsFilter(null); }} className="text-xs text-blue-400 hover:underline">
+                <button
+                  onClick={() => {
+                    setEarningsLevel('year');
+                    setEarningsFilter(null);
+                  }}
+                  className="text-xs text-blue-400 hover:underline"
+                >
                   ← Back
                 </button>
               )}
@@ -168,8 +228,13 @@ export default function SoccerPage() {
             <BarChart
               data={earningsData}
               onBarClick={(key) => {
-                if (earningsLevel === 'year') { setEarningsLevel('month'); setEarningsFilter(key); }
-                else if (earningsLevel === 'month') { setEarningsLevel('day'); setEarningsFilter(key); }
+                if (earningsLevel === 'year') {
+                  setEarningsLevel('month');
+                  setEarningsFilter(key);
+                } else if (earningsLevel === 'month') {
+                  setEarningsLevel('day');
+                  setEarningsFilter(key);
+                }
               }}
             />
           </div>
@@ -179,7 +244,13 @@ export default function SoccerPage() {
             <div className="flex justify-between items-center mb-2">
               <h2 className="font-semibold">Referee - Mileage</h2>
               {mileageLevel !== 'year' && (
-                <button onClick={() => { setMileageLevel('year'); setMileageFilter(null); }} className="text-xs text-blue-400 hover:underline">
+                <button
+                  onClick={() => {
+                    setMileageLevel('year');
+                    setMileageFilter(null);
+                  }}
+                  className="text-xs text-blue-400 hover:underline"
+                >
                   ← Back
                 </button>
               )}
@@ -188,8 +259,13 @@ export default function SoccerPage() {
               data={mileageData}
               color="#34d399"
               onBarClick={(key) => {
-                if (mileageLevel === 'year') { setMileageLevel('month'); setMileageFilter(key); }
-                else if (mileageLevel === 'month') { setMileageLevel('day'); setMileageFilter(key); }
+                if (mileageLevel === 'year') {
+                  setMileageLevel('month');
+                  setMileageFilter(key);
+                } else if (mileageLevel === 'month') {
+                  setMileageLevel('day');
+                  setMileageFilter(key);
+                }
               }}
             />
           </div>

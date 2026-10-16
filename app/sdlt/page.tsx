@@ -33,20 +33,20 @@ export default function SDLTPage() {
   }, []);
 
   useEffect(() => {
-  const today = new Date();
-  const start = new Date(today);
-  start.setDate(today.getDate() - 15);
-  const end = new Date(today);
-  end.setDate(today.getDate() + 15);
+    const today = new Date();
+    const start = new Date(today);
+    start.setDate(today.getDate() - 15);
+    const end = new Date(today);
+    end.setDate(today.getDate() + 15);
 
-  setStartDate(getLocalDateString(start));
-  setEndDate(getLocalDateString(end));
-}, []);
+    setStartDate(getLocalDateString(start));
+    setEndDate(getLocalDateString(end));
+  }, []);
 
   async function loadTransactions() {
-    if(!startDate || !endDate) return;
+    if (!startDate || !endDate) return;
     setLoading(true);
-    
+
     const { data, error } = await supabase
       .from('SDLT_Transactions')
       .select('id, "Action Date", Action, Amount, Verified, Issue')
@@ -63,7 +63,10 @@ export default function SDLTPage() {
     loadTransactions();
   }, [startDate, endDate]);
 
-  async function updateTransaction(id: string, updates: Partial<SDLTTransaction>) {
+  async function updateTransaction(
+    id: string,
+    updates: Partial<SDLTTransaction>,
+  ) {
     await supabase.from('SDLT_Transactions').update(updates).eq('id', id);
     loadTransactions();
   }
@@ -76,11 +79,8 @@ export default function SDLTPage() {
 
   async function addTransaction(e: React.FormEvent) {
     e.preventDefault();
-    let amount = parseFloat(newTx.Amount);
+    const amount = parseFloat(newTx.Amount);
     if (isNaN(amount)) return;
-
-    // Optional: normalize sign if you want (similar to checkbook)
-    // For now we save exactly what is entered
 
     const { error } = await supabase.from('SDLT_Transactions').insert({
       'Action Date': newTx['Action Date'],
@@ -103,24 +103,37 @@ export default function SDLTPage() {
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold">SDLT</h1>
-          <a href="/" className="text-blue-400 hover:underline">← Dashboard</a>
+          <a href="/" className="text-blue-400 hover:underline">
+            ← Dashboard
+          </a>
         </div>
 
-        {/* Header links for future pages */}
+        {/* Links to SDLT sub-pages */}
         <div className="flex gap-4 mb-6 text-sm">
-          <a href="/sdlt/charts" className="hover:underline opacity-70">| Charts</a>
-          <a href="/sdlt/progress" className="hover:underline opacity-70">| Progress</a>
-          <a href="/sdlt/new-purchase" className="hover:underline opacity-70">| New Purchase</a>
+          <a href="/sdlt/charts" className="hover:underline opacity-70">
+            | Charts
+          </a>
+          <a href="/sdlt/progress" className="hover:underline opacity-70">
+            | Progress
+          </a>
+          <a href="/sdlt/new-purchase" className="hover:underline opacity-70">
+            | New Purchase
+          </a>
         </div>
 
         {/* Add form */}
-        <form onSubmit={addTransaction} className="mb-8 p-4 bg-slate-900 rounded-xl border border-slate-800">
+        <form
+          onSubmit={addTransaction}
+          className="mb-8 p-4 bg-slate-900 rounded-xl border border-slate-800"
+        >
           <div className="font-semibold mb-3">Add transaction</div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             <input
               type="date"
               value={newTx['Action Date']}
-              onChange={(e) => setNewTx({ ...newTx, 'Action Date': e.target.value })}
+              onChange={(e) =>
+                setNewTx({ ...newTx, 'Action Date': e.target.value })
+              }
               className="bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm"
             />
             <select
@@ -140,32 +153,35 @@ export default function SDLTPage() {
               onChange={(e) => setNewTx({ ...newTx, Amount: e.target.value })}
               className="bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm"
             />
-            <button type="submit" className="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded text-sm">
+            <button
+              type="submit"
+              className="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded text-sm"
+            >
               Add
             </button>
           </div>
         </form>
 
         <div className="flex gap-3 mb-6 items-center text-sm">
-  <label>
-    Start
-    <input
-      type="date"
-      value={startDate}
-      onChange={(e) => setStartDate(e.target.value)}
-      className="ml-2 bg-slate-800 border border-slate-700 rounded px-2 py-1"
-    />
-  </label>
-  <label>
-    End
-    <input
-      type="date"
-      value={endDate}
-      onChange={(e) => setEndDate(e.target.value)}
-      className="ml-2 bg-slate-800 border border-slate-700 rounded px-2 py-1"
-    />
-  </label>
-</div>
+          <label>
+            Start
+            <input
+              type="date"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+              className="ml-2 bg-slate-800 border border-slate-700 rounded px-2 py-1"
+            />
+          </label>
+          <label>
+            End
+            <input
+              type="date"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+              className="ml-2 bg-slate-800 border border-slate-700 rounded px-2 py-1"
+            />
+          </label>
+        </div>
 
         {/* List */}
         {loading ? (
@@ -175,20 +191,27 @@ export default function SDLTPage() {
         ) : (
           <div className="space-y-2">
             {transactions.map((tx) => (
-              <div key={tx.id} className="flex flex-wrap items-center gap-3 p-3 bg-slate-900 rounded-lg border border-slate-800">
+              <div
+                key={tx.id}
+                className="flex flex-wrap items-center gap-3 p-3 bg-slate-900 rounded-lg border border-slate-800"
+              >
                 <input
                   type="date"
                   defaultValue={tx['Action Date']}
                   onBlur={(e) => {
                     if (e.target.value !== tx['Action Date']) {
-                      updateTransaction(tx.id, { 'Action Date': e.target.value });
+                      updateTransaction(tx.id, {
+                        'Action Date': e.target.value,
+                      });
                     }
                   }}
                   className="bg-slate-800 border border-slate-700 rounded px-2 py-1 text-sm"
                 />
                 <span className="w-28">{tx.Action}</span>
 
-                <span className="w-40 truncate text-sm opacity-90">{tx.Issue}</span>
+                <span className="w-40 truncate text-sm opacity-90">
+                  {tx.Issue}
+                </span>
 
                 {editingAmountId === tx.id ? (
                   <input
@@ -209,33 +232,33 @@ export default function SDLTPage() {
                     className="w-28 text-right bg-slate-800 border border-slate-700 rounded px-2 py-1 text-sm"
                   />
                 ) : (
-                <span
+                  <span
                     onClick={() => setEditingAmountId(tx.id)}
                     className="w-28 text-right cursor-pointer"
-                >
+                  >
                     {tx.Amount.toLocaleString('en-US', {
-                    style: 'currency',
-                    currency: 'USD',
+                      style: 'currency',
+                      currency: 'USD',
                     })}
-                </span>
+                  </span>
                 )}
 
-                
-
                 <select
-                value={tx.Verified}
-                onChange={(e) => updateTransaction(tx.id, { Verified: e.target.value })}
-                className="bg-slate-800 border border-slate-700 rounded px-2 py-1 text-sm"
+                  value={tx.Verified}
+                  onChange={(e) =>
+                    updateTransaction(tx.id, { Verified: e.target.value })
+                  }
+                  className="bg-slate-800 border border-slate-700 rounded px-2 py-1 text-sm"
                 >
-                <option>Expected</option>
-                <option>Verified</option>
+                  <option>Expected</option>
+                  <option>Verified</option>
                 </select>
 
                 <button
-                onClick={() => deleteTransaction(tx.id)}
-                className="ml-auto text-red-400 hover:text-red-300 text-sm"
+                  onClick={() => deleteTransaction(tx.id)}
+                  className="ml-auto text-red-400 hover:text-red-300 text-sm"
                 >
-                Delete
+                  Delete
                 </button>
               </div>
             ))}
