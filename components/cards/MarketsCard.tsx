@@ -61,8 +61,16 @@ export default function MarketsCard({ dark }: { dark: boolean }) {
               <span className="font-medium">{s.name}</span>
               <div className="flex items-center">
                 <div className="text-right">
-                  <div>{s.price.toLocaleString(undefined, { maximumFractionDigits: 2 })}</div>
-                  <div className={s.change >= 0 ? 'text-green-400' : 'text-red-400'}>
+                  <div>
+                    {s.price.toLocaleString(undefined, {
+                      maximumFractionDigits: 2,
+                    })}
+                  </div>
+                  <div
+                    className={
+                      s.change >= 0 ? 'text-green-400' : 'text-red-400'
+                    }
+                  >
                     {s.change >= 0 ? '+' : ''}
                     {s.change.toFixed(2)} ({s.changePercent.toFixed(2)}%)
                   </div>

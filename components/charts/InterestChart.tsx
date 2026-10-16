@@ -1,6 +1,6 @@
 // Monthly interest history line chart with year labels and the max value marked (used by the SDLT card).
 
-import type { InterestPoint } from '@/components/cards/SdltCard';
+import type { InterestPoint } from '@/lib/types';
 
 export default function InterestChart({ data }: { data: InterestPoint[] }) {
   if (!data || data.length < 2) return null;
@@ -12,20 +12,24 @@ export default function InterestChart({ data }: { data: InterestPoint[] }) {
   const paddingTop = 16;
   const paddingBottom = 36;
 
-  const values = data.map(d => d.interest);
+  const values = data.map((d) => d.interest);
   const min = Math.min(...values, 0);
   const max = Math.max(...values);
   const range = max - min || 1;
 
   const toX = (i: number) =>
-    paddingLeft + (i / (data.length - 1)) * (width - paddingLeft - paddingRight);
+    paddingLeft +
+    (i / (data.length - 1)) * (width - paddingLeft - paddingRight);
   const toY = (val: number) =>
-    paddingTop + (1 - (val - min) / range) * (height - paddingTop - paddingBottom);
+    paddingTop +
+    (1 - (val - min) / range) * (height - paddingTop - paddingBottom);
 
   const points = data.map((d, i) => `${toX(i)},${toY(d.interest)}`).join(' ');
 
   const maxIndex = values.indexOf(max);
-  const ticks = [max, Math.round((max + min) / 2), min].filter((v, i, arr) => arr.indexOf(v) === i);
+  const ticks = [max, Math.round((max + min) / 2), min].filter(
+    (v, i, arr) => arr.indexOf(v) === i,
+  );
 
   // Find the first occurrence of each year for x-axis labels
   const yearLabels: { year: string; index: number }[] = [];
@@ -39,7 +43,12 @@ export default function InterestChart({ data }: { data: InterestPoint[] }) {
   });
 
   return (
-    <svg width="100%" height={height} viewBox={`0 0 ${width} ${height}`} className="mt-3">
+    <svg
+      width="100%"
+      height={height}
+      viewBox={`0 0 ${width} ${height}`}
+      className="mt-3"
+    >
       {/* Y-axis */}
       <line
         x1={paddingLeft}
@@ -76,7 +85,6 @@ export default function InterestChart({ data }: { data: InterestPoint[] }) {
         </g>
       ))}
 
-      
       {/* X-axis year labels (vertical)(short form) */}
       {/* X-axis year labels (short form) */}
       {yearLabels.map(({ year, index }) => (
@@ -101,16 +109,20 @@ export default function InterestChart({ data }: { data: InterestPoint[] }) {
       />
 
       {/* Max value label */}
-    <text
-      x={toX(maxIndex)}
-      y={toY(max) - 6}
-      textAnchor="middle"
-      fontSize="9"
-      fill="#34d399"
-      fontWeight="600"
-    >
-      ${Math.round(max)}, {new Date(data[maxIndex].date).toLocaleDateString('en-US', { month: 'short', year: '2-digit' })}
-    </text>
+      <text
+        x={toX(maxIndex)}
+        y={toY(max) - 6}
+        textAnchor="middle"
+        fontSize="9"
+        fill="#34d399"
+        fontWeight="600"
+      >
+        ${Math.round(max)},{' '}
+        {new Date(data[maxIndex].date).toLocaleDateString('en-US', {
+          month: 'short',
+          year: '2-digit',
+        })}
+      </text>
     </svg>
   );
 }

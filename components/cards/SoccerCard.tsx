@@ -6,13 +6,12 @@ import Card from '@/components/Card';
 export default function SoccerCard({ dark }: { dark: boolean }) {
   return (
     <Card dark={dark}>
-      <a
-        href="/soccer"
-        className="font-semibold hover:underline"
-      >
+      <a href="/soccer" className="font-semibold hover:underline">
         Soccer
       </a>
-      <div className={`text-sm mt-2 ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
+      <div
+        className={`text-sm mt-2 ${dark ? 'text-slate-400' : 'text-slate-500'}`}
+      >
         Games & mileage
       </div>
     </Card>

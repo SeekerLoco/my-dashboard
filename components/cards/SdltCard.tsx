@@ -7,8 +7,7 @@ import { getLocalDateString } from '@/lib/dates';
 import Card from '@/components/Card';
 import DonutChart from '@/components/charts/DonutChart';
 import InterestChart from '@/components/charts/InterestChart';
-
-export type InterestPoint = { date: string; interest: number };
+import type { InterestPoint } from '@/lib/types';
 
 export default function SdltCard({ dark }: { dark: boolean }) {
   const [sdltProgress, setSdltProgress] = useState<number | null>(null);
@@ -38,10 +37,10 @@ export default function SdltCard({ dark }: { dark: boolean }) {
 
     if (data) {
       setInterestData(
-        data.map(row => ({
+        data.map((row) => ({
           date: row['End of Month'],
           interest: row.monthly_interest_from_tx || 0,
-        }))
+        })),
       );
     }
   }
@@ -53,13 +52,12 @@ export default function SdltCard({ dark }: { dark: boolean }) {
 
   return (
     <Card dark={dark}>
-      <a
-        href="/sdlt"
-        className="font-semibold hover:underline"
-      >
+      <a href="/sdlt" className="font-semibold hover:underline">
         SDLT
       </a>
-      <div className={`text-sm mt-2 ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
+      <div
+        className={`text-sm mt-2 ${dark ? 'text-slate-400' : 'text-slate-500'}`}
+      >
         Self Directed Long Term
       </div>
       <div className="flex items-center gap-2 mt-2">

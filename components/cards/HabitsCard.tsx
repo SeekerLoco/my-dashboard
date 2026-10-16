@@ -15,7 +15,11 @@ export default function HabitsCard({ dark }: { dark: boolean }) {
 
   // Reads Supabase tables habits (active habits) and habits_completions (today's check-offs)
   async function loadHabits() {
-    const { data: habitsData } = await supabase.from('habits').select('id, name').eq('active', true).order('created_at');
+    const { data: habitsData } = await supabase
+      .from('habits')
+      .select('id, name')
+      .eq('active', true)
+      .order('created_at');
     setHabits(habitsData || []);
 
     const today = getLocalDateString();
@@ -24,7 +28,7 @@ export default function HabitsCard({ dark }: { dark: boolean }) {
       .select('habit_id')
       .eq('completed_date', today);
 
-    setTodayCompletions(completionsData?.map(c => c.habit_id) || []);
+    setTodayCompletions(completionsData?.map((c) => c.habit_id) || []);
   }
 
   useEffect(() => {
@@ -87,7 +91,9 @@ export default function HabitsCard({ dark }: { dark: boolean }) {
         <button
           type="submit"
           className={`px-3 py-1.5 rounded-md text-sm ${
-            dark ? 'bg-slate-700 hover:bg-slate-600' : 'bg-slate-200 hover:bg-slate-300'
+            dark
+              ? 'bg-slate-700 hover:bg-slate-600'
+              : 'bg-slate-200 hover:bg-slate-300'
           }`}
         >
           Add
@@ -102,7 +108,10 @@ export default function HabitsCard({ dark }: { dark: boolean }) {
           habits.map((habit) => {
             const done = todayCompletions.includes(habit.id);
             return (
-              <div key={habit.id} className="flex items-center justify-between gap-2">
+              <div
+                key={habit.id}
+                className="flex items-center justify-between gap-2"
+              >
                 <label className="flex items-center gap-2 cursor-pointer flex-1">
                   <input
                     type="checkbox"
@@ -110,7 +119,9 @@ export default function HabitsCard({ dark }: { dark: boolean }) {
                     onChange={() => toggleHabit(habit.id)}
                     className="rounded"
                   />
-                  <span className={done ? 'line-through opacity-60' : ''}>{habit.name}</span>
+                  <span className={done ? 'line-through opacity-60' : ''}>
+                    {habit.name}
+                  </span>
                 </label>
                 <button
                   onClick={() => archiveHabit(habit.id)}

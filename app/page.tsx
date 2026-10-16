@@ -11,16 +11,6 @@ import SdltCard from '@/components/cards/SdltCard';
 import HabitsCard from '@/components/cards/HabitsCard';
 import SoccerCard from '@/components/cards/SoccerCard';
 
-// Not referenced anywhere in the app; the live list is in app/api/stocks/route.ts.
-const STOCK_SYMBOLS = [
-  { symbol: '^GSPC', name: 'S&P 500' },
-  { symbol: '^DJI', name: 'Dow Jones' },
-  { symbol: '^IXIC', name: 'Nasdaq' },
-  { symbol: 'GC=F', name: 'Gold' },
-  { symbol: 'SI=F', name: 'Silver' },
-  { symbol: 'SPCX', name: 'SPCX' },
-];
-
 export default function Home() {
   const [dark, setDark] = useState(true);
 
@@ -46,7 +36,9 @@ export default function Home() {
   }
 
   return (
-    <main className={`min-h-screen p-6 transition-colors ${dark ? 'bg-slate-950 text-white' : 'bg-slate-100 text-slate-900'}`}>
+    <main
+      className={`min-h-screen p-6 transition-colors ${dark ? 'bg-slate-950 text-white' : 'bg-slate-100 text-slate-900'}`}
+    >
       <header className="mb-8 flex justify-between items-center">
         <h1 className="text-2xl font-bold">SeekerLoco Hub</h1>
         <button

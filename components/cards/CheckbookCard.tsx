@@ -7,8 +7,7 @@ import { getLocalDateString } from '@/lib/dates';
 import Card from '@/components/Card';
 import IconButton from '@/components/IconButton';
 import ProjectionChart from '@/components/charts/ProjectionChart';
-
-export type ProjectionPoint = { date: string; balance: number };
+import type { ProjectionPoint } from '@/lib/types';
 
 export default function CheckbookCard({ dark }: { dark: boolean }) {
   const [showBalance, setShowBalance] = useState(true);
@@ -34,7 +33,7 @@ export default function CheckbookCard({ dark }: { dark: boolean }) {
     const today = getLocalDateString();
     const end = new Date();
     end.setDate(end.getDate() + 90);
-    const endStr =  getLocalDateString(end);
+    const endStr = getLocalDateString(end);
 
     const { data } = await supabase
       .from('daily_balances')
@@ -44,10 +43,12 @@ export default function CheckbookCard({ dark }: { dark: boolean }) {
       .order('calendar_date');
 
     if (data) {
-      setProjection(data.map(row => ({
-        date: row.calendar_date,
-        balance: row.projected_balance,
-      })));
+      setProjection(
+        data.map((row) => ({
+          date: row.calendar_date,
+          balance: row.projected_balance,
+        })),
+      );
     }
   }
 
@@ -59,13 +60,14 @@ export default function CheckbookCard({ dark }: { dark: boolean }) {
   return (
     <Card dark={dark}>
       <div className="flex justify-between items-center mb-2">
-        <a
-          href="/transactions"
-          className="font-semibold hover:underline"
-        >
+        <a href="/transactions" className="font-semibold hover:underline">
           Checkbook
         </a>
-        <IconButton dark={dark} onClick={() => setShowBalance(!showBalance)} title={showBalance ? 'Hide balance' : 'Show balance'}>
+        <IconButton
+          dark={dark}
+          onClick={() => setShowBalance(!showBalance)}
+          title={showBalance ? 'Hide balance' : 'Show balance'}
+        >
           {showBalance ? '👁️' : '👁️‍🗨️'}
         </IconButton>
       </div>
@@ -74,9 +76,12 @@ export default function CheckbookCard({ dark }: { dark: boolean }) {
         {checkbookBalance === null
           ? '...'
           : showBalance
-          ? `$${checkbookBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
-          : '******'}
-          {projection.length > 0 && <ProjectionChart data={projection} />}
+            ? `$${checkbookBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+            : '******'}
+      </div>
+      {/* Keeps text-3xl font-bold so the chart's SVG text and spacing render exactly as before */}
+      <div className="text-3xl font-bold">
+        {projection.length > 0 && <ProjectionChart data={projection} />}
       </div>
     </Card>
   );

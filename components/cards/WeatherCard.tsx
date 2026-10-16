@@ -9,7 +9,13 @@ const DEFAULT_LAT = 39.55;
 const DEFAULT_LON = -104.97;
 const DEFAULT_NAME = 'Highlands Ranch';
 
-type ForecastDay = { day: string; high: number; low: number; icon: string; label: string };
+type ForecastDay = {
+  day: string;
+  high: number;
+  low: number;
+  icon: string;
+  label: string;
+};
 
 type WeatherData = {
   temp: number;
@@ -28,24 +34,26 @@ export default function WeatherCard({ dark }: { dark: boolean }) {
   // Reads the Open-Meteo forecast API (api.open-meteo.com)
   async function fetchWeather(lat: number, lon: number, name: string) {
     const res = await fetch(
-      `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min,weather_code&temperature_unit=fahrenheit&timezone=auto&forecast_days=4`
+      `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min,weather_code&temperature_unit=fahrenheit&timezone=auto&forecast_days=4`,
     );
     const data = await res.json();
 
     const currentInfo = getWeatherInfo(data.current.weather_code);
     const days = ['Sun.', 'Mon.', 'Tue.', 'Wed.', 'Thu.', 'Fri.', 'Sat.'];
-    const forecast = data.daily.time.slice(1, 4).map((dateStr: string, i: number) => {
-      const [y, m, d] = dateStr.split('-').map(Number);
-      const date = new Date(y, m - 1, d); // local date, no UTC shift
-      const info = getWeatherInfo(data.daily.weather_code[i + 1]);
-      return {
-        day: days[date.getDay()],
-        high: Math.round(data.daily.temperature_2m_max[i + 1]),
-        low: Math.round(data.daily.temperature_2m_min[i + 1]),
-        icon: info.icon,
-        label: info.label,
-      };
-    });
+    const forecast = data.daily.time
+      .slice(1, 4)
+      .map((dateStr: string, i: number) => {
+        const [y, m, d] = dateStr.split('-').map(Number);
+        const date = new Date(y, m - 1, d); // local date, no UTC shift
+        const info = getWeatherInfo(data.daily.weather_code[i + 1]);
+        return {
+          day: days[date.getDay()],
+          high: Math.round(data.daily.temperature_2m_max[i + 1]),
+          low: Math.round(data.daily.temperature_2m_min[i + 1]),
+          icon: info.icon,
+          label: info.label,
+        };
+      });
 
     setWeather({
       temp: Math.round(data.current.temperature_2m),
@@ -68,7 +76,7 @@ export default function WeatherCard({ dark }: { dark: boolean }) {
     if (!searchInput.trim()) return;
 
     const geoRes = await fetch(
-      `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(searchInput)}&count=1&language=en&format=json`
+      `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(searchInput)}&count=1&language=en&format=json`,
     );
     const geoData = await geoRes.json();
 
@@ -104,7 +112,9 @@ export default function WeatherCard({ dark }: { dark: boolean }) {
           type="submit"
           title="Search"
           className={`shrink-0 w-8 h-8 flex items-center justify-center rounded-md text-sm ${
-            dark ? 'bg-slate-700 hover:bg-slate-600' : 'bg-slate-200 hover:bg-slate-300'
+            dark
+              ? 'bg-slate-700 hover:bg-slate-600'
+              : 'bg-slate-200 hover:bg-slate-300'
           }`}
         >
           🔍
@@ -114,14 +124,18 @@ export default function WeatherCard({ dark }: { dark: boolean }) {
           onClick={goHome}
           title="Reset to Highlands Ranch"
           className={`shrink-0 w-8 h-8 flex items-center justify-center rounded-md text-sm ${
-            dark ? 'bg-slate-700 hover:bg-slate-600' : 'bg-slate-200 hover:bg-slate-300'
+            dark
+              ? 'bg-slate-700 hover:bg-slate-600'
+              : 'bg-slate-200 hover:bg-slate-300'
           }`}
         >
           🏠
         </button>
       </form>
 
-      <div className={`text-sm ${dark ? 'text-slate-400' : 'text-slate-500'}`}>{locationName}</div>
+      <div className={`text-sm ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
+        {locationName}
+      </div>
 
       {weather ? (
         <>
@@ -133,8 +147,11 @@ export default function WeatherCard({ dark }: { dark: boolean }) {
             </div>
           </div>
 
-          <div className={`text-sm mt-3 ${dark ? 'text-slate-300' : 'text-slate-600'}`}>
-            H: <span className="text-red-400">{weather.high}°</span> &nbsp; L: <span className="text-blue-400">{weather.low}°</span>
+          <div
+            className={`text-sm mt-3 ${dark ? 'text-slate-300' : 'text-slate-600'}`}
+          >
+            H: <span className="text-red-400">{weather.high}°</span> &nbsp; L:{' '}
+            <span className="text-blue-400">{weather.low}°</span>
           </div>
 
           <div className="mt-4 space-y-2 text-sm">
@@ -143,7 +160,8 @@ export default function WeatherCard({ dark }: { dark: boolean }) {
                 <span className="w-10">{day.day}</span>
                 <span className="text-lg">{day.icon}</span>
                 <span className="flex-1 text-right">
-                  <span className="text-red-400">{day.high}°</span> / <span className="text-blue-400">{day.low}°</span>
+                  <span className="text-red-400">{day.high}°</span> /{' '}
+                  <span className="text-blue-400">{day.low}°</span>
                 </span>
               </div>
             ))}

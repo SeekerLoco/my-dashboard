@@ -1,6 +1,12 @@
 // Tiny line chart of recent prices with a dotted line at the opening price (used by the Markets card).
 
-export default function Sparkline({ data, positive }: { data: number[]; positive: boolean }) {
+export default function Sparkline({
+  data,
+  positive,
+}: {
+  data: number[];
+  positive: boolean;
+}) {
   if (!data || data.length < 2) return null;
 
   const min = Math.min(...data);
