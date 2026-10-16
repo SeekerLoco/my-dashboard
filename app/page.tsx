@@ -369,7 +369,7 @@ export default function Home() {
   const [habits, setHabits] = useState<{ id: string; name: string }[]>([]);
   const [todayCompletions, setTodayCompletions] = useState<string[]>([]);
   const [newHabitName, setNewHabitName] = useState('');
-  const [showBalance, setShowBalance] = useState(false);
+  const [showBalance, setShowBalance] = useState(true);
   const [checkbookBalance, setCheckbookBalance] = useState<number | null>(null);
   const [projection, setProjection] = useState<{ date: string; balance: number }[]>([]);
   const [sdltProgress, setSdltProgress] = useState<number | null>(null);
@@ -479,37 +479,6 @@ async function fetchInterestHistory() {
     );
   }
 }
-
-
-
-
-{/* Checkbook card */}
-<div className={`rounded-xl p-5 border ${dark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
-  <div className="flex justify-between items-center mb-2">
-    <a
-      href="/transactions"
-      className="font-semibold hover:underline"
-    >
-      Checkbook
-    </a>
-    <button
-      onClick={() => setShowBalance(!showBalance)}
-      title={showBalance ? 'Hide balance' : 'Show balance'}
-      className={`w-7 h-7 flex items-center justify-center rounded-md text-sm ${
-        dark ? 'bg-slate-700 hover:bg-slate-600' : 'bg-slate-200 hover:bg-slate-300'
-      }`}
-    >
-      {showBalance ? '👁️' : '👁️‍🗨️'}
-    </button>
-  </div>
-
-  <div className="text-3xl font-bold mt-1">
-    {showBalance ? '$6.00' : '******'}
-  </div>
-  <div className={`text-sm mt-1 ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
-    Verified balance
-  </div>
-</div>
 
   async function handleSearch(e: React.FormEvent) {
     e.preventDefault();
