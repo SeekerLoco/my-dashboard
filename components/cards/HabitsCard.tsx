@@ -99,11 +99,11 @@ export default function HabitsCard() {
           value={newHabitName}
           onChange={(e) => setNewHabitName(e.target.value)}
           placeholder="New habit..."
-          className="flex-1 px-3 py-1.5 rounded-md border text-sm bg-white/5 border-white/10 text-white placeholder-slate-400"
+          className="flex-1 min-w-0 px-3 py-1.5 rounded-md border text-sm bg-white/5 border-white/10 text-white placeholder-slate-400"
         />
         <button
           type="submit"
-          className="px-3 py-1.5 rounded-md text-sm bg-indigo-500/70 hover:bg-indigo-500"
+          className="shrink-0 px-3 py-1.5 rounded-md text-sm bg-indigo-500/70 hover:bg-indigo-500"
         >
           Add
         </button>
