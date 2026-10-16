@@ -13,6 +13,7 @@ const SYMBOLS = [
   { symbol: 'SPCX', name: 'SPCX' },
   { symbol: 'CCJ', name: 'CCJ' },
   { symbol: 'NVDA', name: 'NVDA' },
+  { symbol: 'TSLA', name: 'TSLA' },
 ];
 
 // Reads Yahoo Finance chart data for each symbol (cached 15 minutes)
