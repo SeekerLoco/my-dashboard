@@ -9,6 +9,8 @@ const SYMBOLS = [
   { symbol: 'GC=F', name: 'Gold' },
   { symbol: 'SI=F', name: 'Silver' },
   { symbol: 'SPCX', name: 'SPCX' },
+  { symbol: 'CCJ', name: 'CCJ' },
+  { symbol: 'NVDA', name: 'NVDA' },
 ];
 
 // Reads Yahoo Finance chart data for each symbol (cached 15 minutes)
