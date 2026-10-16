@@ -1,5 +1,6 @@
 // 90-day projected checkbook balance line chart, labeling the first date it goes negative.
 
+import { parseLocalDate } from '@/lib/dates';
 import type { ProjectionPoint } from '@/lib/types';
 
 export default function ProjectionChart({ data }: { data: ProjectionPoint[] }) {
@@ -108,7 +109,7 @@ export default function ProjectionChart({ data }: { data: ProjectionPoint[] }) {
           fontSize="10"
           fill="#ffffff"
         >
-          {new Date(firstNegative.date).toLocaleDateString('en-US', {
+          {parseLocalDate(firstNegative.date).toLocaleDateString('en-US', {
             month: 'short',
             day: 'numeric',
           })}

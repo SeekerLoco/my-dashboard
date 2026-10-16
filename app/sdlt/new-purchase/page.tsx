@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { supabase } from '@/lib/supabase';
+import { addMonths, getLocalDateString, parseLocalDate } from '@/lib/dates';
 import { useRouter } from 'next/navigation';
 
 export default function NewPurchasePage() {
@@ -20,26 +21,13 @@ export default function NewPurchasePage() {
   const [message, setMessage] = useState('');
   const [saving, setSaving] = useState(false);
 
-  function addMonths(date: Date, months: number) {
-    const d = new Date(date);
-    d.setMonth(d.getMonth() + months);
-    return d;
-  }
-
-  function toDateString(d: Date) {
-    const year = d.getFullYear();
-    const month = String(d.getMonth() + 1).padStart(2, '0');
-    const day = String(d.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  }
-
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setSaving(true);
     setMessage('');
 
-    const purchaseDate = new Date(form.purchaseDate);
-    const maturityDate = new Date(form.maturityDate);
+    const purchaseDate = parseLocalDate(form.purchaseDate);
+    const maturityDate = parseLocalDate(form.maturityDate);
     const coupon = parseFloat(form.coupon) / 100;
     const cost = parseFloat(form.cost);
     const redemptionAmount = parseFloat(form.redemptionAmount);
@@ -96,12 +84,14 @@ export default function NewPurchasePage() {
         Verified: 'Expected',
       });
     } else {
-      let current = new Date(maturityDate);
+      // Step back from maturity; each date is computed from maturity so month-end clamping doesn't drift
+      let step = 0;
+      let current = maturityDate;
       const interest = (coupon / (12 / monthsStep)) * redemptionAmount;
 
       while (current > purchaseDate) {
         rows.push({
-          'Action Date': toDateString(current),
+          'Action Date': getLocalDateString(current),
           Issue: form.issue,
           Type: form.type,
           Account: form.account,
@@ -109,7 +99,8 @@ export default function NewPurchasePage() {
           Amount: interest,
           Verified: 'Expected',
         });
-        current = addMonths(current, -monthsStep);
+        step += 1;
+        current = addMonths(maturityDate, -monthsStep * step);
       }
     }
 

@@ -1,5 +1,6 @@
 // Monthly interest history line chart with year labels and the max value marked (used by the SDLT card).
 
+import { parseLocalDate } from '@/lib/dates';
 import type { InterestPoint } from '@/lib/types';
 
 export default function InterestChart({ data }: { data: InterestPoint[] }) {
@@ -118,7 +119,7 @@ export default function InterestChart({ data }: { data: InterestPoint[] }) {
         fontWeight="600"
       >
         ${Math.round(max)},{' '}
-        {new Date(data[maxIndex].date).toLocaleDateString('en-US', {
+        {parseLocalDate(data[maxIndex].date).toLocaleDateString('en-US', {
           month: 'short',
           year: '2-digit',
         })}

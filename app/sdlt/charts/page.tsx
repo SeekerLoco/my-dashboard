@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
+import { getLocalDateString } from '@/lib/dates';
 
 type Tx = {
   'Action Date': string;
@@ -28,15 +29,8 @@ export default function ChartsPage() {
     const end = new Date(today);
     end.setMonth(today.getMonth() + 36);
 
-    const toLocal = (d: Date) => {
-      const y = d.getFullYear();
-      const m = String(d.getMonth() + 1).padStart(2, '0');
-      const day = String(d.getDate()).padStart(2, '0');
-      return `${y}-${m}-${day}`;
-    };
-
-    setStartDate(toLocal(start));
-    setEndDate(toLocal(end));
+    setStartDate(getLocalDateString(start));
+    setEndDate(getLocalDateString(end));
   }, []);
 
   useEffect(() => {
