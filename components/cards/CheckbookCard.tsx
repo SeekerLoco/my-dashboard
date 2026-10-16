@@ -6,6 +6,7 @@ import { supabase } from '@/lib/supabase';
 import { getLocalDateString } from '@/lib/dates';
 import Card from '@/components/Card';
 import CardTitle from '@/components/CardTitle';
+import StatusPill from '@/components/StatusPill';
 import IconButton from '@/components/IconButton';
 import ProjectionChart from '@/components/charts/ProjectionChart';
 import type { ProjectionPoint } from '@/lib/types';
@@ -66,21 +67,25 @@ export default function CheckbookCard() {
             Checkbook
           </a>
         </CardTitle>
-        <IconButton
-          onClick={() => setShowBalance(!showBalance)}
-          title={showBalance ? 'Hide balance' : 'Show balance'}
-        >
-          {showBalance ? '👁️' : '👁️‍🗨️'}
-        </IconButton>
+        <div className="flex items-center gap-2">
+          <StatusPill label="Today" accent="teal" />
+          <IconButton
+            onClick={() => setShowBalance(!showBalance)}
+            title={showBalance ? 'Hide balance' : 'Show balance'}
+          >
+            {showBalance ? '👁️' : '👁️‍🗨️'}
+          </IconButton>
+        </div>
       </div>
 
-      <div className="text-3xl font-bold mt-1">
+      <div className="text-4xl font-extrabold tracking-tight mt-1">
         {checkbookBalance === null
           ? '...'
           : showBalance
             ? `$${checkbookBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
             : '******'}
       </div>
+      <div className="text-xs text-slate-400">verified balance</div>
       {/* Keeps text-3xl font-bold so the chart's SVG text and spacing render exactly as before */}
       <div className="text-3xl font-bold">
         {projection.length > 0 && <ProjectionChart data={projection} />}

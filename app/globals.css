@@ -5,6 +5,11 @@
 }
 
 /* Deep navy → blue-violet page background used on every page */
+/* Dark native controls (date pickers, scrollbars) */
+:root {
+  color-scheme: dark;
+}
+
 body {
   min-height: 100vh;
   color: #fff;
@@ -36,4 +41,10 @@ body {
       0 8px 30px rgba(10, 12, 40, 0.55),
       0 0 24px rgba(99, 102, 241, 0.1);
   }
+}
+
+/* Native dropdown options on the dark palette */
+select option {
+  background-color: #161c40;
+  color: #fff;
 }

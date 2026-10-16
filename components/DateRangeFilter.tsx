@@ -21,7 +21,7 @@ export default function DateRangeFilter({
           type="date"
           value={startDate}
           onChange={(e) => onStartChange(e.target.value)}
-          className="ml-2 bg-slate-800 border border-slate-700 rounded px-2 py-1"
+          className="ml-2 bg-white/5 border border-white/10 rounded px-2 py-1"
         />
       </label>
       <label>
@@ -30,7 +30,7 @@ export default function DateRangeFilter({
           type="date"
           value={endDate}
           onChange={(e) => onEndChange(e.target.value)}
-          className="ml-2 bg-slate-800 border border-slate-700 rounded px-2 py-1"
+          className="ml-2 bg-white/5 border border-white/10 rounded px-2 py-1"
         />
       </label>
     </div>

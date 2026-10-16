@@ -139,12 +139,12 @@ export default function SDLTPage() {
               onChange={(e) =>
                 setNewTx({ ...newTx, 'Action Date': e.target.value })
               }
-              className="bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm"
+              className="bg-white/5 border border-white/10 rounded px-3 py-2 text-sm"
             />
             <select
               value={newTx.Action}
               onChange={(e) => setNewTx({ ...newTx, Action: e.target.value })}
-              className="bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm"
+              className="bg-white/5 border border-white/10 rounded px-3 py-2 text-sm"
             >
               <option>Redemption</option>
               <option>Interest</option>
@@ -156,11 +156,11 @@ export default function SDLTPage() {
               placeholder="Amount"
               value={newTx.Amount}
               onChange={(e) => setNewTx({ ...newTx, Amount: e.target.value })}
-              className="bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm"
+              className="bg-white/5 border border-white/10 rounded px-3 py-2 text-sm"
             />
             <button
               type="submit"
-              className="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded text-sm"
+              className="px-4 py-2 bg-indigo-500/70 hover:bg-indigo-500 rounded text-sm"
             >
               Add
             </button>
@@ -184,7 +184,7 @@ export default function SDLTPage() {
             {transactions.map((tx) => (
               <div
                 key={tx.id}
-                className="flex flex-wrap items-center gap-3 p-3 bg-slate-900 rounded-lg border border-slate-800"
+                className="flex flex-wrap items-center gap-3 p-3 bg-white/[0.04] rounded-xl border border-white/10"
               >
                 <input
                   type="date"
@@ -196,7 +196,7 @@ export default function SDLTPage() {
                       });
                     }
                   }}
-                  className="bg-slate-800 border border-slate-700 rounded px-2 py-1 text-sm"
+                  className="bg-white/5 border border-white/10 rounded px-2 py-1 text-sm"
                 />
                 <span className="w-28">{tx.Action}</span>
 
@@ -220,7 +220,7 @@ export default function SDLTPage() {
                     onKeyDown={(e) => {
                       if (e.key === 'Enter') e.currentTarget.blur();
                     }}
-                    className="w-28 text-right bg-slate-800 border border-slate-700 rounded px-2 py-1 text-sm"
+                    className="w-28 text-right bg-white/5 border border-white/10 rounded px-2 py-1 text-sm"
                   />
                 ) : (
                   <span
@@ -236,7 +236,7 @@ export default function SDLTPage() {
                   onChange={(e) =>
                     updateTransaction(tx.id, { Verified: e.target.value })
                   }
-                  className="bg-slate-800 border border-slate-700 rounded px-2 py-1 text-sm"
+                  className="bg-white/5 border border-white/10 rounded px-2 py-1 text-sm"
                 >
                   <option>Expected</option>
                   <option>Verified</option>

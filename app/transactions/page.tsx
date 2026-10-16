@@ -152,12 +152,12 @@ export default function TransactionsPage() {
               onChange={(e) =>
                 setNewTx({ ...newTx, Transaction_Date: e.target.value })
               }
-              className="bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm"
+              className="bg-white/5 border border-white/10 rounded px-3 py-2 text-sm"
             />
             <select
               value={newTx.Category}
               onChange={(e) => setNewTx({ ...newTx, Category: e.target.value })}
-              className="bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm"
+              className="bg-white/5 border border-white/10 rounded px-3 py-2 text-sm"
             >
               <option value="">Category</option>
               {categories.map((cat) => (
@@ -169,7 +169,7 @@ export default function TransactionsPage() {
             <select
               value={newTx.Type}
               onChange={(e) => setNewTx({ ...newTx, Type: e.target.value })}
-              className="bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm"
+              className="bg-white/5 border border-white/10 rounded px-3 py-2 text-sm"
             >
               <option>Debit</option>
               <option>Credit</option>
@@ -180,12 +180,12 @@ export default function TransactionsPage() {
               placeholder="Amount"
               value={newTx.Amount}
               onChange={(e) => setNewTx({ ...newTx, Amount: e.target.value })}
-              className="bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm"
+              className="bg-white/5 border border-white/10 rounded px-3 py-2 text-sm"
             />
             <select
               value={newTx.Status}
               onChange={(e) => setNewTx({ ...newTx, Status: e.target.value })}
-              className="bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm"
+              className="bg-white/5 border border-white/10 rounded px-3 py-2 text-sm"
             >
               <option>Verified</option>
               <option>Expected</option>
@@ -193,7 +193,7 @@ export default function TransactionsPage() {
           </div>
           <button
             type="submit"
-            className="mt-3 px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded text-sm"
+            className="mt-3 px-4 py-2 bg-indigo-500/70 hover:bg-indigo-500 rounded text-sm"
           >
             Add
           </button>
@@ -216,7 +216,7 @@ export default function TransactionsPage() {
             {transactions.map((tx) => (
               <div
                 key={tx.id}
-                className="flex flex-wrap items-center gap-3 p-3 bg-slate-900 rounded-lg border border-slate-800"
+                className="flex flex-wrap items-center gap-3 p-3 bg-white/[0.04] rounded-xl border border-white/10"
               >
                 <input
                   type="date"
@@ -228,7 +228,7 @@ export default function TransactionsPage() {
                       });
                     }
                   }}
-                  className="bg-slate-800 border border-slate-700 rounded px-2 py-1 text-sm"
+                  className="bg-white/5 border border-white/10 rounded px-2 py-1 text-sm"
                 />
                 <span className="w-32 truncate">{tx.Category}</span>
                 <span className="w-16 text-sm opacity-70">{tx.Type}</span>
@@ -248,7 +248,7 @@ export default function TransactionsPage() {
                     onKeyDown={(e) => {
                       if (e.key === 'Enter') e.currentTarget.blur();
                     }}
-                    className={`w-24 text-right bg-slate-800 border border-slate-700 rounded px-2 py-1 text-sm ${
+                    className={`w-24 text-right bg-white/5 border border-white/10 rounded px-2 py-1 text-sm ${
                       tx.Amount < 0 ? 'text-red-400' : 'text-green-400'
                     }`}
                   />
@@ -267,7 +267,7 @@ export default function TransactionsPage() {
                   onChange={(e) =>
                     updateTransaction(tx.id, { Status: e.target.value })
                   }
-                  className="bg-slate-800 border border-slate-700 rounded px-2 py-1 text-sm"
+                  className="bg-white/5 border border-white/10 rounded px-2 py-1 text-sm"
                 >
                   <option>Expected</option>
                   <option>Verified</option>

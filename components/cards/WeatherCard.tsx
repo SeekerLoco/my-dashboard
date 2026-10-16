@@ -4,6 +4,7 @@
 import { useState, useEffect } from 'react';
 import Card from '@/components/Card';
 import CardTitle from '@/components/CardTitle';
+import StatusPill from '@/components/StatusPill';
 import { getWeatherInfo } from '@/lib/weather';
 
 const DEFAULT_LAT = 39.55;
@@ -96,11 +97,12 @@ export default function WeatherCard() {
   }
 
   return (
-    <Card accent="blue">
-      <div className="mb-3">
+    <Card accent="blue" className="sm:row-span-2">
+      <div className="mb-3 flex justify-between items-center">
         <CardTitle icon="⛅" accent="blue">
           <div className="font-semibold">Weather</div>
         </CardTitle>
+        <StatusPill label="Now" accent="blue" />
       </div>
       <form onSubmit={handleSearch} className="mb-3 flex items-center gap-1.5">
         <input
@@ -108,12 +110,12 @@ export default function WeatherCard() {
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
           placeholder="Search city..."
-          className="flex-1 min-w-0 px-3 py-1.5 rounded-md border text-sm bg-slate-800 border-slate-700 text-white placeholder-slate-400"
+          className="flex-1 min-w-0 px-3 py-1.5 rounded-md border text-sm bg-white/5 border-white/10 text-white placeholder-slate-400"
         />
         <button
           type="submit"
           title="Search"
-          className="shrink-0 w-8 h-8 flex items-center justify-center rounded-md text-sm bg-slate-700 hover:bg-slate-600"
+          className="shrink-0 w-8 h-8 flex items-center justify-center rounded-lg text-sm bg-white/10 hover:bg-white/20 border border-white/10"
         >
           🔍
         </button>
@@ -121,7 +123,7 @@ export default function WeatherCard() {
           type="button"
           onClick={goHome}
           title="Reset to Highlands Ranch"
-          className="shrink-0 w-8 h-8 flex items-center justify-center rounded-md text-sm bg-slate-700 hover:bg-slate-600"
+          className="shrink-0 w-8 h-8 flex items-center justify-center rounded-lg text-sm bg-white/10 hover:bg-white/20 border border-white/10"
         >
           🏠
         </button>
@@ -134,8 +136,12 @@ export default function WeatherCard() {
           <div className="flex items-center gap-3 mt-1">
             <span className="text-5xl">{weather.icon}</span>
             <div>
-              <div className="text-4xl font-bold">{weather.temp}°</div>
-              <div className="text-sm">{weather.description}</div>
+              <div className="text-5xl font-extrabold tracking-tight">
+                {weather.temp}°
+              </div>
+              <div className="text-sm text-slate-400">
+                {weather.description}
+              </div>
             </div>
           </div>
 

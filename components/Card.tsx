@@ -1,14 +1,38 @@
 // Shared dashboard card: navy glass panel with a colored accent stripe along the top.
 import type { ReactNode } from 'react';
 
-// Accent colors: stripe on the card and background of the icon tile.
+// Accent colors: top stripe, icon tile background, and status pill tint.
 export const ACCENTS = {
-  blue: { stripe: 'bg-sky-400', tile: 'bg-sky-500/80' },
-  green: { stripe: 'bg-emerald-400', tile: 'bg-emerald-500/80' },
-  teal: { stripe: 'bg-teal-400', tile: 'bg-teal-500/80' },
-  violet: { stripe: 'bg-violet-400', tile: 'bg-violet-500/80' },
-  pink: { stripe: 'bg-pink-400', tile: 'bg-pink-500/80' },
-  orange: { stripe: 'bg-orange-400', tile: 'bg-orange-500/80' },
+  blue: {
+    stripe: 'bg-sky-400',
+    tile: 'bg-sky-500/80',
+    pill: 'bg-sky-500/15 text-sky-300 border-sky-400/30',
+  },
+  green: {
+    stripe: 'bg-emerald-400',
+    tile: 'bg-emerald-500/80',
+    pill: 'bg-emerald-500/15 text-emerald-300 border-emerald-400/30',
+  },
+  teal: {
+    stripe: 'bg-teal-400',
+    tile: 'bg-teal-500/80',
+    pill: 'bg-teal-500/15 text-teal-300 border-teal-400/30',
+  },
+  violet: {
+    stripe: 'bg-violet-400',
+    tile: 'bg-violet-500/80',
+    pill: 'bg-violet-500/15 text-violet-300 border-violet-400/30',
+  },
+  pink: {
+    stripe: 'bg-pink-400',
+    tile: 'bg-pink-500/80',
+    pill: 'bg-pink-500/15 text-pink-300 border-pink-400/30',
+  },
+  orange: {
+    stripe: 'bg-orange-400',
+    tile: 'bg-orange-500/80',
+    pill: 'bg-orange-500/15 text-orange-300 border-orange-400/30',
+  },
 };
 
 export type Accent = keyof typeof ACCENTS;

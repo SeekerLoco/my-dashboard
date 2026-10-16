@@ -4,6 +4,8 @@
 import { useState, useEffect } from 'react';
 import Card from '@/components/Card';
 import CardTitle from '@/components/CardTitle';
+import StatusPill from '@/components/StatusPill';
+import CardFooter from '@/components/CardFooter';
 import IconButton from '@/components/IconButton';
 import Sparkline from '@/components/charts/Sparkline';
 
@@ -38,7 +40,7 @@ export default function MarketsCard() {
   }, []);
 
   return (
-    <Card accent="green">
+    <Card accent="green" className="sm:row-span-2">
       <div className="flex justify-between items-center mb-3">
         <CardTitle icon="📈" accent="green">
           <a
@@ -50,9 +52,12 @@ export default function MarketsCard() {
             Markets
           </a>
         </CardTitle>
-        <IconButton onClick={fetchStocks} title="Refresh">
-          🔄
-        </IconButton>
+        <div className="flex items-center gap-2">
+          <StatusPill label="Live" accent="green" live />
+          <IconButton onClick={fetchStocks} title="Refresh">
+            🔄
+          </IconButton>
+        </div>
       </div>
 
       {stocks.length === 0 ? (
@@ -86,9 +91,9 @@ export default function MarketsCard() {
       )}
 
       {stocksUpdatedAt && (
-        <div className="mt-3 text-xs opacity-50">
+        <CardFooter>
           Updated {new Date(stocksUpdatedAt).toLocaleTimeString()}
-        </div>
+        </CardFooter>
       )}
     </Card>
   );

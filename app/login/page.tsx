@@ -39,7 +39,7 @@ export default function LoginPage() {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full mb-3 px-3 py-2 rounded bg-slate-800 border border-slate-700"
+          className="w-full mb-3 px-3 py-2 rounded bg-white/5 border border-white/10"
           required
         />
 
@@ -48,13 +48,13 @@ export default function LoginPage() {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full mb-4 px-3 py-2 rounded bg-slate-800 border border-slate-700"
+          className="w-full mb-4 px-3 py-2 rounded bg-white/5 border border-white/10"
           required
         />
 
         <button
           type="submit"
-          className="w-full py-2 bg-slate-700 hover:bg-slate-600 rounded"
+          className="w-full py-2 bg-indigo-500/70 hover:bg-indigo-500 rounded"
         >
           Log in
         </button>

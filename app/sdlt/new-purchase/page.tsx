@@ -140,7 +140,7 @@ export default function NewPurchasePage() {
             <input
               value={form.issue}
               onChange={(e) => setForm({ ...form, issue: e.target.value })}
-              className="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2"
+              className="w-full bg-white/5 border border-white/10 rounded px-3 py-2"
               required
             />
           </Field>
@@ -150,7 +150,7 @@ export default function NewPurchasePage() {
               <select
                 value={form.type}
                 onChange={(e) => setForm({ ...form, type: e.target.value })}
-                className="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2"
+                className="w-full bg-white/5 border border-white/10 rounded px-3 py-2"
               >
                 <option>Bond</option>
                 <option>Stock</option>
@@ -160,7 +160,7 @@ export default function NewPurchasePage() {
               <select
                 value={form.account}
                 onChange={(e) => setForm({ ...form, account: e.target.value })}
-                className="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2"
+                className="w-full bg-white/5 border border-white/10 rounded px-3 py-2"
               >
                 <option>Manutes Trust</option>
                 <option>J5Trades</option>
@@ -176,7 +176,7 @@ export default function NewPurchasePage() {
                 onChange={(e) =>
                   setForm({ ...form, purchaseDate: e.target.value })
                 }
-                className="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2"
+                className="w-full bg-white/5 border border-white/10 rounded px-3 py-2"
                 required
               />
             </Field>
@@ -187,7 +187,7 @@ export default function NewPurchasePage() {
                 onChange={(e) =>
                   setForm({ ...form, maturityDate: e.target.value })
                 }
-                className="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2"
+                className="w-full bg-white/5 border border-white/10 rounded px-3 py-2"
                 required
               />
             </Field>
@@ -200,7 +200,7 @@ export default function NewPurchasePage() {
                 step="0.001"
                 value={form.coupon}
                 onChange={(e) => setForm({ ...form, coupon: e.target.value })}
-                className="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2"
+                className="w-full bg-white/5 border border-white/10 rounded px-3 py-2"
                 required
               />
             </Field>
@@ -210,7 +210,7 @@ export default function NewPurchasePage() {
                 onChange={(e) =>
                   setForm({ ...form, frequency: e.target.value })
                 }
-                className="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2"
+                className="w-full bg-white/5 border border-white/10 rounded px-3 py-2"
               >
                 <option>Monthly</option>
                 <option>Semi-Annually</option>
@@ -227,7 +227,7 @@ export default function NewPurchasePage() {
                 step="0.01"
                 value={form.cost}
                 onChange={(e) => setForm({ ...form, cost: e.target.value })}
-                className="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2"
+                className="w-full bg-white/5 border border-white/10 rounded px-3 py-2"
                 required
               />
             </Field>
@@ -239,7 +239,7 @@ export default function NewPurchasePage() {
                 onChange={(e) =>
                   setForm({ ...form, redemptionAmount: e.target.value })
                 }
-                className="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2"
+                className="w-full bg-white/5 border border-white/10 rounded px-3 py-2"
                 required
               />
             </Field>
@@ -248,7 +248,7 @@ export default function NewPurchasePage() {
           <button
             type="submit"
             disabled={saving}
-            className="w-full py-2 bg-slate-700 hover:bg-slate-600 rounded disabled:opacity-50"
+            className="w-full py-2 bg-indigo-500/70 hover:bg-indigo-500 rounded disabled:opacity-50"
           >
             {saving ? 'Creating...' : 'Create Expected Transactions'}
           </button>

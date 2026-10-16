@@ -6,6 +6,7 @@ import { supabase } from '@/lib/supabase';
 import { getLocalDateString } from '@/lib/dates';
 import Card from '@/components/Card';
 import CardTitle from '@/components/CardTitle';
+import StatusPill from '@/components/StatusPill';
 
 type Habit = { id: string; name: string };
 
@@ -74,10 +75,18 @@ export default function HabitsCard() {
 
   return (
     <Card accent="pink">
-      <div className="mb-3">
+      <div className="mb-3 flex justify-between items-center">
         <CardTitle icon="✅" accent="pink">
           <div className="font-semibold">Habits</div>
         </CardTitle>
+        <StatusPill label="Today" accent="pink" />
+      </div>
+
+      <div className="mb-4">
+        <div className="text-4xl font-extrabold tracking-tight">
+          {todayCompletions.length}/{habits.length}
+        </div>
+        <div className="text-xs text-slate-400">done today</div>
       </div>
 
       {/* Add new habit */}
@@ -87,11 +96,11 @@ export default function HabitsCard() {
           value={newHabitName}
           onChange={(e) => setNewHabitName(e.target.value)}
           placeholder="New habit..."
-          className="flex-1 px-3 py-1.5 rounded-md border text-sm bg-slate-800 border-slate-700 text-white placeholder-slate-400"
+          className="flex-1 px-3 py-1.5 rounded-md border text-sm bg-white/5 border-white/10 text-white placeholder-slate-400"
         />
         <button
           type="submit"
-          className="px-3 py-1.5 rounded-md text-sm bg-slate-700 hover:bg-slate-600"
+          className="px-3 py-1.5 rounded-md text-sm bg-indigo-500/70 hover:bg-indigo-500"
         >
           Add
         </button>
@@ -131,10 +140,6 @@ export default function HabitsCard() {
             );
           })
         )}
-      </div>
-
-      <div className="mt-3 text-xs opacity-60">
-        {todayCompletions.length} / {habits.length} done today
       </div>
     </Card>
   );

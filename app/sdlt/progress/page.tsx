@@ -140,7 +140,7 @@ export default function ProgressPage() {
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="text-left opacity-70 border-b border-slate-800">
+              <tr className="text-left opacity-70 border-b border-white/10">
                 <th className="py-2 pr-4">Month</th>
                 <th className="py-2 pr-4">Actual Contribution</th>
                 <th className="py-2 pr-4">Actual Interest</th>
@@ -154,7 +154,7 @@ export default function ProgressPage() {
             </thead>
             <tbody>
               {rowsWithCalcs.map((row) => (
-                <tr key={row.id} className="border-b border-slate-800/50">
+                <tr key={row.id} className="border-b border-white/5">
                   <td className="py-2 pr-4">
                     {row['End of Month']?.slice(0, 7)}
                   </td>
@@ -174,7 +174,7 @@ export default function ProgressPage() {
                           onKeyDown={(e) => {
                             if (e.key === 'Enter') e.currentTarget.blur();
                           }}
-                          className="w-24 bg-slate-800 border border-slate-700 rounded px-2 py-1"
+                          className="w-24 bg-white/5 border border-white/10 rounded px-2 py-1"
                         />
                       ) : (
                         <span
