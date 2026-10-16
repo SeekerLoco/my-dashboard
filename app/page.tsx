@@ -16,7 +16,6 @@ function getWeatherInfo(code: number) {
   return { label: 'Unknown', icon: '❓' };
 }
 
-
 function getLocalDateString(date = new Date()) {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -25,8 +24,8 @@ function getLocalDateString(date = new Date()) {
 }
 
 function DonutChart({ progress }: { progress: number }) {
-  const size = 60;  //was 80
-  const stroke = 6;  //was 8
+  const size = 60;
+  const stroke = 6;
   const radius = (size - stroke) / 2;
   const circumference = 2 * Math.PI * radius;
   const clamped = Math.min(Math.max(progress, 0), 1);
@@ -76,8 +75,6 @@ const STOCK_SYMBOLS = [
   { symbol: 'SI=F', name: 'Silver' },
   { symbol: 'SPCX', name: 'SPCX' },
 ];
-
-
 
 type StockQuote = {
   name: string;
@@ -335,7 +332,6 @@ function InterestChart({ data }: { data: { date: string; interest: number }[] })
       />
 
       {/* Max value label */}
-      {/* Max value label */}
     <text
       x={toX(maxIndex)}
       y={toY(max) - 6}
@@ -375,9 +371,6 @@ export default function Home() {
   const [sdltProgress, setSdltProgress] = useState<number | null>(null);
   const [interestData, setInterestData] = useState<{ date: string; interest: number }[]>([]);
 
-//  import { useRouter } from 'next/navigation';
-
-  // inside Home():
   const router = useRouter();
 
   useEffect(() => {
@@ -450,16 +443,13 @@ export default function Home() {
   async function fetchSdltProgress() {
   const today = getLocalDateString();
 
-  const { data, error } = await supabase
+  const { data } = await supabase
     .from('sdlt_progress_summary')
     .select('progress_to_goal, "End of Month"')
     .lte('End of Month', today)
     .order('End of Month', { ascending: false })
     .limit(1)
     .single();
-
-  //console.log('sdlt data:', data);
-  //console.log('sdlt error:', error);
 
   if (data) setSdltProgress(data.progress_to_goal);
 }
@@ -508,7 +498,6 @@ async function fetchInterestHistory() {
     setDark(newDark);
     localStorage.setItem('theme', newDark ? 'dark' : 'light');
   }
-
 
     // Load habits and today's completions
     
@@ -574,7 +563,6 @@ async function fetchInterestHistory() {
       setCheckbookBalance(data.verified_balance);
     }
   }
-
 
   async function fetchProjection() {
     const today = getLocalDateString();
@@ -739,9 +727,6 @@ async function fetchInterestHistory() {
           )}
         </div>
 
-
-
-
         {/* Checkbook card */}
         <div className={`rounded-xl p-5 border ${dark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
           <div className="flex justify-between items-center mb-2">
@@ -792,8 +777,6 @@ async function fetchInterestHistory() {
             )}
           </div>
         </div>
-
-
 
                 {/* Habits card */}
         <div className={`rounded-xl p-5 border ${dark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
@@ -871,10 +854,6 @@ async function fetchInterestHistory() {
           </div>
         </div>
 
-        {/* Other cards */}
-        
-
-        
       </div>
     </main>
   );
