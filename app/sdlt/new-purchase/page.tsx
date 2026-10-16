@@ -76,8 +76,13 @@ export default function NewPurchasePage() {
     const monthsStep = freqMap[form.frequency];
 
     if (monthsStep === 0) {
-      // Single interest payment at maturity
-      const interest = coupon * redemptionAmount;
+      // Single interest payment at maturity, prorated for the term:
+      // face × annual coupon × (days from purchase to maturity / 365)
+      // (Math.round on the day count absorbs daylight-saving hour shifts)
+      const termDays = Math.round(
+        (maturityDate.getTime() - purchaseDate.getTime()) / 86_400_000,
+      );
+      const interest = redemptionAmount * coupon * (termDays / 365);
       rows.push({
         'Action Date': form.maturityDate,
         Issue: form.issue,
