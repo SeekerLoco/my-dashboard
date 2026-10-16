@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import { useRouter } from 'next/navigation';
+import Card from '@/components/Card';
+import IconButton from '@/components/IconButton';
 
 function getWeatherInfo(code: number) {
   if (code === 0) return { label: 'Clear', icon: '☀️' };
@@ -609,7 +611,7 @@ async function fetchInterestHistory() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {/* Weather card */}
-        <div className={`rounded-xl p-5 border ${dark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
+        <Card dark={dark}>
           <form onSubmit={handleSearch} className="mb-3 flex items-center gap-1.5">
             <input
               type="text"
@@ -674,10 +676,10 @@ async function fetchInterestHistory() {
           ) : (
             <div className="mt-2">Loading...</div>
           )}
-        </div>
+        </Card>
 
                 {/* Stocks card */}
-        <div className={`rounded-xl p-5 border ${dark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
+        <Card dark={dark}>
           <div className="flex justify-between items-center mb-3">
             <a
               href="https://finviz.com/futures"
@@ -687,15 +689,9 @@ async function fetchInterestHistory() {
             >
               Markets
             </a>
-            <button
-              onClick={fetchStocks}
-              title="Refresh"
-              className={`w-7 h-7 flex items-center justify-center rounded-md text-sm ${
-                dark ? 'bg-slate-700 hover:bg-slate-600' : 'bg-slate-200 hover:bg-slate-300'
-              }`}
-            >
+            <IconButton dark={dark} onClick={fetchStocks} title="Refresh">
               🔄
-            </button>
+            </IconButton>
           </div>
 
           {stocks.length === 0 ? (
@@ -725,10 +721,10 @@ async function fetchInterestHistory() {
               Updated {new Date(stocksUpdatedAt).toLocaleTimeString()}
             </div>
           )}
-        </div>
+        </Card>
 
         {/* Checkbook card */}
-        <div className={`rounded-xl p-5 border ${dark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
+        <Card dark={dark}>
           <div className="flex justify-between items-center mb-2">
             <a
               href="/transactions"
@@ -736,15 +732,9 @@ async function fetchInterestHistory() {
             >
               Checkbook
             </a>
-            <button
-              onClick={() => setShowBalance(!showBalance)}
-              title={showBalance ? 'Hide balance' : 'Show balance'}
-              className={`w-7 h-7 flex items-center justify-center rounded-md text-sm ${
-                dark ? 'bg-slate-700 hover:bg-slate-600' : 'bg-slate-200 hover:bg-slate-300'
-              }`}
-            >
+            <IconButton dark={dark} onClick={() => setShowBalance(!showBalance)} title={showBalance ? 'Hide balance' : 'Show balance'}>
               {showBalance ? '👁️' : '👁️‍🗨️'}
-            </button>
+            </IconButton>
           </div>
 
           <div className="text-3xl font-bold mt-1">
@@ -755,10 +745,10 @@ async function fetchInterestHistory() {
               : '******'}
               {projection.length > 0 && <ProjectionChart data={projection} />}
           </div>
-        </div>
+        </Card>
 
         {/* SDLT card */}
-        <div className={`rounded-xl p-5 border ${dark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
+        <Card dark={dark}>
           <a
             href="/sdlt"
             className="font-semibold hover:underline"
@@ -776,10 +766,10 @@ async function fetchInterestHistory() {
               </div>
             )}
           </div>
-        </div>
+        </Card>
 
                 {/* Habits card */}
-        <div className={`rounded-xl p-5 border ${dark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
+        <Card dark={dark}>
           <div className="font-semibold mb-3">Habits</div>
 
           {/* Add new habit */}
@@ -839,10 +829,10 @@ async function fetchInterestHistory() {
           <div className="mt-3 text-xs opacity-60">
             {todayCompletions.length} / {habits.length} done today
           </div>
-        </div>
+        </Card>
 
         {/* Soccer card */}
-        <div className={`rounded-xl p-5 border ${dark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
+        <Card dark={dark}>
           <a
             href="/soccer"
             className="font-semibold hover:underline"
@@ -852,7 +842,7 @@ async function fetchInterestHistory() {
           <div className={`text-sm mt-2 ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
             Games & mileage
           </div>
-        </div>
+        </Card>
 
       </div>
     </main>
