@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
+import { getLocalDateString } from '@/lib/dates';
 
 
 type Transaction = {
@@ -32,7 +33,7 @@ export default function TransactionsPage() {
   useEffect(() => {
     setNewTx((prev) => ({
       ...prev,
-      Transaction_Date: new Date().toISOString().split('T')[0],
+      Transaction_Date: getLocalDateString(),
     }));
   }, []);
 
@@ -43,8 +44,8 @@ export default function TransactionsPage() {
   const end = new Date(today);
   end.setDate(today.getDate() + 7);
 
-  setStartDate(start.toISOString().split('T')[0]);
-  setEndDate(end.toISOString().split('T')[0]);
+  setStartDate(getLocalDateString(start));
+  setEndDate(getLocalDateString(end));
 }, []);
 
   async function loadTransactions() {
@@ -122,7 +123,7 @@ export default function TransactionsPage() {
 
   if (!error) {
     setNewTx({
-      Transaction_Date: new Date().toISOString().split('T')[0],
+      Transaction_Date: getLocalDateString(),
       Category: '',
       Type: 'Debit',
       Amount: '',

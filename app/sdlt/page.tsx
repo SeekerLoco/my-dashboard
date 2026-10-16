@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
+import { getLocalDateString } from '@/lib/dates';
 
 type SDLTTransaction = {
   id: string;
@@ -27,7 +28,7 @@ export default function SDLTPage() {
   useEffect(() => {
     setNewTx((prev) => ({
       ...prev,
-      'Action Date': new Date().toISOString().split('T')[0],
+      'Action Date': getLocalDateString(),
     }));
   }, []);
 
@@ -38,30 +39,14 @@ export default function SDLTPage() {
   const end = new Date(today);
   end.setDate(today.getDate() + 15);
 
-  const toLocal = (d: Date) => {
-    const year = d.getFullYear();
-    const month = String(d.getMonth() + 1).padStart(2, '0');
-    const day = String(d.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  };
-
-  setStartDate(toLocal(start));
-  setEndDate(toLocal(end));
+  setStartDate(getLocalDateString(start));
+  setEndDate(getLocalDateString(end));
 }, []);
 
   async function loadTransactions() {
     if(!startDate || !endDate) return;
     setLoading(true);
     
-    const today = new Date();
-    const start = new Date(today);
-    start.setDate(today.getDate() - 15);
-    const end = new Date(today);
-    end.setDate(today.getDate() + 15);
-    
-    const startStr = start.toISOString().split('T')[0];
-    const endStr = end.toISOString().split('T')[0];
-
     const { data, error } = await supabase
       .from('SDLT_Transactions')
       .select('id, "Action Date", Action, Amount, Verified, Issue')
@@ -105,7 +90,7 @@ export default function SDLTPage() {
 
     if (!error) {
       setNewTx({
-        'Action Date': new Date().toISOString().split('T')[0],
+        'Action Date': getLocalDateString(),
         Action: 'Redemption',
         Amount: '',
       });

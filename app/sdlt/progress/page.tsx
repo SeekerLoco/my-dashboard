@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
+import { getLocalDateString } from '@/lib/dates';
 
 type ChartRow = {
   'End of Month': string;
@@ -23,7 +24,7 @@ export default function ProgressPage() {
   const [editing, setEditing] = useState<{ id: string; field: string } | null>(null);
 
   async function loadChart() {
-    const today = new Date().toISOString().split('T')[0];
+    const today = getLocalDateString();
     const { data } = await supabase
       .from('sdlt_progress_summary')
       .select('"End of Month", running_actual')
