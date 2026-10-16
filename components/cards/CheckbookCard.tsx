@@ -13,7 +13,7 @@ import ProjectionChart from '@/components/charts/ProjectionChart';
 import type { ProjectionPoint } from '@/lib/types';
 
 export default function CheckbookCard() {
-  const [showBalance, setShowBalance] = useState(true);
+  const [showBalance, setShowBalance] = useState(false);
   const [checkbookBalance, setCheckbookBalance] = useState<number | null>(null);
   // Count-up animation for the headline balance (only displayed when not masked)
   const animatedBalance = useCountUp(checkbookBalance);
