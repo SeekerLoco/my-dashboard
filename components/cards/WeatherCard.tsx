@@ -26,7 +26,7 @@ type WeatherData = {
   forecast: ForecastDay[];
 };
 
-export default function WeatherCard({ dark }: { dark: boolean }) {
+export default function WeatherCard() {
   const [locationName, setLocationName] = useState(DEFAULT_NAME);
   const [searchInput, setSearchInput] = useState('');
   const [weather, setWeather] = useState<WeatherData | null>(null);
@@ -95,27 +95,19 @@ export default function WeatherCard({ dark }: { dark: boolean }) {
   }
 
   return (
-    <Card dark={dark}>
+    <Card>
       <form onSubmit={handleSearch} className="mb-3 flex items-center gap-1.5">
         <input
           type="text"
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
           placeholder="Search city..."
-          className={`flex-1 min-w-0 px-3 py-1.5 rounded-md border text-sm ${
-            dark
-              ? 'bg-slate-800 border-slate-700 text-white placeholder-slate-400'
-              : 'bg-white border-slate-300 text-slate-900 placeholder-slate-500'
-          }`}
+          className="flex-1 min-w-0 px-3 py-1.5 rounded-md border text-sm bg-slate-800 border-slate-700 text-white placeholder-slate-400"
         />
         <button
           type="submit"
           title="Search"
-          className={`shrink-0 w-8 h-8 flex items-center justify-center rounded-md text-sm ${
-            dark
-              ? 'bg-slate-700 hover:bg-slate-600'
-              : 'bg-slate-200 hover:bg-slate-300'
-          }`}
+          className="shrink-0 w-8 h-8 flex items-center justify-center rounded-md text-sm bg-slate-700 hover:bg-slate-600"
         >
           🔍
         </button>
@@ -123,19 +115,13 @@ export default function WeatherCard({ dark }: { dark: boolean }) {
           type="button"
           onClick={goHome}
           title="Reset to Highlands Ranch"
-          className={`shrink-0 w-8 h-8 flex items-center justify-center rounded-md text-sm ${
-            dark
-              ? 'bg-slate-700 hover:bg-slate-600'
-              : 'bg-slate-200 hover:bg-slate-300'
-          }`}
+          className="shrink-0 w-8 h-8 flex items-center justify-center rounded-md text-sm bg-slate-700 hover:bg-slate-600"
         >
           🏠
         </button>
       </form>
 
-      <div className={`text-sm ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
-        {locationName}
-      </div>
+      <div className="text-sm text-slate-400">{locationName}</div>
 
       {weather ? (
         <>
@@ -147,9 +133,7 @@ export default function WeatherCard({ dark }: { dark: boolean }) {
             </div>
           </div>
 
-          <div
-            className={`text-sm mt-3 ${dark ? 'text-slate-300' : 'text-slate-600'}`}
-          >
+          <div className="text-sm mt-3 text-slate-300">
             H: <span className="text-red-400">{weather.high}°</span> &nbsp; L:{' '}
             <span className="text-blue-400">{weather.low}°</span>
           </div>

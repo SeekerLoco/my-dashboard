@@ -8,7 +8,7 @@ import Card from '@/components/Card';
 
 type Habit = { id: string; name: string };
 
-export default function HabitsCard({ dark }: { dark: boolean }) {
+export default function HabitsCard() {
   const [habits, setHabits] = useState<Habit[]>([]);
   const [todayCompletions, setTodayCompletions] = useState<string[]>([]);
   const [newHabitName, setNewHabitName] = useState('');
@@ -72,7 +72,7 @@ export default function HabitsCard({ dark }: { dark: boolean }) {
   }
 
   return (
-    <Card dark={dark}>
+    <Card>
       <div className="font-semibold mb-3">Habits</div>
 
       {/* Add new habit */}
@@ -82,19 +82,11 @@ export default function HabitsCard({ dark }: { dark: boolean }) {
           value={newHabitName}
           onChange={(e) => setNewHabitName(e.target.value)}
           placeholder="New habit..."
-          className={`flex-1 px-3 py-1.5 rounded-md border text-sm ${
-            dark
-              ? 'bg-slate-800 border-slate-700 text-white placeholder-slate-400'
-              : 'bg-white border-slate-300 text-slate-900'
-          }`}
+          className="flex-1 px-3 py-1.5 rounded-md border text-sm bg-slate-800 border-slate-700 text-white placeholder-slate-400"
         />
         <button
           type="submit"
-          className={`px-3 py-1.5 rounded-md text-sm ${
-            dark
-              ? 'bg-slate-700 hover:bg-slate-600'
-              : 'bg-slate-200 hover:bg-slate-300'
-          }`}
+          className="px-3 py-1.5 rounded-md text-sm bg-slate-700 hover:bg-slate-600"
         >
           Add
         </button>

@@ -9,7 +9,7 @@ import DonutChart from '@/components/charts/DonutChart';
 import InterestChart from '@/components/charts/InterestChart';
 import type { InterestPoint } from '@/lib/types';
 
-export default function SdltCard({ dark }: { dark: boolean }) {
+export default function SdltCard() {
   const [sdltProgress, setSdltProgress] = useState<number | null>(null);
   const [interestData, setInterestData] = useState<InterestPoint[]>([]);
 
@@ -51,15 +51,11 @@ export default function SdltCard({ dark }: { dark: boolean }) {
   }, []);
 
   return (
-    <Card dark={dark}>
+    <Card>
       <a href="/sdlt" className="font-semibold hover:underline">
         SDLT
       </a>
-      <div
-        className={`text-sm mt-2 ${dark ? 'text-slate-400' : 'text-slate-500'}`}
-      >
-        Self Directed Long Term
-      </div>
+      <div className="text-sm mt-2 text-slate-400">Self Directed Long Term</div>
       <div className="flex items-center gap-2 mt-2">
         {sdltProgress !== null && <DonutChart progress={sdltProgress} />}
         {interestData.length > 0 && (

@@ -9,7 +9,7 @@ import IconButton from '@/components/IconButton';
 import ProjectionChart from '@/components/charts/ProjectionChart';
 import type { ProjectionPoint } from '@/lib/types';
 
-export default function CheckbookCard({ dark }: { dark: boolean }) {
+export default function CheckbookCard() {
   const [showBalance, setShowBalance] = useState(true);
   const [checkbookBalance, setCheckbookBalance] = useState<number | null>(null);
   const [projection, setProjection] = useState<ProjectionPoint[]>([]);
@@ -58,13 +58,12 @@ export default function CheckbookCard({ dark }: { dark: boolean }) {
   }, []);
 
   return (
-    <Card dark={dark}>
+    <Card>
       <div className="flex justify-between items-center mb-2">
         <a href="/transactions" className="font-semibold hover:underline">
           Checkbook
         </a>
         <IconButton
-          dark={dark}
           onClick={() => setShowBalance(!showBalance)}
           title={showBalance ? 'Hide balance' : 'Show balance'}
         >

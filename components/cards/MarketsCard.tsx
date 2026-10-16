@@ -14,7 +14,7 @@ type StockQuote = {
   history: number[];
 };
 
-export default function MarketsCard({ dark }: { dark: boolean }) {
+export default function MarketsCard() {
   const [stocks, setStocks] = useState<StockQuote[]>([]);
   const [stocksUpdatedAt, setStocksUpdatedAt] = useState<string | null>(null);
 
@@ -37,7 +37,7 @@ export default function MarketsCard({ dark }: { dark: boolean }) {
   }, []);
 
   return (
-    <Card dark={dark}>
+    <Card>
       <div className="flex justify-between items-center mb-3">
         <a
           href="https://finviz.com/futures"
@@ -47,7 +47,7 @@ export default function MarketsCard({ dark }: { dark: boolean }) {
         >
           Markets
         </a>
-        <IconButton dark={dark} onClick={fetchStocks} title="Refresh">
+        <IconButton onClick={fetchStocks} title="Refresh">
           🔄
         </IconButton>
       </div>
