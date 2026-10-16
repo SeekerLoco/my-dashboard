@@ -481,6 +481,8 @@ async function fetchInterestHistory() {
 }
 
 
+
+
 {/* Checkbook card */}
 <div className={`rounded-xl p-5 border ${dark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
   <div className="flex justify-between items-center mb-2">
@@ -884,6 +886,19 @@ async function fetchInterestHistory() {
 
           <div className="mt-3 text-xs opacity-60">
             {todayCompletions.length} / {habits.length} done today
+          </div>
+        </div>
+
+        {/* Soccer card */}
+        <div className={`rounded-xl p-5 border ${dark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
+          <a
+            href="/soccer"
+            className="font-semibold hover:underline"
+          >
+            Soccer
+          </a>
+          <div className={`text-sm mt-2 ${dark ? 'text-slate-400' : 'text-slate-500'}`}>
+            Games & mileage
           </div>
         </div>
 
