@@ -7,6 +7,7 @@ import CheckbookCard from '@/components/cards/CheckbookCard';
 import SdltCard from '@/components/cards/SdltCard';
 import HabitsCard from '@/components/cards/HabitsCard';
 import SoccerCard from '@/components/cards/SoccerCard';
+import LogoutButton from '@/components/LogoutButton';
 
 export default function Home() {
   return (
@@ -21,8 +22,7 @@ export default function Home() {
           </span>
           <h1 className="text-xl font-bold">SeekerLoco Hub</h1>
         </div>
-        {/* Slot for future header buttons */}
-        <div className="flex items-center gap-2" />
+        <LogoutButton />
       </header>
 
       {/* Masonry-ish grid: Weather and Markets span two rows; dense flow fills the gaps */}
