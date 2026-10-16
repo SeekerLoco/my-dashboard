@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import Card from '@/components/Card';
+import CardTitle from '@/components/CardTitle';
 import { getWeatherInfo } from '@/lib/weather';
 
 const DEFAULT_LAT = 39.55;
@@ -95,7 +96,12 @@ export default function WeatherCard() {
   }
 
   return (
-    <Card>
+    <Card accent="blue">
+      <div className="mb-3">
+        <CardTitle icon="⛅" accent="blue">
+          <div className="font-semibold">Weather</div>
+        </CardTitle>
+      </div>
       <form onSubmit={handleSearch} className="mb-3 flex items-center gap-1.5">
         <input
           type="text"

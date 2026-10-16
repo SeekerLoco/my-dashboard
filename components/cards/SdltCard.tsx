@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import { getLocalDateString } from '@/lib/dates';
 import Card from '@/components/Card';
+import CardTitle from '@/components/CardTitle';
 import DonutChart from '@/components/charts/DonutChart';
 import InterestChart from '@/components/charts/InterestChart';
 import type { InterestPoint } from '@/lib/types';
@@ -51,10 +52,12 @@ export default function SdltCard() {
   }, []);
 
   return (
-    <Card>
-      <a href="/sdlt" className="font-semibold hover:underline">
-        SDLT
-      </a>
+    <Card accent="violet">
+      <CardTitle icon="🏦" accent="violet">
+        <a href="/sdlt" className="font-semibold hover:underline">
+          SDLT
+        </a>
+      </CardTitle>
       <div className="text-sm mt-2 text-slate-400">Self Directed Long Term</div>
       <div className="flex items-center gap-2 mt-2">
         {sdltProgress !== null && <DonutChart progress={sdltProgress} />}

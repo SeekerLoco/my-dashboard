@@ -126,7 +126,7 @@ export default function NewPurchasePage() {
   }
 
   return (
-    <main className="min-h-screen bg-slate-950 text-white p-6">
+    <main className="min-h-screen text-white p-6">
       <div className="max-w-xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold">New Purchase</h1>
@@ -135,10 +135,7 @@ export default function NewPurchasePage() {
           </a>
         </div>
 
-        <form
-          onSubmit={handleSubmit}
-          className="space-y-4 bg-slate-900 p-6 rounded-xl border border-slate-800"
-        >
+        <form onSubmit={handleSubmit} className="panel space-y-4 p-6">
           <Field label="CUSIP / Issue">
             <input
               value={form.issue}

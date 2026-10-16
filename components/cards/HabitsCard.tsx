@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import { getLocalDateString } from '@/lib/dates';
 import Card from '@/components/Card';
+import CardTitle from '@/components/CardTitle';
 
 type Habit = { id: string; name: string };
 
@@ -72,8 +73,12 @@ export default function HabitsCard() {
   }
 
   return (
-    <Card>
-      <div className="font-semibold mb-3">Habits</div>
+    <Card accent="pink">
+      <div className="mb-3">
+        <CardTitle icon="✅" accent="pink">
+          <div className="font-semibold">Habits</div>
+        </CardTitle>
+      </div>
 
       {/* Add new habit */}
       <form onSubmit={addHabit} className="mb-4 flex gap-2">

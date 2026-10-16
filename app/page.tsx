@@ -10,7 +10,7 @@ import SoccerCard from '@/components/cards/SoccerCard';
 
 export default function Home() {
   return (
-    <main className="min-h-screen p-6 transition-colors bg-slate-950 text-white">
+    <main className="min-h-screen p-6 text-white">
       <header className="mb-8 flex justify-between items-center">
         <h1 className="text-2xl font-bold">SeekerLoco Hub</h1>
       </header>

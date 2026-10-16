@@ -107,7 +107,7 @@ export default function SDLTPage() {
   }
 
   return (
-    <main className="min-h-screen bg-slate-950 text-white p-6">
+    <main className="min-h-screen text-white p-6">
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold">SDLT</h1>
@@ -130,10 +130,7 @@ export default function SDLTPage() {
         </div>
 
         {/* Add form */}
-        <form
-          onSubmit={addTransaction}
-          className="mb-8 p-4 bg-slate-900 rounded-xl border border-slate-800"
-        >
+        <form onSubmit={addTransaction} className="panel mb-8 p-4">
           <div className="font-semibold mb-3">Add transaction</div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             <input

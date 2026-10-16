@@ -30,11 +30,8 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="min-h-screen bg-slate-950 text-white flex items-center justify-center p-6">
-      <form
-        onSubmit={handleLogin}
-        className="w-full max-w-sm bg-slate-900 p-6 rounded-xl border border-slate-800"
-      >
+    <main className="min-h-screen text-white flex items-center justify-center p-6">
+      <form onSubmit={handleLogin} className="panel w-full max-w-sm p-6">
         <h1 className="text-xl font-bold mb-4">Log in</h1>
 
         <input

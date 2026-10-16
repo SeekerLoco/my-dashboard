@@ -76,7 +76,7 @@ export default function ChartsPage() {
   const interestData = groupData('Interest', interestLevel, interestFilter);
 
   return (
-    <main className="min-h-screen bg-slate-950 text-white p-6">
+    <main className="min-h-screen text-white p-6">
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold">SDLT Charts</h1>
@@ -93,7 +93,7 @@ export default function ChartsPage() {
         />
 
         {/* Redemptions */}
-        <div className="mb-10 p-4 bg-slate-900 rounded-xl border border-slate-800">
+        <div className="panel mb-10 p-4">
           <div className="flex justify-between items-center mb-2">
             <h2 className="font-semibold">Redemptions</h2>
             {redemptionLevel !== 'year' && (
@@ -122,7 +122,7 @@ export default function ChartsPage() {
         </div>
 
         {/* Interest */}
-        <div className="p-4 bg-slate-900 rounded-xl border border-slate-800">
+        <div className="panel p-4">
           <div className="flex justify-between items-center mb-2">
             <h2 className="font-semibold">Interest</h2>
             <div className="flex items-center gap-3 text-xs">

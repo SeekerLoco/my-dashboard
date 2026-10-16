@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import { getLocalDateString } from '@/lib/dates';
 import Card from '@/components/Card';
+import CardTitle from '@/components/CardTitle';
 import IconButton from '@/components/IconButton';
 import ProjectionChart from '@/components/charts/ProjectionChart';
 import type { ProjectionPoint } from '@/lib/types';
@@ -58,11 +59,13 @@ export default function CheckbookCard() {
   }, []);
 
   return (
-    <Card>
+    <Card accent="teal">
       <div className="flex justify-between items-center mb-2">
-        <a href="/transactions" className="font-semibold hover:underline">
-          Checkbook
-        </a>
+        <CardTitle icon="💵" accent="teal">
+          <a href="/transactions" className="font-semibold hover:underline">
+            Checkbook
+          </a>
+        </CardTitle>
         <IconButton
           onClick={() => setShowBalance(!showBalance)}
           title={showBalance ? 'Hide balance' : 'Show balance'}

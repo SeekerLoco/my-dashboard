@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import Card from '@/components/Card';
+import CardTitle from '@/components/CardTitle';
 import IconButton from '@/components/IconButton';
 import Sparkline from '@/components/charts/Sparkline';
 
@@ -37,16 +38,18 @@ export default function MarketsCard() {
   }, []);
 
   return (
-    <Card>
+    <Card accent="green">
       <div className="flex justify-between items-center mb-3">
-        <a
-          href="https://finviz.com/futures"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="font-semibold hover:underline"
-        >
-          Markets
-        </a>
+        <CardTitle icon="📈" accent="green">
+          <a
+            href="https://finviz.com/futures"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold hover:underline"
+          >
+            Markets
+          </a>
+        </CardTitle>
         <IconButton onClick={fetchStocks} title="Refresh">
           🔄
         </IconButton>

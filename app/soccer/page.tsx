@@ -86,7 +86,7 @@ export default function SoccerPage() {
   const mileageData = groupBy('mileage', mileageLevel, mileageFilter);
 
   return (
-    <main className="min-h-screen bg-slate-950 text-white p-6">
+    <main className="min-h-screen text-white p-6">
       <div className="max-w-5xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold">Soccer</h1>
@@ -96,7 +96,7 @@ export default function SoccerPage() {
         </div>
 
         {/* Missing venues alert */}
-        <div className="mb-6 p-4 bg-slate-900 rounded-xl border border-slate-800">
+        <div className="panel mb-6 p-4">
           <div className="font-semibold mb-2">Missing Venues</div>
           {missingVenues.length === 0 ? (
             <div className="text-green-400">✓ OK — all venues have mileage</div>
@@ -109,7 +109,7 @@ export default function SoccerPage() {
 
         <div className="grid md:grid-cols-2 gap-6">
           {/* Earnings */}
-          <div className="p-4 bg-slate-900 rounded-xl border border-slate-800">
+          <div className="panel p-4">
             <div className="flex justify-between items-center mb-2">
               <h2 className="font-semibold">Referee - Earnings</h2>
               {earningsLevel !== 'year' && (
@@ -137,7 +137,7 @@ export default function SoccerPage() {
           </div>
 
           {/* Mileage */}
-          <div className="p-4 bg-slate-900 rounded-xl border border-slate-800">
+          <div className="panel p-4">
             <div className="flex justify-between items-center mb-2">
               <h2 className="font-semibold">Referee - Mileage</h2>
               {mileageLevel !== 'year' && (
@@ -166,13 +166,13 @@ export default function SoccerPage() {
           </div>
 
           {/* Age Groups */}
-          <div className="p-4 bg-slate-900 rounded-xl border border-slate-800">
+          <div className="panel p-4">
             <h2 className="font-semibold mb-2">Referee - Age Groups</h2>
             <BarChart data={ageData} color="#a78bfa" />
           </div>
 
           {/* Gender */}
-          <div className="p-4 bg-slate-900 rounded-xl border border-slate-800">
+          <div className="panel p-4">
             <h2 className="font-semibold mb-2">Referee - Gender</h2>
             <BarChart data={genderData} color="#f472b6" />
           </div>
