@@ -124,7 +124,7 @@ export default function SDLTPage() {
         {/* Header links for future pages */}
         <div className="flex gap-4 mb-6 text-sm">
           <a href="/sdlt/charts" className="hover:underline opacity-70">| Charts</a>
-          
+          <a href="/sdlt/progress" className="hover:underline opacity-70">| Progress</a>
           <a href="/sdlt/new-purchase" className="hover:underline opacity-70">| New Purchase</a>
         </div>
 
