@@ -7,6 +7,7 @@ import CheckbookCard from '@/components/cards/CheckbookCard';
 import SdltCard from '@/components/cards/SdltCard';
 import HabitsCard from '@/components/cards/HabitsCard';
 import SoccerCard from '@/components/cards/SoccerCard';
+import TelegraphCard from '@/components/cards/TelegraphCard';
 import LogoutButton from '@/components/LogoutButton';
 
 export default function Home() {
@@ -44,6 +45,9 @@ export default function Home() {
 
         {/* Soccer card */}
         <SoccerCard />
+
+        {/* Daily Telegraph card */}
+        <TelegraphCard />
       </div>
     </main>
   );
