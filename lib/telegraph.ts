@@ -3,9 +3,9 @@
 export type SectionId =
   | 'front'
   | 'local'
+  | 'us-world'
   | 'markets'
   | 'sports'
-  | 'family'
   | 'irreverent'
   | 'weather';
 
@@ -23,9 +23,9 @@ export type Story = {
 export const SECTIONS: { id: SectionId; label: string }[] = [
   { id: 'front', label: 'Front Page' },
   { id: 'local', label: 'Local' },
+  { id: 'us-world', label: 'US and World' },
   { id: 'markets', label: 'Markets' },
   { id: 'sports', label: 'Sports' },
-  { id: 'family', label: 'Family' },
   { id: 'irreverent', label: 'Irreverent' },
   { id: 'weather', label: 'Weather' },
 ];
@@ -60,11 +60,11 @@ export const STORIES: Story[] = [
   },
   {
     id: 'homework-treaty',
-    section: 'family',
+    section: 'local',
     frontPage: true,
     headline: 'Historic Homework Treaty Signed at Dinner Table',
     dek: 'Terms include screen time after math, and dessert after everything.',
-    byline: 'By Ima Kidd, Family Bureau',
+    byline: 'By Ima Kidd, Local News',
     date: '2026-10-16',
     body: [
       'After weeks of negotiations, both parties agreed to a framework that observers call "fragile but promising."',
@@ -130,10 +130,10 @@ export const STORIES: Story[] = [
   },
   {
     id: 'pancake-summit',
-    section: 'family',
+    section: 'irreverent',
     headline: 'Saturday Pancake Summit Ends in Record Stack',
     dek: 'Syrup reserves reported critically low.',
-    byline: 'By Ima Kidd, Family Bureau',
+    byline: 'By Ima Kidd, Irreverent Desk',
     date: '2026-10-17',
     body: [
       'Officials confirmed a stack of eleven before the plate surrendered.',
@@ -182,6 +182,42 @@ export const STORIES: Story[] = [
     body: [
       'In a unanimous vote of one, the cat assumed leadership of the household Friday.',
       'Shareholders were told to expect "significant restructuring of the couch."',
+    ],
+  },
+  {
+    id: 'moon-daylight',
+    section: 'us-world',
+    headline: 'Moon Requests Daytime Shift, Citing "Feeling Overlooked"',
+    dek: 'Sun says it is "open to a job share."',
+    byline: 'By Luna Tick, US and World Desk',
+    date: '2026-10-17',
+    body: [
+      'In a rare public statement, the Moon said it was tired of working nights while the Sun gets all the beach days.',
+      'Astronomers say negotiations could take several billion years, which is about average for a committee.',
+    ],
+  },
+  {
+    id: 'speed-limit-snails',
+    section: 'us-world',
+    headline: 'Nation’s Snails Petition for Lower Speed Limits on Sidewalks',
+    dek: 'Proposed limit: "whatever feels comfortable, honestly."',
+    byline: 'By Shelly Slowe, US and World Desk',
+    date: '2026-10-16',
+    body: [
+      'A petition signed by thousands of snails arrived this week, delivered by a snail, and is expected to be read by spring.',
+      'Skateboarders have called the proposal "a lot."',
+    ],
+  },
+  {
+    id: 'world-hug-day',
+    section: 'us-world',
+    headline: 'Every Country Agrees on Best Pizza Topping; Summit Ends Early',
+    dek: 'Delegates spent the extra time at a bowling alley.',
+    byline: 'By Marge Herita, US and World Desk',
+    date: '2026-10-15',
+    body: [
+      'In a surprise outcome, all delegations voted for "extra cheese" within the first five minutes.',
+      'The pineapple question was politely tabled for future generations.',
     ],
   },
 ];
