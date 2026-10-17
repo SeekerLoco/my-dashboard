@@ -1,13 +1,17 @@
-// The Daily Telegraph page: newspaper layout with in-place section tabs and deep links (?section=…#story-id).
+// The Daily Telegraph page: newspaper layout with in-place section tabs and deep links (?issue=YYYY-MM-DD&section=…#story-id), plus a 7-day edition picker.
 'use client';
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Playfair_Display } from 'next/font/google';
 import PageHeader from '@/components/PageHeader';
+import { parseLocalDate } from '@/lib/dates';
 import {
   SECTIONS,
   getSectionStories,
+  getRecentIssues,
+  issueNumbering,
+  resolveIssue,
   type SectionId,
   type Story,
 } from '@/lib/telegraph';
@@ -21,8 +25,7 @@ const isSection = (v: string | null): v is SectionId =>
   SECTIONS.some((s) => s.id === v);
 
 function formatDate(d: string) {
-  const [y, m, day] = d.split('-').map(Number);
-  return new Date(y, m - 1, day).toLocaleDateString('en-US', {
+  return parseLocalDate(d).toLocaleDateString('en-US', {
     weekday: 'long',
     month: 'long',
     day: 'numeric',
@@ -33,6 +36,7 @@ function formatDate(d: string) {
 export default function TelegraphPage() {
   const router = useRouter();
   const [section, setSection] = useState<SectionId>('front');
+  const [issueDate, setIssueDate] = useState<string | null>(null);
   const [highlight, setHighlight] = useState<string | null>(null);
 
   // Read deep link (?section=…#id) on load, then scroll to and highlight the story.
@@ -42,6 +46,7 @@ export default function TelegraphPage() {
       const params = new URLSearchParams(window.location.search);
       const s = params.get('section');
       if (isSection(s)) setSection(s);
+      setIssueDate(resolveIssue(params.get('issue'))?.date ?? null);
       const id = window.location.hash.slice(1);
       if (id) {
         setHighlight(id);
@@ -56,22 +61,33 @@ export default function TelegraphPage() {
     return () => clearTimeout(t);
   }, []);
 
+  const recent = getRecentIssues();
+  const issue = resolveIssue(issueDate);
+
+  // Update the URL query in place (no navigation); omit defaults to keep it short.
+  function sync(nextIssue: string | undefined, nextSection: SectionId) {
+    const q = new URLSearchParams();
+    if (nextIssue && nextIssue !== recent[0]?.date) q.set('issue', nextIssue);
+    if (nextSection !== 'front') q.set('section', nextSection);
+    const qs = q.toString();
+    router.replace(qs ? `/telegraph?${qs}` : '/telegraph', { scroll: false });
+  }
+
   function pick(id: SectionId) {
     setSection(id);
     setHighlight(null);
-    router.replace(id === 'front' ? '/telegraph' : `/telegraph?section=${id}`, {
-      scroll: false,
-    });
+    sync(issue?.date, id);
   }
 
-  const stories = getSectionStories(section);
+  function pickIssue(date: string) {
+    setIssueDate(date);
+    setHighlight(null);
+    sync(date, section);
+  }
+
+  const stories = getSectionStories(issue, section);
   const [lead, ...rest] = stories;
-  const today = new Date().toLocaleDateString('en-US', {
-    weekday: 'long',
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-  });
+  const issueLine = issue ? formatDate(issue.date) : 'No issues this week';
   const label = SECTIONS.find((s) => s.id === section)?.label;
 
   return (
@@ -83,7 +99,7 @@ export default function TelegraphPage() {
       >
         {/* Masthead */}
         <div className="flex justify-between text-xs uppercase tracking-widest text-stone-600 border-b border-stone-400 pb-2">
-          <span>Vol. I · No. 1</span>
+          <span>{issue ? issueNumbering(issue.date).label : '—'}</span>
           <span>Experimental Edition</span>
           <span>Price: One Smile</span>
         </div>
@@ -91,8 +107,28 @@ export default function TelegraphPage() {
           The Daily Telegraph
         </h2>
         <div className="text-center text-sm italic text-stone-700 border-y-4 border-double border-stone-800 py-1">
-          {today} · All the news that’s fit to make up
+          {issueLine} · All the news that’s fit to make up
         </div>
+
+        {/* Edition picker: issues from the last 7 days, newest first */}
+        {recent.length > 1 && (
+          <div className="flex flex-wrap justify-center gap-2 pt-3 text-xs uppercase tracking-wider">
+            {recent.map((i) => (
+              <button
+                key={i.date}
+                onClick={() => pickIssue(i.date)}
+                className={`px-2 py-0.5 rounded border transition ${i.date === issue?.date ? 'border-stone-900 bg-stone-900 text-[#f4efe3]' : 'border-stone-400 text-stone-600 hover:text-stone-900'}`}
+              >
+                No. {issueNumbering(i.date).number} ·{' '}
+                {parseLocalDate(i.date).toLocaleDateString('en-US', {
+                  weekday: 'short',
+                  month: 'short',
+                  day: 'numeric',
+                })}
+              </button>
+            ))}
+          </div>
+        )}
 
         {/* Section sub-headers */}
         <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2 border-b border-stone-400 py-3 text-sm uppercase tracking-wider">

@@ -1,4 +1,12 @@
-// The Daily Telegraph: placeholder story data (all fictional) and helpers. A bot will fill this in later.
+// The Daily Telegraph: issue data (all placeholder/fictional) and helpers.
+//
+// How issues are stored (for a future feeder bot):
+// - ISSUES below holds one Issue per local date: { date: 'YYYY-MM-DD', stories: Story[] }.
+// - To publish a new day, append an Issue with that date; story ids only need to be unique within the issue.
+// - Only the last 7 days (today plus 6 prior, local time) are shown; older issues are ignored.
+//   Pruning: a feeder can simply drop entries older than 7 days from ISSUES (nothing else references them).
+
+import { getLocalDateString } from '@/lib/dates';
 
 export type SectionId =
   | 'front'
@@ -30,7 +38,7 @@ export const SECTIONS: { id: SectionId; label: string }[] = [
   { id: 'weather', label: 'Weather' },
 ];
 
-export const STORIES: Story[] = [
+const ISSUE_2026_10_17: Story[] = [
   {
     id: 'referee-whistle',
     section: 'sports',
@@ -222,19 +230,102 @@ export const STORIES: Story[] = [
   },
 ];
 
+export type Issue = { date: string; stories: Story[] };
+
+export const ISSUES: Issue[] = [
+  { date: '2026-10-17', stories: ISSUE_2026_10_17 },
+];
+
+export const WINDOW_DAYS = 7;
+
+const ROMAN: [number, string][] = [
+  [1000, 'M'],
+  [900, 'CM'],
+  [500, 'D'],
+  [400, 'CD'],
+  [100, 'C'],
+  [90, 'XC'],
+  [50, 'L'],
+  [40, 'XL'],
+  [10, 'X'],
+  [9, 'IX'],
+  [5, 'V'],
+  [4, 'IV'],
+  [1, 'I'],
+];
+
+export function toRoman(n: number): string {
+  let out = '';
+  for (const [v, r] of ROMAN)
+    while (n >= v) {
+      out += r;
+      n -= v;
+    }
+  return out;
+}
+
+// Whole days between two YYYY-MM-DD dates (calendar math via UTC components, so no DST/zone drift).
+function dayDiff(from: string, to: string): number {
+  const ms = (d: string) => {
+    const [y, m, day] = d.split('-').map(Number);
+    return Date.UTC(y, m - 1, day);
+  };
+  return Math.round((ms(to) - ms(from)) / 86400000);
+}
+
+const FIRST_ISSUE = '2026-10-17';
+
+// Volume = year - 2025. No. 1 on 2026-10-17, +1 per day, resets to No. 1 every Jan 1 (so day of year from 2027).
+export function issueNumbering(date: string): {
+  volume: number;
+  number: number;
+  label: string;
+} {
+  const year = Number(date.slice(0, 4));
+  const volume = year - 2025;
+  const start = year === 2026 ? FIRST_ISSUE : `${year}-01-01`;
+  const number = dayDiff(start, date) + 1;
+  return { volume, number, label: `Vol. ${toRoman(volume)} · No. ${number}` };
+}
+
+// Issues within the rolling window (today + 6 prior), newest first.
+export function getRecentIssues(today = getLocalDateString()): Issue[] {
+  return ISSUES.filter((i) => {
+    const age = dayDiff(i.date, today);
+    return age >= 0 && age < WINDOW_DAYS;
+  }).sort((a, b) => b.date.localeCompare(a.date));
+}
+
+// The requested issue if it's in the window, otherwise the latest one (or undefined if none).
+export function resolveIssue(
+  date: string | null,
+  today = getLocalDateString(),
+): Issue | undefined {
+  const recent = getRecentIssues(today);
+  return recent.find((i) => i.date === date) ?? recent[0];
+}
+
 // Stories for a section; Front Page returns the front-page picks (lead first).
-export function getSectionStories(section: SectionId): Story[] {
+export function getSectionStories(
+  issue: Issue | undefined,
+  section: SectionId,
+): Story[] {
+  const stories = issue?.stories ?? [];
   return section === 'front'
-    ? STORIES.filter((s) => s.frontPage)
-    : STORIES.filter((s) => s.section === section);
+    ? stories.filter((s) => s.frontPage)
+    : stories.filter((s) => s.section === section);
 }
 
-// Top 5 front-page headlines for the dashboard card.
-export function getTopHeadlines(limit = 5): Story[] {
-  return getSectionStories('front').slice(0, limit);
+// Latest issue and its top front-page headlines for the dashboard card.
+export function getTopHeadlines(limit = 5): {
+  issue?: Issue;
+  stories: Story[];
+} {
+  const issue = resolveIssue(null);
+  return { issue, stories: getSectionStories(issue, 'front').slice(0, limit) };
 }
 
-// Deep link to a story inside the Telegraph page.
-export function storyHref(story: Story): string {
-  return `/telegraph?section=${story.section}#${story.id}`;
+// Deep link to a story inside a given issue.
+export function storyHref(issue: Issue, story: Story): string {
+  return `/telegraph?issue=${issue.date}&section=${story.section}#${story.id}`;
 }
