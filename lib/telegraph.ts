@@ -1,7 +1,13 @@
 // The Daily Telegraph: placeholder story data (all fictional) and helpers. A bot will fill this in later.
 
 export type SectionId =
-  'front' | 'local' | 'markets' | 'sports' | 'family' | 'weather';
+  | 'front'
+  | 'local'
+  | 'markets'
+  | 'sports'
+  | 'family'
+  | 'irreverent'
+  | 'weather';
 
 export type Story = {
   id: string;
@@ -20,6 +26,7 @@ export const SECTIONS: { id: SectionId; label: string }[] = [
   { id: 'markets', label: 'Markets' },
   { id: 'sports', label: 'Sports' },
   { id: 'family', label: 'Family' },
+  { id: 'irreverent', label: 'Irreverent' },
   { id: 'weather', label: 'Weather' },
 ];
 
@@ -140,6 +147,42 @@ export const STORIES: Story[] = [
     byline: 'By Stormy Skye, Weather Center',
     date: '2026-10-16',
     body: ['Gusts will redistribute leaves fairly, according to no one.'],
+  },
+  {
+    id: 'sock-union',
+    section: 'irreverent',
+    headline: 'Missing Socks Form Union, Demand Better Dryer Conditions',
+    dek: 'Spokes-sock says the lint trap "has seen things."',
+    byline: 'By Lefty Unmatched, Irreverent Desk',
+    date: '2026-10-17',
+    body: [
+      'A coalition of single socks emerged from behind the dryer Saturday with a list of demands, including gentler spin cycles and reunification with their partners.',
+      'Management (Dad) has agreed to talks but refuses to discuss the sock that went missing in 2019.',
+    ],
+  },
+  {
+    id: 'remote-witness',
+    section: 'irreverent',
+    headline: 'TV Remote Enters Witness Protection After Couch Incident',
+    dek: 'Last seen between the cushions, now living under a new name.',
+    byline: 'By Cush N. Crevice, Irreverent Desk',
+    date: '2026-10-16',
+    body: [
+      'Authorities believe the remote fled after one too many arguments over what to watch.',
+      'It is now reportedly going by "The Clicker" and enjoying a quiet life inside a laundry basket.',
+    ],
+  },
+  {
+    id: 'cat-ceo',
+    section: 'irreverent',
+    headline: 'Household Cat Named CEO, Immediately Schedules Nap',
+    dek: 'First executive order: all sunbeams belong to the cat.',
+    byline: 'By Whisker Wells, Irreverent Desk',
+    date: '2026-10-15',
+    body: [
+      'In a unanimous vote of one, the cat assumed leadership of the household Friday.',
+      'Shareholders were told to expect "significant restructuring of the couch."',
+    ],
   },
 ];
 
