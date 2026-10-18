@@ -6,12 +6,14 @@ import { useRouter } from 'next/navigation';
 import { Playfair_Display } from 'next/font/google';
 import PageHeader from '@/components/PageHeader';
 import { parseLocalDate } from '@/lib/dates';
+import Sparkline from '@/components/charts/Sparkline';
 import {
   SECTIONS,
-  getSectionStories,
   getRecentIssues,
   issueNumbering,
   resolveIssue,
+  sectionLabel,
+  type Section,
   type SectionId,
   type Story,
 } from '@/lib/telegraph';
@@ -85,8 +87,7 @@ export default function TelegraphPage() {
     sync(date, section);
   }
 
-  const stories = getSectionStories(issue, section);
-  const [lead, ...rest] = stories;
+  const sec = issue?.sections[section];
   const issueLine = issue ? formatDate(issue.date) : 'No issues this week';
   const label = SECTIONS.find((s) => s.id === section)?.label;
 
@@ -100,14 +101,17 @@ export default function TelegraphPage() {
         {/* Masthead */}
         <div className="flex justify-between text-xs uppercase tracking-widest text-stone-600 border-b border-stone-400 pb-2">
           <span>{issue ? issueNumbering(issue.date).label : '—'}</span>
-          <span>Experimental Edition</span>
+          <span>Daily Edition</span>
           <span>Price: One Smile</span>
         </div>
         <h2 className="text-center text-5xl md:text-7xl font-black tracking-tight py-4">
           The Daily Telegraph
         </h2>
         <div className="text-center text-sm italic text-stone-700 border-y-4 border-double border-stone-800 py-1">
-          {issueLine} · All the news that’s fit to make up
+          {issueLine} ·{' '}
+          {issue?.editor
+            ? `Edited by ${issue.editor}`
+            : 'All the news that’s fit to print'}
         </div>
 
         {/* Edition picker: issues from the last 7 days, newest first */}
@@ -149,26 +153,314 @@ export default function TelegraphPage() {
           </h3>
         )}
 
-        {lead ? (
-          <div className="mt-6 grid gap-8 lg:grid-cols-3">
-            <StoryBlock story={lead} lead highlight={highlight === lead.id} />
-            <div className="lg:border-l lg:border-stone-400 lg:pl-8 space-y-6 divide-y divide-stone-300">
-              {rest.map((s) => (
-                <StoryBlock
-                  key={s.id}
-                  story={s}
-                  highlight={highlight === s.id}
-                />
-              ))}
-            </div>
-          </div>
-        ) : (
+        {!issue ? (
           <p className="mt-6 text-center italic text-stone-600">
-            No stories yet.
+            No issues this week.
           </p>
+        ) : !sec?.available ? (
+          <p className="mt-6 text-center italic text-stone-600">
+            This section is unavailable in this edition
+            {sec?.status ? ` (${sec.status})` : ''}.
+          </p>
+        ) : (
+          <>
+            {section === 'markets' && <MarketsBlock sec={sec} />}
+            {section === 'weather' && <WeatherBlock sec={sec} />}
+            {section === 'sports' && <ScoresBlock sec={sec} />}
+            <StoryGrid
+              stories={sec.stories}
+              highlight={highlight}
+              showFrom={section === 'front'}
+              empty={section !== 'markets' && section !== 'weather'}
+            />
+          </>
         )}
       </article>
     </main>
+  );
+}
+
+const pct = (v?: number) =>
+  v === undefined ? '—' : `${v > 0 ? '+' : ''}${v.toFixed(2)}%`;
+const pctClass = (v?: number) =>
+  v === undefined ? '' : v >= 0 ? 'text-emerald-800' : 'text-red-800';
+
+function SourceLine({ story }: { story: Story }) {
+  if (!story.source_name && !story.source_url) return null;
+  return (
+    <p className="mt-1 text-xs text-stone-600">
+      Source:{' '}
+      {story.source_url ? (
+        <a
+          href={story.source_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline hover:text-stone-900"
+        >
+          {story.source_name || story.source_url}
+        </a>
+      ) : (
+        story.source_name
+      )}
+    </p>
+  );
+}
+
+function StoryGrid({
+  stories,
+  highlight,
+  showFrom,
+  empty,
+}: {
+  stories: Story[];
+  highlight: string | null;
+  showFrom?: boolean;
+  empty?: boolean;
+}) {
+  const [lead, ...rest] = stories;
+  if (!lead)
+    return empty ? (
+      <p className="mt-6 text-center italic text-stone-600">No stories yet.</p>
+    ) : null;
+  return (
+    <div className="mt-6 grid gap-8 lg:grid-cols-3">
+      <StoryBlock
+        story={lead}
+        lead
+        showFrom={showFrom}
+        highlight={highlight === lead.id}
+      />
+      <div className="lg:border-l lg:border-stone-400 lg:pl-8 space-y-6 divide-y divide-stone-300">
+        {rest.map((s) => (
+          <StoryBlock
+            key={s.id}
+            story={s}
+            showFrom={showFrom}
+            highlight={highlight === s.id}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function MarketsBlock({ sec }: { sec: Section }) {
+  const b = sec.breadth;
+  return (
+    <div className="mt-6 space-y-6">
+      {sec.table && sec.table.length > 0 && (
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm border-y-2 border-stone-800">
+            <thead className="text-xs uppercase tracking-wider text-stone-600 border-b border-stone-400">
+              <tr>
+                <th className="text-left py-1 pr-2">Index</th>
+                <th className="text-right px-2">Close</th>
+                <th className="text-right px-2">Day</th>
+                <th className="text-right px-2">Week</th>
+                <th className="text-right px-2">Month</th>
+                <th className="text-right px-2">YTD</th>
+                <th className="text-center px-2">40-wk</th>
+                <th className="text-right px-2">RSI 14</th>
+                <th className="text-right pl-2">MACD</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-stone-300">
+              {sec.table.map((r) => {
+                const rsi = r.rsi_series ?? [];
+                const macd = (r.macd_series ?? []).map((m) => m.macd);
+                return (
+                  <tr key={r.symbol}>
+                    <td className="py-1 pr-2">
+                      <span className="font-bold">{r.name}</span>{' '}
+                      <span className="text-xs text-stone-500">{r.symbol}</span>
+                    </td>
+                    <td className="text-right px-2 tabular-nums">
+                      {r.last_close?.toLocaleString('en-US', {
+                        maximumFractionDigits: 2,
+                      }) ?? '—'}
+                    </td>
+                    {[r.pct_day, r.pct_week, r.pct_month, r.pct_ytd].map(
+                      (v, i) => (
+                        <td
+                          key={i}
+                          className={`text-right px-2 tabular-nums ${pctClass(v)}`}
+                        >
+                          {pct(v)}
+                        </td>
+                      ),
+                    )}
+                    <td className="text-center px-2">{r.vs_40wk_sma ?? '—'}</td>
+                    <td className="text-right px-2 tabular-nums whitespace-nowrap">
+                      {r.rsi_14?.toFixed(1) ?? '—'}
+                      <Sparkline
+                        data={rsi}
+                        positive={rsi[rsi.length - 1] >= rsi[0]}
+                      />
+                    </td>
+                    <td className="text-right pl-2 tabular-nums whitespace-nowrap">
+                      {r.macd ? r.macd.histogram.toFixed(2) : '—'}
+                      <Sparkline
+                        data={macd}
+                        positive={(r.macd?.histogram ?? 0) >= 0}
+                      />
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+          <p className="mt-1 text-xs text-stone-500">
+            {sec.as_of_close ? `As of close ${sec.as_of_close}. ` : ''}MACD
+            column shows the histogram; sparklines show recent RSI and MACD
+            line.
+          </p>
+        </div>
+      )}
+      <div className="grid gap-6 md:grid-cols-3">
+        {b && (
+          <div className="border border-stone-400 p-3">
+            <div className="text-xs uppercase tracking-wider text-stone-600">
+              {b.label ?? 'Market breadth'}
+            </div>
+            <div className="text-3xl font-black">
+              {b.value?.toFixed(1) ?? '—'}
+              {b.direction && (
+                <span className="ml-2 text-base font-normal italic">
+                  {b.direction}
+                </span>
+              )}
+            </div>
+            {b.prior_value !== undefined && (
+              <div className="text-xs text-stone-600">
+                Prior: {b.prior_value.toFixed(1)}
+              </div>
+            )}
+            {b.reading && (
+              <div className="mt-1 text-sm font-bold uppercase">
+                {b.reading}
+              </div>
+            )}
+            {b.note && <div className="text-xs text-stone-500">{b.note}</div>}
+          </div>
+        )}
+        {sec.summary && (
+          <p className="md:col-span-2 leading-relaxed first-letter:text-4xl first-letter:font-black first-letter:float-left first-letter:mr-2 first-letter:leading-none">
+            {sec.summary}
+          </p>
+        )}
+      </div>
+      {sec.portfolio_news && sec.portfolio_news.length > 0 && (
+        <div>
+          <h4 className="text-lg font-black border-b border-stone-800 mb-2">
+            News by Symbol
+          </h4>
+          <div className="grid gap-4 md:grid-cols-3">
+            {sec.portfolio_news.map((p) => (
+              <div key={p.symbol}>
+                <div className="font-bold tracking-wider">{p.symbol}</div>
+                {(p.stories ?? []).length === 0 && (
+                  <p className="text-sm italic text-stone-500">No news.</p>
+                )}
+                {(p.stories ?? []).map((st, i) => (
+                  <div key={i} className="mt-2 text-sm">
+                    <div className="font-bold leading-snug">{st.headline}</div>
+                    {st.summary && (
+                      <div className="text-stone-700">{st.summary}</div>
+                    )}
+                    <SourceLine story={{ ...st, id: `${p.symbol}-${i}` }} />
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function WeatherBlock({ sec }: { sec: Section }) {
+  return (
+    <div className="mt-6 space-y-6">
+      {sec.summary && (
+        <p className="text-lg leading-relaxed md:columns-2 gap-8 first-letter:text-5xl first-letter:font-black first-letter:float-left first-letter:mr-2 first-letter:leading-none">
+          {sec.summary}
+        </p>
+      )}
+      {sec.maps && sec.maps.length > 0 && (
+        <div className="grid gap-6 md:grid-cols-2">
+          {sec.maps.map((m, i) => (
+            <figure key={i} className="border border-stone-400 p-2">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={m.image_url}
+                alt={m.title ?? 'Weather map'}
+                className="w-full h-auto"
+                loading="lazy"
+              />
+              <figcaption className="mt-1 text-xs text-stone-600">
+                {m.title}
+                {m.source_url && (
+                  <>
+                    {' · '}
+                    <a
+                      href={m.source_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline"
+                    >
+                      {m.source_name ?? 'Source'}
+                    </a>
+                  </>
+                )}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ScoresBlock({ sec }: { sec: Section }) {
+  if (!sec.scores || sec.scores.length === 0) return null;
+  return (
+    <div className="mt-6">
+      <h4 className="text-lg font-black border-b border-stone-800 mb-2">
+        Scoreboard
+      </h4>
+      <ul className="grid gap-x-8 gap-y-1 md:grid-cols-2 text-sm">
+        {sec.scores.map((sc, i) => (
+          <li
+            key={i}
+            className="flex justify-between border-b border-stone-300 py-1"
+          >
+            <span>
+              <span className="font-bold">{sc.team}</span>
+              {sc.opponent && ` vs. ${sc.opponent}`}
+              {sc.date && (
+                <span className="text-xs text-stone-500"> · {sc.date}</span>
+              )}
+            </span>
+            <span className="tabular-nums">
+              {sc.result && <span className="font-bold mr-1">{sc.result}</span>}
+              {sc.source_url ? (
+                <a
+                  href={sc.source_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline"
+                >
+                  {sc.score ?? 'Box score'}
+                </a>
+              ) : (
+                sc.score
+              )}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 
@@ -176,41 +468,62 @@ function StoryBlock({
   story,
   lead,
   highlight,
+  showFrom,
 }: {
   story: Story;
   lead?: boolean;
   highlight?: boolean;
+  showFrom?: boolean;
 }) {
+  const from = showFrom ? sectionLabel(story.from_section) : undefined;
+  const meta = [
+    story.byline,
+    story.location,
+    story.impact && `Impact: ${story.impact}`,
+    story.published_at && formatDate(story.published_at.slice(0, 10)),
+  ].filter(Boolean);
   return (
     <section
       id={story.id}
       className={`scroll-mt-24 rounded transition-colors duration-700 ${lead ? 'lg:col-span-2' : 'pt-6 first:pt-0'} ${highlight ? 'bg-amber-200/70' : ''}`}
     >
+      {from && (
+        <div className="text-xs uppercase tracking-widest text-stone-500">
+          {from}
+        </div>
+      )}
       <h4
         className={`font-black leading-tight ${lead ? 'text-4xl' : 'text-xl'}`}
       >
         {story.headline}
       </h4>
-      <p
-        className={`mt-2 italic text-stone-700 ${lead ? 'text-lg' : 'text-sm'}`}
-      >
-        {story.dek}
-      </p>
-      <p className="mt-2 text-xs uppercase tracking-wider text-stone-500">
-        {story.byline} · {formatDate(story.date)}
-      </p>
-      <div
-        className={`mt-3 text-stone-800 leading-relaxed ${lead ? 'md:columns-2 gap-8' : 'text-sm'}`}
-      >
-        {story.body.map((p, i) => (
-          <p
-            key={i}
-            className={`mb-3 ${lead && i === 0 ? 'first-letter:text-5xl first-letter:font-black first-letter:float-left first-letter:mr-2 first-letter:leading-none' : ''}`}
-          >
-            {p}
-          </p>
-        ))}
-      </div>
+      {story.summary && (
+        <p
+          className={`mt-2 italic text-stone-700 ${lead ? 'text-lg' : 'text-sm'}`}
+        >
+          {story.summary}
+        </p>
+      )}
+      {meta.length > 0 && (
+        <p className="mt-2 text-xs uppercase tracking-wider text-stone-500">
+          {meta.join(' · ')}
+        </p>
+      )}
+      <SourceLine story={story} />
+      {story.body && story.body.length > 0 && (
+        <div
+          className={`mt-3 text-stone-800 leading-relaxed ${lead ? 'md:columns-2 gap-8' : 'text-sm'}`}
+        >
+          {story.body.map((p, i) => (
+            <p
+              key={i}
+              className={`mb-3 ${lead && i === 0 ? 'first-letter:text-5xl first-letter:font-black first-letter:float-left first-letter:mr-2 first-letter:leading-none' : ''}`}
+            >
+              {p}
+            </p>
+          ))}
+        </div>
+      )}
     </section>
   );
 }
