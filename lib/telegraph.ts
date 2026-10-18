@@ -45,21 +45,25 @@ export type RawStory = {
   body?: string[];
 };
 
-export type Macd = { macd: number; signal: number; histogram: number };
+export type Macd = {
+  macd: number | null;
+  signal: number | null;
+  histogram: number | null;
+};
 
 export type MarketRow = {
   name: string;
   symbol: string;
-  last_close?: number;
-  pct_day?: number;
-  pct_week?: number;
-  pct_month?: number;
-  pct_ytd?: number;
-  vs_40wk_sma?: string;
-  rsi_14?: number;
-  rsi_series?: number[];
-  macd?: Macd;
-  macd_series?: Macd[];
+  last_close?: number | null;
+  pct_day?: number | null;
+  pct_week?: number | null;
+  pct_month?: number | null;
+  pct_ytd?: number | null;
+  vs_40wk_sma?: string | null;
+  rsi_14?: number | null;
+  rsi_series?: (number | null)[];
+  macd?: Macd | null;
+  macd_series?: (Macd | null)[];
 };
 
 export type Score = {

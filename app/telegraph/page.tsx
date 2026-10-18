@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Playfair_Display } from 'next/font/google';
 import PageHeader from '@/components/PageHeader';
-import { parseLocalDate } from '@/lib/dates';
+import { getLocalDateString, parseLocalDate } from '@/lib/dates';
 import Sparkline from '@/components/charts/Sparkline';
 import {
   SECTIONS,
@@ -33,6 +33,13 @@ function formatDate(d: string) {
     day: 'numeric',
     year: 'numeric',
   });
+}
+
+// published_at is either date-only ('2026-10-17', a local date) or a full timestamp (converted to local); date only, no time.
+function formatPublished(v: string) {
+  if (/^\d{4}-\d{2}-\d{2}$/.test(v)) return formatDate(v);
+  const d = new Date(v);
+  return Number.isNaN(d.getTime()) ? '' : formatDate(getLocalDateString(d));
 }
 
 export default function TelegraphPage() {
@@ -180,10 +187,14 @@ export default function TelegraphPage() {
   );
 }
 
-const pct = (v?: number) =>
-  v === undefined ? '—' : `${v > 0 ? '+' : ''}${v.toFixed(2)}%`;
-const pctClass = (v?: number) =>
-  v === undefined ? '' : v >= 0 ? 'text-emerald-800' : 'text-red-800';
+// Markets values may be null/missing: show 'n/a' instead of NaN.
+const num = (v: unknown): v is number =>
+  typeof v === 'number' && Number.isFinite(v);
+const fixed = (v: unknown, d = 2) => (num(v) ? v.toFixed(d) : 'n/a');
+const pct = (v: unknown) =>
+  num(v) ? `${v > 0 ? '+' : ''}${v.toFixed(2)}%` : 'n/a';
+const pctClass = (v: unknown) =>
+  num(v) ? (v >= 0 ? 'text-emerald-800' : 'text-red-800') : 'text-stone-500';
 
 function SourceLine({ story }: { story: Story }) {
   if (!story.source_name && !story.source_url) return null;
@@ -266,8 +277,10 @@ function MarketsBlock({ sec }: { sec: Section }) {
             </thead>
             <tbody className="divide-y divide-stone-300">
               {sec.table.map((r) => {
-                const rsi = r.rsi_series ?? [];
-                const macd = (r.macd_series ?? []).map((m) => m.macd);
+                const rsi = (r.rsi_series ?? []).filter(num);
+                const macd = (r.macd_series ?? [])
+                  .map((m) => m?.macd)
+                  .filter(num);
                 return (
                   <tr key={r.symbol}>
                     <td className="py-1 pr-2">
@@ -275,9 +288,11 @@ function MarketsBlock({ sec }: { sec: Section }) {
                       <span className="text-xs text-stone-500">{r.symbol}</span>
                     </td>
                     <td className="text-right px-2 tabular-nums">
-                      {r.last_close?.toLocaleString('en-US', {
-                        maximumFractionDigits: 2,
-                      }) ?? '—'}
+                      {num(r.last_close)
+                        ? r.last_close.toLocaleString('en-US', {
+                            maximumFractionDigits: 2,
+                          })
+                        : 'n/a'}
                     </td>
                     {[r.pct_day, r.pct_week, r.pct_month, r.pct_ytd].map(
                       (v, i) => (
@@ -289,19 +304,23 @@ function MarketsBlock({ sec }: { sec: Section }) {
                         </td>
                       ),
                     )}
-                    <td className="text-center px-2">{r.vs_40wk_sma ?? '—'}</td>
+                    <td className="text-center px-2">
+                      {r.vs_40wk_sma ?? 'n/a'}
+                    </td>
                     <td className="text-right px-2 tabular-nums whitespace-nowrap">
-                      {r.rsi_14?.toFixed(1) ?? '—'}
+                      {fixed(r.rsi_14, 1)}
                       <Sparkline
                         data={rsi}
                         positive={rsi[rsi.length - 1] >= rsi[0]}
                       />
                     </td>
                     <td className="text-right pl-2 tabular-nums whitespace-nowrap">
-                      {r.macd ? r.macd.histogram.toFixed(2) : '—'}
+                      {fixed(r.macd?.histogram)}
                       <Sparkline
                         data={macd}
-                        positive={(r.macd?.histogram ?? 0) >= 0}
+                        positive={
+                          (num(r.macd?.histogram) ? r.macd.histogram : 0) >= 0
+                        }
                       />
                     </td>
                   </tr>
@@ -323,14 +342,14 @@ function MarketsBlock({ sec }: { sec: Section }) {
               {b.label ?? 'Market breadth'}
             </div>
             <div className="text-3xl font-black">
-              {b.value?.toFixed(1) ?? '—'}
+              {fixed(b.value, 1)}
               {b.direction && (
                 <span className="ml-2 text-base font-normal italic">
                   {b.direction}
                 </span>
               )}
             </div>
-            {b.prior_value !== undefined && (
+            {num(b.prior_value) && (
               <div className="text-xs text-stone-600">
                 Prior: {b.prior_value.toFixed(1)}
               </div>
@@ -480,7 +499,7 @@ function StoryBlock({
     story.byline,
     story.location,
     story.impact && `Impact: ${story.impact}`,
-    story.published_at && formatDate(story.published_at.slice(0, 10)),
+    story.published_at && formatPublished(story.published_at),
   ].filter(Boolean);
   return (
     <section
