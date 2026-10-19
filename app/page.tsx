@@ -8,6 +8,7 @@ import SdltCard from '@/components/cards/SdltCard';
 import HabitsCard from '@/components/cards/HabitsCard';
 import SoccerCard from '@/components/cards/SoccerCard';
 import TelegraphCard from '@/components/cards/TelegraphCard';
+import JournalCard from '@/components/cards/JournalCard';
 import LogoutButton from '@/components/LogoutButton';
 
 export default function Home() {
@@ -48,6 +49,9 @@ export default function Home() {
 
         {/* Daily Telegraph card */}
         <TelegraphCard />
+
+        {/* Journal card */}
+        <JournalCard />
       </div>
     </main>
   );
