@@ -75,6 +75,19 @@ export type Score = {
   source_url?: string;
 };
 
+export type FearGreed = {
+  score?: number | null;
+  rating?: string | null;
+  previous_close?: number | null;
+  previous_1_week?: number | null;
+  previous_1_month?: number | null;
+  previous_1_year?: number | null;
+  as_of?: string | null;
+  source_name?: string | null;
+  source_url?: string | null;
+  commentary?: string | null;
+};
+
 export type RawSection = {
   status?: string;
   stories?: RawStory[];
@@ -89,6 +102,7 @@ export type RawSection = {
     reading?: string;
     note?: string;
   };
+  fear_greed?: FearGreed | null;
   summary?: string;
   portfolio_news?: { symbol: string; stories?: RawStory[] }[];
   headlines?: RawStory[];

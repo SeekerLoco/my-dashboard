@@ -13,6 +13,7 @@ import {
   issueNumbering,
   resolveIssue,
   sectionLabel,
+  type FearGreed,
   type Section,
   type SectionId,
   type Story,
@@ -257,6 +258,8 @@ function StoryGrid({
 
 function MarketsBlock({ sec }: { sec: Section }) {
   const b = sec.breadth;
+  const fg = sec.fear_greed;
+  const boxes = (b ? 1 : 0) + (fg ? 1 : 0);
   return (
     <div className="mt-6 space-y-6">
       {sec.table && sec.table.length > 0 && (
@@ -362,8 +365,11 @@ function MarketsBlock({ sec }: { sec: Section }) {
             {b.note && <div className="text-xs text-stone-500">{b.note}</div>}
           </div>
         )}
+        {fg && <FearGreedBox fg={fg} />}
         {sec.summary && (
-          <p className="md:col-span-2 leading-relaxed first-letter:text-4xl first-letter:font-black first-letter:float-left first-letter:mr-2 first-letter:leading-none">
+          <p
+            className={`${boxes === 1 ? 'md:col-span-2' : 'md:col-span-3'} leading-relaxed first-letter:text-4xl first-letter:font-black first-letter:float-left first-letter:mr-2 first-letter:leading-none`}
+          >
             {sec.summary}
           </p>
         )}
@@ -393,6 +399,137 @@ function MarketsBlock({ sec }: { sec: Section }) {
             ))}
           </div>
         </div>
+      )}
+    </div>
+  );
+}
+
+const titleCase = (s: string) => s.replace(/\b\w/g, (c) => c.toUpperCase());
+
+function fgColor(v: number) {
+  if (v < 25) return '#991b1b';
+  if (v < 45) return '#c2410c';
+  if (v <= 55) return '#a16207';
+  if (v <= 75) return '#4d7c0f';
+  return '#166534';
+}
+
+function formatAsOf(v: string) {
+  const d = new Date(v);
+  if (Number.isNaN(d.getTime())) return v;
+  return d.toLocaleString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    timeZoneName: 'short',
+  });
+}
+
+function FearGreedBox({ fg }: { fg: FearGreed }) {
+  const score = num(fg.score)
+    ? Math.max(0, Math.min(100, Math.round(fg.score)))
+    : null;
+  const bands = ['#991b1b', '#c2410c', '#a16207', '#4d7c0f', '#166534'];
+  const pt = (v: number, r: number) => {
+    const a = Math.PI * (1 - v / 100);
+    return [60 + r * Math.cos(a), 60 - r * Math.sin(a)];
+  };
+  const arc = (from: number, to: number) => {
+    const [x1, y1] = pt(from, 48);
+    const [x2, y2] = pt(to, 48);
+    return `M${x1.toFixed(2)} ${y1.toFixed(2)} A48 48 0 0 1 ${x2.toFixed(2)} ${y2.toFixed(2)}`;
+  };
+  const prev: [string, number | null | undefined][] = [
+    ['Prev close', fg.previous_close],
+    ['1 week', fg.previous_1_week],
+    ['1 month', fg.previous_1_month],
+    ['1 year', fg.previous_1_year],
+  ];
+  return (
+    <div className="border border-stone-400 p-3">
+      <div className="text-xs uppercase tracking-wider text-stone-600">
+        Fear &amp; Greed Index
+      </div>
+      <div className="flex items-end gap-3">
+        <svg
+          viewBox="0 0 120 66"
+          className="w-28 shrink-0"
+          role="img"
+          aria-label={`Fear and Greed gauge${score !== null ? `: ${score}` : ''}`}
+        >
+          {bands.map((c, i) => (
+            <path
+              key={i}
+              d={arc(i * 20 + (i ? 0.8 : 0), (i + 1) * 20 - (i < 4 ? 0.8 : 0))}
+              stroke={c}
+              strokeWidth="10"
+              fill="none"
+            />
+          ))}
+          {score !== null &&
+            (() => {
+              const [x, y] = pt(score, 40);
+              return (
+                <line
+                  x1="60"
+                  y1="60"
+                  x2={x.toFixed(2)}
+                  y2={y.toFixed(2)}
+                  stroke="#1c1917"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                />
+              );
+            })()}
+          <circle cx="60" cy="60" r="4" fill="#1c1917" />
+        </svg>
+        <div>
+          <div
+            className="text-3xl font-black leading-none"
+            style={score !== null ? { color: fgColor(score) } : undefined}
+          >
+            {score ?? 'n/a'}
+          </div>
+          {fg.rating && (
+            <div className="mt-1 text-sm font-bold">{titleCase(fg.rating)}</div>
+          )}
+        </div>
+      </div>
+      <div className="mt-2 grid grid-cols-4 gap-1 text-center text-xs text-stone-600">
+        {prev.map(([label, v]) => (
+          <div key={label}>
+            <div className="uppercase tracking-wider text-[10px]">{label}</div>
+            <div className="font-bold tabular-nums text-stone-800">
+              {num(v) ? Math.round(v) : 'n/a'}
+            </div>
+          </div>
+        ))}
+      </div>
+      {fg.commentary && (
+        <p className="mt-2 text-sm italic leading-snug">{fg.commentary}</p>
+      )}
+      {fg.as_of && (
+        <div className="mt-1 text-xs text-stone-500">
+          As of {formatAsOf(fg.as_of)}
+        </div>
+      )}
+      {(fg.source_name || fg.source_url) && (
+        <p className="mt-1 text-xs text-stone-600">
+          Source:{' '}
+          {fg.source_url ? (
+            <a
+              href={fg.source_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-stone-900"
+            >
+              {fg.source_name || fg.source_url}
+            </a>
+          ) : (
+            fg.source_name
+          )}
+        </p>
       )}
     </div>
   );
