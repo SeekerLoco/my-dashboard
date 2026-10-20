@@ -1,0 +1,1891 @@
+{
+  "edition_date": "2026-10-20",
+  "generated_at": "2026-10-20T01:04:24-06:00",
+  "editor": "Thaddeus Pendelton",
+  "sections": {
+    "front_page": {
+      "status": "complete",
+      "stories": [
+        {
+          "headline": "Rays beat Guardians 7-3, win ALCS and head to the World Series",
+          "summary": "Junior Caminero and Yandy Díaz homered and Freddy Peralta pitched 5 1/3 innings as Tampa Bay took the series 4-2. The Rays face the Milwaukee Brewers in their first full-season World Series since 2008.",
+          "source_name": "ESPN",
+          "source_url": "https://www.espn.com/mlb/story/_/id/50214010/playoffs-guardians-rays-game-6-alcs-live-takeaways",
+          "published_at": "2026-10-19",
+          "from_section": "sports"
+        },
+        {
+          "headline": "AI stocks lead a rebound as the Nasdaq gains 1.1%",
+          "summary": "The Nasdaq rose 1.11% to 26,430.89 and the S&P 500 0.41% to 7,690.73 after last week's worst week since June, while the Dow slipped 0.07%; most stocks outside AI and tech fell, and seven of 11 S&P sectors closed lower.",
+          "source_name": "AP News / Reuters",
+          "source_url": "https://www.investing.com/news/economy-news/wall-st-futures-climb-as-ai-stocks-rebound-oil-yields-fall-4956777",
+          "published_at": "2026-10-19",
+          "from_section": "markets"
+        },
+        {
+          "headline": "Houthi missiles kill at least 53 at Yemeni government camp",
+          "summary": "Houthi rebels fired ballistic missiles at the al-Alam military camp in Shabwa province Monday, killing at least 53 soldiers, one of the deadliest attacks since a 2022 ceasefire collapsed. Oil rose on the news.",
+          "source_name": "AP via Daily Record",
+          "source_url": "https://www.dailyrecordnews.com/ap_news/us/ap-news-summary-at-9-35-a-m-edt/article_4522b62d-6e55-51d2-b6f5-909a02734adf.html",
+          "published_at": "2026-10-19",
+          "from_section": "us_world"
+        },
+        {
+          "headline": "France orders local curfews after a weekend of rioting and looting",
+          "summary": "PM Sébastien Lecornu told prefects to impose limited curfews after violence targeting city halls and businesses led to 2,400 arrests on Sunday; European stocks fell more than 1%.",
+          "source_name": "AP via Daily Record",
+          "source_url": "https://www.dailyrecordnews.com/ap_news/us/ap-news-summary-at-9-35-a-m-edt/article_4522b62d-6e55-51d2-b6f5-909a02734adf.html",
+          "published_at": "2026-10-19",
+          "from_section": "us_world"
+        }
+      ]
+    },
+    "local": {
+      "status": "complete",
+      "stories": [
+        {
+          "headline": "Court weighs lawsuit against Amendment 87 two weeks before Election Day",
+          "summary": "A Denver court is hearing a lawsuit that could affect the graduated income tax measure's place on the November ballot, a statewide question for Highlands Ranch voters too.",
+          "source_name": "Denver7",
+          "source_url": "https://www.denver7.com/news/local-news/court-hearing-questions-on-amendment-87-two-weeks-before-election-day",
+          "published_at": "2026-10-19T07:45:16-06:00",
+          "location": "Denver",
+          "impact": "High",
+          "composite_score": 5
+        },
+        {
+          "headline": "Castle Rock proposes rezoning Cantril School grounds",
+          "summary": "The plan would put the school's 12 historic residential lots under one public-land designation and remove internal lot lines and an alley ahead of future grounds improvements.",
+          "source_name": "The Badger (Denver)",
+          "source_url": "https://denver.thebadger.news/articles/2026-10-19-castle-rock-cantril-school-rezoning-grounds-plan",
+          "published_at": "2026-10-19T12:03:22Z",
+          "location": "Castle Rock",
+          "impact": "Low",
+          "composite_score": 3
+        }
+      ]
+    },
+    "us_world": {
+      "status": "complete",
+      "stories": [
+        {
+          "headline": "Houthi missiles kill at least 53 at Yemeni government camp",
+          "summary": "Houthi rebels fired ballistic missiles at the al-Alam military camp in Shabwa province Monday, killing at least 53 soldiers, one of the deadliest attacks since a 2022 ceasefire collapsed. Oil rose on the news.",
+          "source_name": "AP via Daily Record",
+          "source_url": "https://www.dailyrecordnews.com/ap_news/us/ap-news-summary-at-9-35-a-m-edt/article_4522b62d-6e55-51d2-b6f5-909a02734adf.html",
+          "published_at": "2026-10-19"
+        },
+        {
+          "headline": "France orders local curfews after a weekend of rioting and looting",
+          "summary": "PM Sébastien Lecornu told prefects to impose limited curfews after violence targeting city halls and businesses led to 2,400 arrests on Sunday; European stocks fell more than 1%.",
+          "source_name": "AP via Daily Record",
+          "source_url": "https://www.dailyrecordnews.com/ap_news/us/ap-news-summary-at-9-35-a-m-edt/article_4522b62d-6e55-51d2-b6f5-909a02734adf.html",
+          "published_at": "2026-10-19"
+        },
+        {
+          "headline": "Russian strikes cut power to over half a million Ukrainians",
+          "summary": "Missiles and drones damaged more than 10 energy facilities, leaving over 500,000 people without power, heat and water; Zelenskyy said Kyiv got no early warning from partners.",
+          "source_name": "AP via Daily Record",
+          "source_url": "https://www.dailyrecordnews.com/ap_news/us/ap-news-summary-at-9-35-a-m-edt/article_4522b62d-6e55-51d2-b6f5-909a02734adf.html",
+          "published_at": "2026-10-19"
+        },
+        {
+          "headline": "Trump open to three-way nuclear talks with Xi and Putin",
+          "summary": "Trump said Monday he is open to arms-control talks with the leaders of China and Russia as soon as next month.",
+          "source_name": "Reuters via Yahoo",
+          "source_url": "https://www.yahoo.com/news/videos/ap-top-stories-october-19-144522096.html",
+          "published_at": "2026-10-19"
+        }
+      ]
+    },
+    "markets": {
+      "as_of_close": "2026-10-19",
+      "table": [
+        {
+          "name": "S&P 500",
+          "symbol": "^GSPC",
+          "last_close": 7690.73,
+          "pct_day": 0.41,
+          "pct_week": -1.49,
+          "pct_month": 0.53,
+          "pct_ytd": 12.35,
+          "vs_40wk_sma": "Above",
+          "rsi_14": 47.3,
+          "rsi_series": [
+            50.9,
+            47.5,
+            43.8,
+            50,
+            46.8,
+            44.1,
+            41.4,
+            49.6,
+            50.7,
+            59.3,
+            59.3,
+            53.7,
+            53.5,
+            56.7,
+            51,
+            49.9,
+            48.1,
+            49.6,
+            54.8,
+            59,
+            62.3,
+            60.3,
+            56.2,
+            59.9,
+            59.4,
+            59.2,
+            49.5,
+            51.9,
+            44.1,
+            47.3
+          ],
+          "macd": {
+            "macd": 12.941,
+            "signal": 23.926,
+            "histogram": -10.985
+          },
+          "macd_series": [
+            {
+              "macd": 25.058,
+              "signal": 33.481,
+              "histogram": -8.423
+            },
+            {
+              "macd": 18.803,
+              "signal": 30.545,
+              "histogram": -11.742
+            },
+            {
+              "macd": 10.126,
+              "signal": 26.461,
+              "histogram": -16.336
+            },
+            {
+              "macd": 8.419,
+              "signal": 22.853,
+              "histogram": -14.434
+            },
+            {
+              "macd": 4.035,
+              "signal": 19.089,
+              "histogram": -15.055
+            },
+            {
+              "macd": -2.178,
+              "signal": 14.836,
+              "histogram": -17.014
+            },
+            {
+              "macd": -9.727,
+              "signal": 9.923,
+              "histogram": -19.651
+            },
+            {
+              "macd": -8.675,
+              "signal": 6.204,
+              "histogram": -14.878
+            },
+            {
+              "macd": -6.735,
+              "signal": 3.616,
+              "histogram": -10.351
+            },
+            {
+              "macd": 3.972,
+              "signal": 3.687,
+              "histogram": 0.285
+            },
+            {
+              "macd": 12.31,
+              "signal": 5.412,
+              "histogram": 6.899
+            },
+            {
+              "macd": 14.028,
+              "signal": 7.135,
+              "histogram": 6.893
+            },
+            {
+              "macd": 15.061,
+              "signal": 8.72,
+              "histogram": 6.341
+            },
+            {
+              "macd": 18.833,
+              "signal": 10.743,
+              "histogram": 8.09
+            },
+            {
+              "macd": 16.81,
+              "signal": 11.956,
+              "histogram": 4.854
+            },
+            {
+              "macd": 14.008,
+              "signal": 12.367,
+              "histogram": 1.641
+            },
+            {
+              "macd": 10.113,
+              "signal": 11.916,
+              "histogram": -1.803
+            },
+            {
+              "macd": 8.136,
+              "signal": 11.16,
+              "histogram": -3.024
+            },
+            {
+              "macd": 10.983,
+              "signal": 11.125,
+              "histogram": -0.141
+            },
+            {
+              "macd": 17.176,
+              "signal": 12.335,
+              "histogram": 4.841
+            },
+            {
+              "macd": 25.419,
+              "signal": 14.952,
+              "histogram": 10.468
+            },
+            {
+              "macd": 30.22,
+              "signal": 18.005,
+              "histogram": 12.214
+            },
+            {
+              "macd": 30.732,
+              "signal": 20.551,
+              "histogram": 10.181
+            },
+            {
+              "macd": 34.466,
+              "signal": 23.334,
+              "histogram": 11.133
+            },
+            {
+              "macd": 36.657,
+              "signal": 25.998,
+              "histogram": 10.658
+            },
+            {
+              "macd": 37.812,
+              "signal": 28.361,
+              "histogram": 9.451
+            },
+            {
+              "macd": 31.386,
+              "signal": 28.966,
+              "histogram": 2.42
+            },
+            {
+              "macd": 27.997,
+              "signal": 28.772,
+              "histogram": -0.775
+            },
+            {
+              "macd": 18.272,
+              "signal": 26.672,
+              "histogram": -8.4
+            },
+            {
+              "macd": 12.941,
+              "signal": 23.926,
+              "histogram": -10.985
+            }
+          ]
+        },
+        {
+          "name": "Dow Jones Industrial Average",
+          "symbol": "^DJI",
+          "last_close": 51966.03,
+          "pct_day": -0.07,
+          "pct_week": 0.22,
+          "pct_month": 0.55,
+          "pct_ytd": 8.12,
+          "vs_40wk_sma": "Above",
+          "rsi_14": 52,
+          "rsi_series": [
+            45.1,
+            41.1,
+            38.2,
+            44.9,
+            43.4,
+            40.2,
+            35,
+            39.3,
+            38.4,
+            43.3,
+            41.5,
+            38.3,
+            36.9,
+            43.6,
+            40.2,
+            39,
+            35.1,
+            35.5,
+            39.4,
+            40.8,
+            44.6,
+            40.8,
+            41.6,
+            48,
+            50.6,
+            48.2,
+            47.5,
+            55.2,
+            52.6,
+            52
+          ],
+          "macd": {
+            "macd": -87.511,
+            "signal": -224.842,
+            "histogram": 137.331
+          },
+          "macd_series": [
+            {
+              "macd": 56.973,
+              "signal": 146.358,
+              "histogram": -89.385
+            },
+            {
+              "macd": -17.722,
+              "signal": 113.542,
+              "histogram": -131.264
+            },
+            {
+              "macd": -101.294,
+              "signal": 70.575,
+              "histogram": -171.869
+            },
+            {
+              "macd": -124.998,
+              "signal": 31.46,
+              "histogram": -156.458
+            },
+            {
+              "macd": -154.277,
+              "signal": -5.687,
+              "histogram": -148.59
+            },
+            {
+              "macd": -201.631,
+              "signal": -44.876,
+              "histogram": -156.755
+            },
+            {
+              "macd": -286.787,
+              "signal": -93.258,
+              "histogram": -193.529
+            },
+            {
+              "macd": -325.017,
+              "signal": -139.61,
+              "histogram": -185.407
+            },
+            {
+              "macd": -358.876,
+              "signal": -183.463,
+              "histogram": -175.413
+            },
+            {
+              "macd": -352.102,
+              "signal": -217.191,
+              "histogram": -134.911
+            },
+            {
+              "macd": -357.551,
+              "signal": -245.263,
+              "histogram": -112.288
+            },
+            {
+              "macd": -385.833,
+              "signal": -273.377,
+              "histogram": -112.456
+            },
+            {
+              "macd": -416.487,
+              "signal": -301.999,
+              "histogram": -114.488
+            },
+            {
+              "macd": -397.575,
+              "signal": -321.114,
+              "histogram": -76.461
+            },
+            {
+              "macd": -405.916,
+              "signal": -338.075,
+              "histogram": -67.842
+            },
+            {
+              "macd": -418.323,
+              "signal": -354.124,
+              "histogram": -64.199
+            },
+            {
+              "macd": -458.685,
+              "signal": -375.036,
+              "histogram": -83.649
+            },
+            {
+              "macd": -483.444,
+              "signal": -396.718,
+              "histogram": -86.726
+            },
+            {
+              "macd": -477.358,
+              "signal": -412.846,
+              "histogram": -64.512
+            },
+            {
+              "macd": -459.896,
+              "signal": -422.256,
+              "histogram": -37.64
+            },
+            {
+              "macd": -420.76,
+              "signal": -421.957,
+              "histogram": 1.197
+            },
+            {
+              "macd": -412.539,
+              "signal": -420.073,
+              "histogram": 7.535
+            },
+            {
+              "macd": -397.266,
+              "signal": -415.512,
+              "histogram": 18.246
+            },
+            {
+              "macd": -347.005,
+              "signal": -401.811,
+              "histogram": 54.805
+            },
+            {
+              "macd": -288.069,
+              "signal": -379.062,
+              "histogram": 90.993
+            },
+            {
+              "macd": -253.006,
+              "signal": -353.851,
+              "histogram": 100.845
+            },
+            {
+              "macd": -226.53,
+              "signal": -328.387,
+              "histogram": 101.857
+            },
+            {
+              "macd": -158.835,
+              "signal": -294.476,
+              "histogram": 135.641
+            },
+            {
+              "macd": -117.97,
+              "signal": -259.175,
+              "histogram": 141.205
+            },
+            {
+              "macd": -87.511,
+              "signal": -224.842,
+              "histogram": 137.331
+            }
+          ]
+        },
+        {
+          "name": "Nasdaq Composite",
+          "symbol": "^IXIC",
+          "last_close": 26430.89,
+          "pct_day": 1.11,
+          "pct_week": -2.99,
+          "pct_month": -0.35,
+          "pct_ytd": 13.72,
+          "vs_40wk_sma": "Above",
+          "rsi_14": 43.3,
+          "rsi_series": [
+            53.5,
+            50.2,
+            46.9,
+            51.8,
+            49,
+            45.3,
+            45.2,
+            53.9,
+            55.7,
+            64.3,
+            65.8,
+            59.2,
+            59.3,
+            61.1,
+            55.8,
+            55.3,
+            56.4,
+            56.6,
+            62.1,
+            66.3,
+            67.9,
+            66.2,
+            57.4,
+            60.3,
+            57.4,
+            56.4,
+            45.8,
+            46.2,
+            37.2,
+            43.3
+          ],
+          "macd": {
+            "macd": 17.755,
+            "signal": 151.826,
+            "histogram": -134.07
+          },
+          "macd_series": [
+            {
+              "macd": 102.144,
+              "signal": 105.182,
+              "histogram": -3.038
+            },
+            {
+              "macd": 86.568,
+              "signal": 101.459,
+              "histogram": -14.891
+            },
+            {
+              "macd": 59.687,
+              "signal": 93.105,
+              "histogram": -33.418
+            },
+            {
+              "macd": 57.995,
+              "signal": 86.083,
+              "histogram": -28.088
+            },
+            {
+              "macd": 44.311,
+              "signal": 77.728,
+              "histogram": -33.417
+            },
+            {
+              "macd": 16.745,
+              "signal": 65.532,
+              "histogram": -48.787
+            },
+            {
+              "macd": -5.294,
+              "signal": 51.367,
+              "histogram": -56.66
+            },
+            {
+              "macd": 12.589,
+              "signal": 43.611,
+              "histogram": -31.022
+            },
+            {
+              "macd": 34.772,
+              "signal": 41.843,
+              "histogram": -7.072
+            },
+            {
+              "macd": 99.582,
+              "signal": 53.391,
+              "histogram": 46.191
+            },
+            {
+              "macd": 158.972,
+              "signal": 74.507,
+              "histogram": 84.465
+            },
+            {
+              "macd": 179.102,
+              "signal": 95.426,
+              "histogram": 83.676
+            },
+            {
+              "macd": 193.098,
+              "signal": 114.961,
+              "histogram": 78.138
+            },
+            {
+              "macd": 212.182,
+              "signal": 134.405,
+              "histogram": 77.777
+            },
+            {
+              "macd": 204.905,
+              "signal": 148.505,
+              "histogram": 56.4
+            },
+            {
+              "macd": 195.046,
+              "signal": 157.813,
+              "histogram": 37.233
+            },
+            {
+              "macd": 190.167,
+              "signal": 164.284,
+              "histogram": 25.883
+            },
+            {
+              "macd": 185.018,
+              "signal": 168.431,
+              "histogram": 16.587
+            },
+            {
+              "macd": 204.343,
+              "signal": 175.613,
+              "histogram": 28.73
+            },
+            {
+              "macd": 240.006,
+              "signal": 188.492,
+              "histogram": 51.514
+            },
+            {
+              "macd": 274.982,
+              "signal": 205.79,
+              "histogram": 69.192
+            },
+            {
+              "macd": 294.377,
+              "signal": 223.507,
+              "histogram": 70.87
+            },
+            {
+              "macd": 278.669,
+              "signal": 234.539,
+              "histogram": 44.129
+            },
+            {
+              "macd": 276.973,
+              "signal": 243.026,
+              "histogram": 33.947
+            },
+            {
+              "macd": 262.894,
+              "signal": 247,
+              "histogram": 15.894
+            },
+            {
+              "macd": 245.555,
+              "signal": 246.711,
+              "histogram": -1.155
+            },
+            {
+              "macd": 188.368,
+              "signal": 235.042,
+              "histogram": -46.674
+            },
+            {
+              "macd": 143.025,
+              "signal": 216.639,
+              "histogram": -73.614
+            },
+            {
+              "macd": 60.161,
+              "signal": 185.343,
+              "histogram": -125.183
+            },
+            {
+              "macd": 17.755,
+              "signal": 151.826,
+              "histogram": -134.07
+            }
+          ]
+        },
+        {
+          "name": "Gold (COMEX futures, GC=F)",
+          "symbol": "GC=F",
+          "last_close": 4160.1,
+          "pct_day": -0.5,
+          "pct_week": -0.73,
+          "pct_month": -5.98,
+          "pct_ytd": -4.17,
+          "vs_40wk_sma": "Below",
+          "rsi_14": 41.7,
+          "rsi_series": [
+            49.8,
+            51.3,
+            47.5,
+            47.6,
+            43.7,
+            42.5,
+            47.2,
+            48.2,
+            50.3,
+            46.9,
+            46.3,
+            41.8,
+            40.3,
+            42.8,
+            33,
+            34.2,
+            34.9,
+            36.7,
+            34.1,
+            33.8,
+            37.6,
+            34.3,
+            36.4,
+            43.5,
+            41.4,
+            40.3,
+            35,
+            42.3,
+            43.5,
+            41.7
+          ],
+          "macd": {
+            "macd": -53.64,
+            "signal": -57.811,
+            "histogram": 4.171
+          },
+          "macd_series": [
+            {
+              "macd": 49.788,
+              "signal": 78.578,
+              "histogram": -28.79
+            },
+            {
+              "macd": 43.276,
+              "signal": 71.518,
+              "histogram": -28.242
+            },
+            {
+              "macd": 33.421,
+              "signal": 63.899,
+              "histogram": -30.477
+            },
+            {
+              "macd": 25.447,
+              "signal": 56.208,
+              "histogram": -30.761
+            },
+            {
+              "macd": 14.362,
+              "signal": 47.839,
+              "histogram": -33.477
+            },
+            {
+              "macd": 3.99,
+              "signal": 39.069,
+              "histogram": -35.079
+            },
+            {
+              "macd": 0.182,
+              "signal": 31.292,
+              "histogram": -31.11
+            },
+            {
+              "macd": -1.831,
+              "signal": 24.667,
+              "histogram": -26.498
+            },
+            {
+              "macd": -1.376,
+              "signal": 19.459,
+              "histogram": -20.835
+            },
+            {
+              "macd": -4.275,
+              "signal": 14.712,
+              "histogram": -18.987
+            },
+            {
+              "macd": -7.096,
+              "signal": 10.35,
+              "histogram": -17.446
+            },
+            {
+              "macd": -13.852,
+              "signal": 5.51,
+              "histogram": -19.362
+            },
+            {
+              "macd": -20.614,
+              "signal": 0.285,
+              "histogram": -20.899
+            },
+            {
+              "macd": -23.827,
+              "signal": -4.537,
+              "histogram": -19.29
+            },
+            {
+              "macd": -38.262,
+              "signal": -11.282,
+              "histogram": -26.98
+            },
+            {
+              "macd": -48.234,
+              "signal": -18.673,
+              "histogram": -29.561
+            },
+            {
+              "macd": -54.938,
+              "signal": -25.926,
+              "histogram": -29.013
+            },
+            {
+              "macd": -58.321,
+              "signal": -32.405,
+              "histogram": -25.916
+            },
+            {
+              "macd": -63.497,
+              "signal": -38.623,
+              "histogram": -24.874
+            },
+            {
+              "macd": -67.268,
+              "signal": -44.352,
+              "histogram": -22.916
+            },
+            {
+              "macd": -67.038,
+              "signal": -48.889,
+              "histogram": -18.149
+            },
+            {
+              "macd": -69.796,
+              "signal": -53.07,
+              "histogram": -16.725
+            },
+            {
+              "macd": -69.861,
+              "signal": -56.428,
+              "histogram": -13.432
+            },
+            {
+              "macd": -64.385,
+              "signal": -58.02,
+              "histogram": -6.365
+            },
+            {
+              "macd": -61.411,
+              "signal": -58.698,
+              "histogram": -2.713
+            },
+            {
+              "macd": -59.442,
+              "signal": -58.847,
+              "histogram": -0.595
+            },
+            {
+              "macd": -62.759,
+              "signal": -59.629,
+              "histogram": -3.129
+            },
+            {
+              "macd": -59.68,
+              "signal": -59.639,
+              "histogram": -0.041
+            },
+            {
+              "macd": -55.71,
+              "signal": -58.854,
+              "histogram": 3.143
+            },
+            {
+              "macd": -53.64,
+              "signal": -57.811,
+              "histogram": 4.171
+            }
+          ]
+        },
+        {
+          "name": "Silver (COMEX futures, SI=F)",
+          "symbol": "SI=F",
+          "last_close": 56.97,
+          "pct_day": -0.04,
+          "pct_week": -5.27,
+          "pct_month": -14.4,
+          "pct_ytd": -18.76,
+          "vs_40wk_sma": "Below",
+          "rsi_14": 36.2,
+          "rsi_series": [
+            53.5,
+            58,
+            47,
+            47.8,
+            45,
+            44.3,
+            47.8,
+            51.5,
+            54.7,
+            52.2,
+            52.5,
+            47.3,
+            44.5,
+            47.4,
+            39,
+            37.6,
+            36.3,
+            38.9,
+            36.9,
+            40.8,
+            42,
+            38.3,
+            36,
+            43,
+            41.4,
+            38.5,
+            30.2,
+            35.6,
+            36.2,
+            36.2
+          ],
+          "macd": {
+            "macd": -1.898,
+            "signal": -1.555,
+            "histogram": -0.342
+          },
+          "macd_series": [
+            {
+              "macd": 0.993,
+              "signal": 1.326,
+              "histogram": -0.333
+            },
+            {
+              "macd": 1.052,
+              "signal": 1.271,
+              "histogram": -0.219
+            },
+            {
+              "macd": 0.794,
+              "signal": 1.176,
+              "histogram": -0.382
+            },
+            {
+              "macd": 0.604,
+              "signal": 1.061,
+              "histogram": -0.457
+            },
+            {
+              "macd": 0.366,
+              "signal": 0.922,
+              "histogram": -0.557
+            },
+            {
+              "macd": 0.153,
+              "signal": 0.768,
+              "histogram": -0.616
+            },
+            {
+              "macd": 0.068,
+              "signal": 0.628,
+              "histogram": -0.56
+            },
+            {
+              "macd": 0.095,
+              "signal": 0.522,
+              "histogram": -0.427
+            },
+            {
+              "macd": 0.202,
+              "signal": 0.458,
+              "histogram": -0.256
+            },
+            {
+              "macd": 0.225,
+              "signal": 0.411,
+              "histogram": -0.186
+            },
+            {
+              "macd": 0.249,
+              "signal": 0.379,
+              "histogram": -0.13
+            },
+            {
+              "macd": 0.141,
+              "signal": 0.331,
+              "histogram": -0.19
+            },
+            {
+              "macd": -0.019,
+              "signal": 0.261,
+              "histogram": -0.28
+            },
+            {
+              "macd": -0.081,
+              "signal": 0.193,
+              "histogram": -0.273
+            },
+            {
+              "macd": -0.37,
+              "signal": 0.08,
+              "histogram": -0.45
+            },
+            {
+              "macd": -0.636,
+              "signal": -0.063,
+              "histogram": -0.573
+            },
+            {
+              "macd": -0.883,
+              "signal": -0.227,
+              "histogram": -0.656
+            },
+            {
+              "macd": -1.016,
+              "signal": -0.385,
+              "histogram": -0.631
+            },
+            {
+              "macd": -1.169,
+              "signal": -0.542,
+              "histogram": -0.627
+            },
+            {
+              "macd": -1.204,
+              "signal": -0.674,
+              "histogram": -0.53
+            },
+            {
+              "macd": -1.194,
+              "signal": -0.778,
+              "histogram": -0.416
+            },
+            {
+              "macd": -1.273,
+              "signal": -0.877,
+              "histogram": -0.396
+            },
+            {
+              "macd": -1.388,
+              "signal": -0.979,
+              "histogram": -0.409
+            },
+            {
+              "macd": -1.334,
+              "signal": -1.05,
+              "histogram": -0.284
+            },
+            {
+              "macd": -1.318,
+              "signal": -1.104,
+              "histogram": -0.215
+            },
+            {
+              "macd": -1.369,
+              "signal": -1.157,
+              "histogram": -0.212
+            },
+            {
+              "macd": -1.682,
+              "signal": -1.262,
+              "histogram": -0.42
+            },
+            {
+              "macd": -1.805,
+              "signal": -1.37,
+              "histogram": -0.434
+            },
+            {
+              "macd": -1.868,
+              "signal": -1.47,
+              "histogram": -0.398
+            },
+            {
+              "macd": -1.898,
+              "signal": -1.555,
+              "histogram": -0.342
+            }
+          ]
+        },
+        {
+          "name": "SPCX",
+          "symbol": "SPCX",
+          "last_close": 147.96,
+          "pct_day": 1.32,
+          "pct_week": -9.46,
+          "pct_month": -3.11,
+          "pct_ytd": null,
+          "vs_40wk_sma": null,
+          "rsi_14": 45.8,
+          "rsi_series": [
+            65.8,
+            59.8,
+            60.2,
+            62.2,
+            59,
+            54.4,
+            59.8,
+            62.3,
+            60.1,
+            59.2,
+            61.3,
+            54.6,
+            54.2,
+            54.8,
+            51.3,
+            55,
+            56.5,
+            53.2,
+            62.4,
+            69.6,
+            70,
+            65,
+            57.7,
+            59.1,
+            59.7,
+            52.8,
+            48.9,
+            46,
+            43.9,
+            45.8
+          ],
+          "macd": {
+            "macd": 1.018,
+            "signal": 3.158,
+            "histogram": -2.14
+          },
+          "macd_series": [
+            {
+              "macd": 4,
+              "signal": 2.571,
+              "histogram": 1.428
+            },
+            {
+              "macd": 3.995,
+              "signal": 2.856,
+              "histogram": 1.139
+            },
+            {
+              "macd": 3.996,
+              "signal": 3.084,
+              "histogram": 0.912
+            },
+            {
+              "macd": 4.194,
+              "signal": 3.306,
+              "histogram": 0.888
+            },
+            {
+              "macd": 4.056,
+              "signal": 3.456,
+              "histogram": 0.6
+            },
+            {
+              "macd": 3.531,
+              "signal": 3.471,
+              "histogram": 0.06
+            },
+            {
+              "macd": 3.668,
+              "signal": 3.51,
+              "histogram": 0.158
+            },
+            {
+              "macd": 4.048,
+              "signal": 3.618,
+              "histogram": 0.43
+            },
+            {
+              "macd": 4.131,
+              "signal": 3.721,
+              "histogram": 0.411
+            },
+            {
+              "macd": 4.081,
+              "signal": 3.793,
+              "histogram": 0.288
+            },
+            {
+              "macd": 4.224,
+              "signal": 3.879,
+              "histogram": 0.345
+            },
+            {
+              "macd": 3.781,
+              "signal": 3.859,
+              "histogram": -0.079
+            },
+            {
+              "macd": 3.364,
+              "signal": 3.76,
+              "histogram": -0.396
+            },
+            {
+              "macd": 3.051,
+              "signal": 3.618,
+              "histogram": -0.567
+            },
+            {
+              "macd": 2.515,
+              "signal": 3.398,
+              "histogram": -0.883
+            },
+            {
+              "macd": 2.367,
+              "signal": 3.192,
+              "histogram": -0.825
+            },
+            {
+              "macd": 2.353,
+              "signal": 3.024,
+              "histogram": -0.671
+            },
+            {
+              "macd": 2.093,
+              "signal": 2.838,
+              "histogram": -0.744
+            },
+            {
+              "macd": 2.734,
+              "signal": 2.817,
+              "histogram": -0.083
+            },
+            {
+              "macd": 4.173,
+              "signal": 3.088,
+              "histogram": 1.085
+            },
+            {
+              "macd": 5.319,
+              "signal": 3.534,
+              "histogram": 1.785
+            },
+            {
+              "macd": 5.812,
+              "signal": 3.99,
+              "histogram": 1.822
+            },
+            {
+              "macd": 5.57,
+              "signal": 4.306,
+              "histogram": 1.264
+            },
+            {
+              "macd": 5.478,
+              "signal": 4.54,
+              "histogram": 0.937
+            },
+            {
+              "macd": 5.41,
+              "signal": 4.714,
+              "histogram": 0.696
+            },
+            {
+              "macd": 4.747,
+              "signal": 4.721,
+              "histogram": 0.026
+            },
+            {
+              "macd": 3.824,
+              "signal": 4.541,
+              "histogram": -0.718
+            },
+            {
+              "macd": 2.775,
+              "signal": 4.188,
+              "histogram": -1.413
+            },
+            {
+              "macd": 1.714,
+              "signal": 3.693,
+              "histogram": -1.979
+            },
+            {
+              "macd": 1.018,
+              "signal": 3.158,
+              "histogram": -2.14
+            }
+          ]
+        },
+        {
+          "name": "CCJ",
+          "symbol": "CCJ",
+          "last_close": 80.7,
+          "pct_day": -1.01,
+          "pct_week": -6.29,
+          "pct_month": -11.92,
+          "pct_ytd": -11.79,
+          "vs_40wk_sma": "Below",
+          "rsi_14": 34.6,
+          "rsi_series": [
+            56,
+            52.9,
+            47.5,
+            46.2,
+            40.8,
+            38,
+            37.5,
+            41.9,
+            40,
+            43.7,
+            46.6,
+            40.3,
+            36.5,
+            36.4,
+            34.9,
+            34.7,
+            34.4,
+            32.8,
+            32,
+            39.3,
+            52.4,
+            45,
+            41.8,
+            43.8,
+            40.7,
+            40.7,
+            33.8,
+            38.1,
+            35.7,
+            34.6
+          ],
+          "macd": {
+            "macd": -3.081,
+            "signal": -2.633,
+            "histogram": -0.448
+          },
+          "macd_series": [
+            {
+              "macd": 1.364,
+              "signal": 1.572,
+              "histogram": -0.208
+            },
+            {
+              "macd": 1.281,
+              "signal": 1.514,
+              "histogram": -0.233
+            },
+            {
+              "macd": 0.962,
+              "signal": 1.403,
+              "histogram": -0.441
+            },
+            {
+              "macd": 0.642,
+              "signal": 1.251,
+              "histogram": -0.609
+            },
+            {
+              "macd": 0.112,
+              "signal": 1.023,
+              "histogram": -0.911
+            },
+            {
+              "macd": -0.469,
+              "signal": 0.725,
+              "histogram": -1.194
+            },
+            {
+              "macd": -0.943,
+              "signal": 0.391,
+              "histogram": -1.334
+            },
+            {
+              "macd": -1.152,
+              "signal": 0.083,
+              "histogram": -1.235
+            },
+            {
+              "macd": -1.397,
+              "signal": -0.213,
+              "histogram": -1.184
+            },
+            {
+              "macd": -1.444,
+              "signal": -0.459,
+              "histogram": -0.985
+            },
+            {
+              "macd": -1.357,
+              "signal": -0.639,
+              "histogram": -0.718
+            },
+            {
+              "macd": -1.575,
+              "signal": -0.826,
+              "histogram": -0.749
+            },
+            {
+              "macd": -1.942,
+              "signal": -1.049,
+              "histogram": -0.892
+            },
+            {
+              "macd": -2.211,
+              "signal": -1.282,
+              "histogram": -0.929
+            },
+            {
+              "macd": -2.479,
+              "signal": -1.521,
+              "histogram": -0.958
+            },
+            {
+              "macd": -2.673,
+              "signal": -1.751,
+              "histogram": -0.922
+            },
+            {
+              "macd": -2.812,
+              "signal": -1.963,
+              "histogram": -0.848
+            },
+            {
+              "macd": -2.966,
+              "signal": -2.164,
+              "histogram": -0.802
+            },
+            {
+              "macd": -3.095,
+              "signal": -2.35,
+              "histogram": -0.744
+            },
+            {
+              "macd": -2.977,
+              "signal": -2.476,
+              "histogram": -0.501
+            },
+            {
+              "macd": -2.408,
+              "signal": -2.462,
+              "histogram": 0.054
+            },
+            {
+              "macd": -2.25,
+              "signal": -2.42,
+              "histogram": 0.169
+            },
+            {
+              "macd": -2.256,
+              "signal": -2.387,
+              "histogram": 0.131
+            },
+            {
+              "macd": -2.16,
+              "signal": -2.342,
+              "histogram": 0.181
+            },
+            {
+              "macd": -2.215,
+              "signal": -2.316,
+              "histogram": 0.101
+            },
+            {
+              "macd": -2.231,
+              "signal": -2.299,
+              "histogram": 0.068
+            },
+            {
+              "macd": -2.591,
+              "signal": -2.358,
+              "histogram": -0.233
+            },
+            {
+              "macd": -2.703,
+              "signal": -2.427,
+              "histogram": -0.276
+            },
+            {
+              "macd": -2.897,
+              "signal": -2.521,
+              "histogram": -0.376
+            },
+            {
+              "macd": -3.081,
+              "signal": -2.633,
+              "histogram": -0.448
+            }
+          ]
+        },
+        {
+          "name": "NVDA",
+          "symbol": "NVDA",
+          "last_close": 217.09,
+          "pct_day": 1.38,
+          "pct_week": -4.08,
+          "pct_month": -2.33,
+          "pct_ytd": 16.4,
+          "vs_40wk_sma": "Above",
+          "rsi_14": 41.5,
+          "rsi_series": [
+            56.1,
+            54.3,
+            49.8,
+            49.8,
+            43.9,
+            45.1,
+            46.7,
+            51.7,
+            54.2,
+            58.2,
+            59.4,
+            55.7,
+            54.7,
+            55.2,
+            58.6,
+            56.6,
+            57.7,
+            60.1,
+            62.9,
+            66.9,
+            67.2,
+            64.3,
+            54.5,
+            53,
+            49.4,
+            52,
+            43.9,
+            40.2,
+            37.5,
+            41.5
+          ],
+          "macd": {
+            "macd": -0.792,
+            "signal": 1.586,
+            "histogram": -2.378
+          },
+          "macd_series": [
+            {
+              "macd": 3.87,
+              "signal": 3.169,
+              "histogram": 0.701
+            },
+            {
+              "macd": 3.692,
+              "signal": 3.274,
+              "histogram": 0.418
+            },
+            {
+              "macd": 3.087,
+              "signal": 3.236,
+              "histogram": -0.15
+            },
+            {
+              "macd": 2.572,
+              "signal": 3.104,
+              "histogram": -0.532
+            },
+            {
+              "macd": 1.554,
+              "signal": 2.794,
+              "histogram": -1.239
+            },
+            {
+              "macd": 0.836,
+              "signal": 2.402,
+              "histogram": -1.566
+            },
+            {
+              "macd": 0.402,
+              "signal": 2.002,
+              "histogram": -1.6
+            },
+            {
+              "macd": 0.491,
+              "signal": 1.7,
+              "histogram": -1.209
+            },
+            {
+              "macd": 0.789,
+              "signal": 1.518,
+              "histogram": -0.729
+            },
+            {
+              "macd": 1.421,
+              "signal": 1.498,
+              "histogram": -0.077
+            },
+            {
+              "macd": 2.019,
+              "signal": 1.602,
+              "histogram": 0.416
+            },
+            {
+              "macd": 2.196,
+              "signal": 1.721,
+              "histogram": 0.475
+            },
+            {
+              "macd": 2.236,
+              "signal": 1.824,
+              "histogram": 0.412
+            },
+            {
+              "macd": 2.281,
+              "signal": 1.915,
+              "histogram": 0.365
+            },
+            {
+              "macd": 2.592,
+              "signal": 2.051,
+              "histogram": 0.541
+            },
+            {
+              "macd": 2.675,
+              "signal": 2.176,
+              "histogram": 0.499
+            },
+            {
+              "macd": 2.803,
+              "signal": 2.301,
+              "histogram": 0.502
+            },
+            {
+              "macd": 3.069,
+              "signal": 2.455,
+              "histogram": 0.614
+            },
+            {
+              "macd": 3.489,
+              "signal": 2.661,
+              "histogram": 0.827
+            },
+            {
+              "macd": 4.173,
+              "signal": 2.964,
+              "histogram": 1.209
+            },
+            {
+              "macd": 4.688,
+              "signal": 3.309,
+              "histogram": 1.38
+            },
+            {
+              "macd": 4.898,
+              "signal": 3.626,
+              "histogram": 1.271
+            },
+            {
+              "macd": 4.448,
+              "signal": 3.791,
+              "histogram": 0.657
+            },
+            {
+              "macd": 3.95,
+              "signal": 3.823,
+              "histogram": 0.127
+            },
+            {
+              "macd": 3.278,
+              "signal": 3.714,
+              "histogram": -0.436
+            },
+            {
+              "macd": 2.89,
+              "signal": 3.549,
+              "histogram": -0.659
+            },
+            {
+              "macd": 1.977,
+              "signal": 3.234,
+              "histogram": -1.258
+            },
+            {
+              "macd": 0.914,
+              "signal": 2.77,
+              "histogram": -1.856
+            },
+            {
+              "macd": -0.176,
+              "signal": 2.181,
+              "histogram": -2.357
+            },
+            {
+              "macd": -0.792,
+              "signal": 1.586,
+              "histogram": -2.378
+            }
+          ]
+        }
+      ],
+      "breadth": {
+        "label": "Percent of S&P 500 stocks above 50-day MA",
+        "value": 43.8,
+        "prior_value": 45,
+        "direction": "falling",
+        "reading": "neutral",
+        "note": "Below 30 bullish, above 70 bearish. Computed by Thaddeus from Yahoo Finance daily closes for 502 of 503 current S&P 500 constituents at the Oct. 19 close (mimics MMFI)."
+      },
+      "fear_greed": {
+        "score": 23,
+        "rating": "extreme fear",
+        "previous_close": 23,
+        "previous_1_week": 44,
+        "previous_1_month": 30,
+        "previous_1_year": 30,
+        "as_of": "2026-10-20T00:00:00+00:00",
+        "source_name": "CNN Fear & Greed Index",
+        "source_url": "https://www.cnn.com/markets/fear-and-greed",
+        "commentary": "Sentiment stayed stuck at 23, in extreme fear, despite Monday's tech bounce, down from 44 a week ago. A narrow, AI-led rally with breadth slipping to 43.8% didn't convince the broader market."
+      },
+      "summary": "A narrow bounce: the Nasdaq gained 1.1% and NVDA 1.4% as AI and chip stocks recovered some of last week's losses, but the Dow slipped 0.07% and most stocks outside tech fell, with utilities (-2%) and real estate (-1.2%) the laggards. Breadth eased to 43.8% of S&P 500 stocks above their 50-day average. Small caps barely moved, with the Russell 2000 up about 0.3% to 2,728. Rates remain the headwind: the 10-year Treasury yield rose about 7 basis points to 5.14% as bond traders brace for a possible Fed hike on energy-driven inflation, with WTI crude settling up 2.2% at $103.66. Gold futures slipped 0.5% to $4,160 and silver held near $56.97; both remain below their 40-week averages.",
+      "portfolio_news": [
+        {
+          "symbol": "SPCX",
+          "stories": [
+            {
+              "headline": "SpaceX reports Q3 results after Tuesday's close",
+              "summary": "Analysts expect revenue of roughly $12.7-12.9 billion, up from $7.81 billion in Q2, and a return to profit; AI spending, capex and Starlink growth are the focus.",
+              "source_name": "MarketWatch / Reuters",
+              "source_url": "https://www.marketwatch.com/story/spacex-expected-to-turn-a-profit-in-3q-as-revenue-jumps-earnings-preview-40bc2666",
+              "published_at": "2026-10-19"
+            }
+          ]
+        },
+        {
+          "symbol": "NVDA",
+          "stories": [
+            {
+              "headline": "Nvidia rebounds ahead of a major earnings week",
+              "summary": "Shares reached $216.51 Monday as investors returned to AI stocks; Nvidia closed at $217.09, up 1.4%.",
+              "source_name": "Yahoo Finance",
+              "source_url": "https://finance.yahoo.com/markets/stocks/articles/nvidia-stocks-rebound-108-billion-120907275.html",
+              "published_at": "2026-10-19T12:09:07Z"
+            }
+          ]
+        },
+        {
+          "symbol": "CCJ",
+          "stories": [
+            {
+              "headline": "Barclays trims Cameco target to $95",
+              "summary": "Barclays kept an Equal-Weight rating on Cameco and lowered its price target to $95 from $97.",
+              "source_name": "Benzinga",
+              "source_url": "https://www.benzinga.com/news/26/10/62450275/barclays-maintains-equal-weight-cameco-lowers-price-target-95",
+              "published_at": "2026-10-19"
+            }
+          ]
+        }
+      ],
+      "headlines": [
+        {
+          "headline": "AI stocks lead a rebound as the Nasdaq gains 1.1%",
+          "summary": "The Nasdaq rose 1.11% to 26,430.89 and the S&P 500 0.41% to 7,690.73 after last week's worst week since June, while the Dow slipped 0.07%; most stocks outside AI and tech fell, and seven of 11 S&P sectors closed lower.",
+          "source_name": "AP News / Reuters",
+          "source_url": "https://www.investing.com/news/economy-news/wall-st-futures-climb-as-ai-stocks-rebound-oil-yields-fall-4956777",
+          "published_at": "2026-10-19"
+        },
+        {
+          "headline": "10-year yield hits 5.14% as markets weigh a Fed hike",
+          "summary": "The 2-year yield rose 6 bps to 4.77% and the 10-year 7 bps to 5.14% as oil stayed elevated; WTI settled near $104, its highest in over a month.",
+          "source_name": "Derivative Path",
+          "source_url": "https://derivativepath.com/resources/newsletter/yields-rise-as-oil-disruptions-persist/",
+          "published_at": "2026-10-19"
+        },
+        {
+          "headline": "Fed chair won't signal another rate hike; markets bet on an October pause",
+          "summary": "The Fed raised rates in September for the first time since 2023, and recent data show inflation picking up on higher energy prices.",
+          "source_name": "Yahoo Finance",
+          "source_url": "https://finance.yahoo.com/economy/policy/articles/fed-chair-refuses-signal-another-102101014.html",
+          "published_at": "2026-10-19T10:21:01Z"
+        }
+      ],
+      "status": "complete"
+    },
+    "sports": {
+      "status": "complete",
+      "stories": [
+        {
+          "headline": "Rays beat Guardians 7-3, win ALCS and head to the World Series",
+          "summary": "Junior Caminero and Yandy Díaz homered and Freddy Peralta pitched 5 1/3 innings as Tampa Bay took the series 4-2. The Rays face the Milwaukee Brewers in their first full-season World Series since 2008.",
+          "source_name": "ESPN",
+          "source_url": "https://www.espn.com/mlb/story/_/id/50214010/playoffs-guardians-rays-game-6-alcs-live-takeaways",
+          "published_at": "2026-10-19"
+        },
+        {
+          "headline": "No. 6 Michigan State hosts No. 4 UConn in exhibition Tuesday",
+          "summary": "The Spartans play the second of three exhibition games Tuesday, Oct. 20, at the Breslin Center.",
+          "source_name": "MSU Athletics",
+          "source_url": "https://msuspartans.com/news/2026/10/19/mens-basketball-no-6-michigan-state-hosts-no-4-uconn-in-exhibition-game-at-the-breslin-center-tuesday-night",
+          "published_at": "2026-10-19"
+        },
+        {
+          "headline": "MSU basketball opens at No. 6 in AP preseason poll",
+          "summary": "Michigan State trails Florida, Duke, Illinois, UConn and Arizona, returns nine players from a Sweet 16 team and adds the No. 7 recruiting class.",
+          "source_name": "The State News",
+          "source_url": "https://statenews.com/article/2026/10/msu-men-s-basketball-debuts-at-no-6-in-ap-preseason-poll",
+          "published_at": "2026-10"
+        },
+        {
+          "headline": "UCLA's turnaround offers a blueprint for MSU football",
+          "summary": "Ahead of Saturday's trip to UCLA, the State News looks at how the Bruins' first-year coach got to a 6-0 start while the Spartans rebuild.",
+          "source_name": "The State News",
+          "source_url": "https://statenews.com/article/2026/10/ucla-turnaround-offers-blueprint-for-msu-footballs-rebuild",
+          "published_at": "2026-10"
+        }
+      ],
+      "scores": [
+        {
+          "team": "Tampa Bay Rays (ALCS Gm 6)",
+          "opponent": "Cleveland Guardians",
+          "score": "7-3",
+          "result": "W",
+          "date": "2026-10-19",
+          "source_url": "https://www.mlb.com/gameday/guardians-vs-rays/2026/10/19/849815/final/wrap"
+        }
+      ]
+    },
+    "irreverent": {
+      "status": "complete",
+      "stories": [
+        {
+          "headline": "Nation Of France Films Massive Campaign Ad For Republicans",
+          "summary": "The Bee says France spent a week filming a sprawling attack ad for the GOP ahead of the midterms.",
+          "source_name": "The Babylon Bee",
+          "source_url": "https://babylonbee.com/news/nation-of-france-films-massive-campaign-ad-for-republicans",
+          "published_at": "2026-10-19"
+        },
+        {
+          "headline": "RFK Jr. Prepares To Delight Trick-Or-Treaters With Mason Jars Of Beef Tallow",
+          "summary": "A Halloween treat only the health secretary could love.",
+          "source_name": "The Babylon Bee",
+          "source_url": "https://babylonbee.com/news/rfk-jr-prepares-to-delight-trick-or-treaters-with-mason-jars-of-beef-tallow",
+          "published_at": "2026-10-19"
+        },
+        {
+          "headline": "Trump Boasts Tariffs A Huge Success At Making Things Expensive",
+          "summary": "The Onion on a trade policy that really delivered.",
+          "source_name": "The Onion",
+          "source_url": "https://theonion.com/trump-boasts-tariffs-a-huge-success-at-making-things-expensive/",
+          "published_at": "2026-10-19T18:54:43Z"
+        }
+      ]
+    },
+    "weather": {
+      "status": "complete",
+      "summary": "The nor'easter off the Carolinas keeps moderate coastal flooding, beach erosion and dangerous seas going from southern New Jersey to the North Carolina coast into midweek, with gusts over 45 mph possible on the Outer Banks and Virginia Tidewater. Out West, a low sliding down the coast sends a plume of moisture into California and the Southwest Tuesday, with showers and thunderstorms; WPC has a Slight Risk (level 2 of 4) of excessive rainfall for parts of the Southwest, Great Basin and Central/Southern Rockies Wednesday into Thursday morning, with flash flooding most likely on burn scars, in canyons and in urban areas. Scattered rain and storms continue over Florida's east coast and the Keys and over far South Texas through Wednesday.",
+      "source_name": "NWS Weather Prediction Center",
+      "source_url": "https://www.wpc.ncep.noaa.gov/discussions/pmdspd.html",
+      "maps": [
+        {
+          "title": "NWS national forecast chart, Day 1",
+          "image_url": "https://www.wpc.ncep.noaa.gov/noaa/noaad1.gif",
+          "source_name": "NWS Weather Prediction Center",
+          "source_url": "https://www.wpc.ncep.noaa.gov/national_forecast/natfcst.php"
+        },
+        {
+          "title": "NWS national forecast chart, Day 2",
+          "image_url": "https://www.wpc.ncep.noaa.gov/noaa/noaad2.gif",
+          "source_name": "NWS Weather Prediction Center",
+          "source_url": "https://www.wpc.ncep.noaa.gov/national_forecast/natfcst.php"
+        },
+        {
+          "title": "Current US surface analysis",
+          "image_url": "https://www.wpc.ncep.noaa.gov/sfc/namussfcwbg.gif",
+          "source_name": "NWS Weather Prediction Center",
+          "source_url": "https://www.wpc.ncep.noaa.gov/html/sfc-zoom.php"
+        },
+        {
+          "title": "7-day precipitation forecast",
+          "image_url": "https://www.wpc.ncep.noaa.gov/qpf/p168i.gif",
+          "source_name": "NWS Weather Prediction Center",
+          "source_url": "https://www.wpc.ncep.noaa.gov/qpf/qpf2.shtml"
+        }
+      ]
+    }
+  }
+}

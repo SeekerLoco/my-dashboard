@@ -2,5 +2,6 @@
 import i0 from './2026-10-17.json';
 import i1 from './2026-10-18.json';
 import i2 from './2026-10-19.json';
+import i3 from './2026-10-20.json';
 
-export const RAW_ISSUES: unknown[] = [i0, i1, i2];
+export const RAW_ISSUES: unknown[] = [i0, i1, i2, i3];
