@@ -23,7 +23,13 @@ export default function TastytradeHub() {
               <div className="mt-3 flex gap-2 flex-wrap">
                 <AccountBadge account={s.account} />
                 <StatusPill
-                  label={s.enabled ? 'Placeholder' : 'Not enabled'}
+                  label={
+                    !s.enabled
+                      ? 'Not enabled'
+                      : s.slug === 'watch'
+                        ? 'Partially live'
+                        : 'Placeholder'
+                  }
                   accent={s.enabled ? s.accent : 'pink'}
                 />
               </div>
