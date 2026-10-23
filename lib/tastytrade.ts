@@ -34,6 +34,12 @@ export type TtPosition = {
   option_type: string | null;
   avg_open_price: number | string | null;
   mark: number | string | null;
+  // Per-contract Greeks saved by TT bot; null until a snapshot fills them.
+  delta: number | string | null;
+  gamma: number | string | null;
+  theta: number | string | null;
+  vega: number | string | null;
+  iv: number | string | null;
 };
 
 export type TtAccountData = {
@@ -72,7 +78,7 @@ export async function fetchTastytrade(): Promise<TtState> {
     const { data: pos, error: pErr } = await supabase
       .from('tt_position_snapshots')
       .select(
-        'id, snapshot_id, symbol, underlying, instrument_type, quantity, direction, expiration, strike, option_type, avg_open_price, mark',
+        'id, snapshot_id, symbol, underlying, instrument_type, quantity, direction, expiration, strike, option_type, avg_open_price, mark, delta, gamma, theta, vega, iv',
       )
       .eq('snapshot_id', bal.id);
     if (pErr) return { status: 'none', reason: pErr.message };
@@ -178,7 +184,8 @@ export function dayPnl(points: TtBalancePoint[]): number | null {
 
 // --- Trade journal (tt_trades) --------------------------------------------
 
-export type TtTradeStatus = 'open' | 'closed' | 'expired';
+export type TtTradeStatus =
+  'open' | 'closed' | 'expired' | 'rolled' | 'assigned';
 
 export type TtLeg = {
   direction: 'buy' | 'sell';

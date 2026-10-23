@@ -72,15 +72,17 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  // Only allow known symbols so the route can't be used as an open proxy
+  // Only allow known symbols (or plain stock/ETF tickers like EWZ or BRK.B, used by the tastytrade
+  // Alerts panel for option underlyings) so the route can't be used as an open proxy
   const allowed = new Set([
     ...SYMBOLS.map((s) => s.symbol),
     ...HOLDING_TICKERS,
   ]);
+  const plainTicker = /^[A-Z]{1,5}(\.[A-Z])?$/;
   const items = [
     ...new Set(requested.split(',').map((s) => s.trim().toUpperCase())),
   ]
-    .filter((s) => allowed.has(s))
+    .filter((s) => allowed.has(s) || plainTicker.test(s))
     .map((symbol) => ({ symbol, name: symbol }));
   return NextResponse.json({
     quotes: await fetchQuotes(items, true),
