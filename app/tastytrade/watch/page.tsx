@@ -1,8 +1,10 @@
-// Step 1 Watch: read-only portfolio monitoring; balances and positions are live from Supabase, other panels are placeholders.
+// Step 1 Watch: read-only portfolio monitoring; balances, positions, account value and trade journal are live from Supabase; Greeks and alerts are placeholders.
 'use client';
 
 import StepHeader from '@/components/tastytrade/StepHeader';
 import { Section, Table, KV, AccountBadge } from '@/components/tastytrade/TT';
+import AccountValuePanel from '@/components/tastytrade/AccountValue';
+import TradeJournal from '@/components/tastytrade/TradeJournal';
 import * as D from '@/lib/tastytrade-placeholders';
 import { useTastytrade, money, asOfDenver, envLabel } from '@/lib/tastytrade';
 
@@ -117,22 +119,8 @@ export default function WatchPage() {
         <Section title="Greeks summary" accent="violet">
           <KV items={D.greeks} />
         </Section>
-        <Section title="Account value" accent="teal" className="lg:col-span-2">
-          <div className="h-40 rounded-xl border border-dashed border-white/20 flex items-center justify-center text-white/50 text-sm">
-            Account value chart goes here
-          </div>
-        </Section>
-        <Section title="Trade journal: P&L by strategy" accent="orange">
-          <Table
-            head={['Strategy', 'Trades', 'Win rate', 'P&L']}
-            rows={D.journalByStrategy.map((j) => [
-              j.strategy,
-              j.trades,
-              j.winRate,
-              j.pl,
-            ])}
-          />
-        </Section>
+        <AccountValuePanel tt={tt} />
+        <TradeJournal tt={tt} />
         <Section title="Alerts" accent="pink">
           <ul className="space-y-1.5 text-sm">
             {D.alerts.map((a) => (
