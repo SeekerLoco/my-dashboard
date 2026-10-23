@@ -1,9 +1,10 @@
-// Step 1 Watch: read-only portfolio monitoring; balances, positions, account value and trade journal are live from Supabase; Greeks are placeholders; alerts are computed live.
+// Step 1 Watch: read-only portfolio monitoring; balances, positions, account value and trade journal are live from Supabase; Greeks summary is live; alerts are computed live.
 'use client';
 
 import StepHeader from '@/components/tastytrade/StepHeader';
 import { Section, Table, KV, AccountBadge } from '@/components/tastytrade/TT';
 import AccountValuePanel from '@/components/tastytrade/AccountValue';
+import GreeksSummary from '@/components/tastytrade/GreeksSummary';
 import AlertsPanel from '@/components/tastytrade/Alerts';
 import TradeJournal from '@/components/tastytrade/TradeJournal';
 import * as D from '@/lib/tastytrade-placeholders';
@@ -117,9 +118,7 @@ export default function WatchPage() {
             </>
           )}
         </Section>
-        <Section title="Greeks summary" accent="violet">
-          <KV items={D.greeks} />
-        </Section>
+        <GreeksSummary tt={tt} />
         <AccountValuePanel tt={tt} />
         <TradeJournal tt={tt} />
         <AlertsPanel tt={tt} />

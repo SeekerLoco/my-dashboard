@@ -400,3 +400,47 @@ export const RULE_LINES: string[] = [
   `Buying power: warn under ${BP_WARN_PCT}% of net liq, red under ${BP_CRITICAL_PCT}%.`,
   `Stale data: note when the newest snapshot is over ${STALE_HOURS} hours old.`,
 ];
+
+// --- Greeks summary ------------------------------------------------------
+
+export type GreekKey = 'delta' | 'gamma' | 'theta' | 'vega';
+
+// One Greek for a position, scaled to the whole position: per-share value x quantity x 100, negated for short.
+export function positionGreek(p: TtPosition, key: GreekKey): number | null {
+  const v = toNum(p[key]);
+  const qty = toNum(p.quantity);
+  if (v === null || qty === null) return null;
+  if (!isShort(p) && !isLong(p)) return null;
+  const sign = isShort(p) ? -1 : 1;
+  const mult = isOption(p) ? OPTION_MULTIPLIER : 1;
+  return v * Math.abs(qty) * mult * sign;
+}
+
+export function greekTotals(positions: TtPosition[]): {
+  totals: Record<GreekKey, number>;
+  counted: number;
+  skipped: number;
+} {
+  const totals: Record<GreekKey, number> = {
+    delta: 0,
+    gamma: 0,
+    theta: 0,
+    vega: 0,
+  };
+  let counted = 0;
+  let skipped = 0;
+  for (const p of positions) {
+    const vals = (Object.keys(totals) as GreekKey[]).map((k) =>
+      positionGreek(p, k),
+    );
+    if (vals.some((v) => v === null)) {
+      skipped++;
+      continue;
+    }
+    (Object.keys(totals) as GreekKey[]).forEach((k, i) => {
+      totals[k] += vals[i] as number;
+    });
+    counted++;
+  }
+  return { totals, counted, skipped };
+}
