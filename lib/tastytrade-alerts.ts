@@ -11,8 +11,10 @@ import type {
 
 // Rule 1: warn when a short option's strike is within this % of the stock price (in the money = critical).
 export const STRIKE_NEAR_PCT = 3;
-// Rule 2: warn when total position delta is beyond +/- this many shares-equivalent (1 contract = 100 shares).
-export const DELTA_LIMIT_SHARES = 30;
+// Rule 2: warn when |dollar delta| (delta x quantity x 100 x stock price, short negated) is above this % of net liq.
+export const DOLLAR_DELTA_PCT = 50;
+// Rule 6: warn when the max loss of all open journal trades adds up to more than this many dollars.
+export const OPEN_RISK_LIMIT_USD = 500;
 // Rule 3: "consider closing" once captured profit reaches this % of the trade's max profit.
 export const PROFIT_TARGET_PCT = 50;
 // Rule 4: warn at or under this many days to expiration; critical at or under the second number.
@@ -29,7 +31,8 @@ const OPTION_MULTIPLIER = 100;
 // --- Types ---------------------------------------------------------------
 
 export type AlertSeverity = 'info' | 'warn' | 'critical' | 'good';
-export type AlertRule = 'strike' | 'delta' | 'profit' | 'dte' | 'bp' | 'stale';
+export type AlertRule =
+  'strike' | 'dollardelta' | 'profit' | 'dte' | 'bp' | 'stale' | 'risk';
 
 export type Alert = {
   id: string;
@@ -194,26 +197,116 @@ export function totalDeltaShares(positions: TtPosition[]): {
   return { total, counted, skipped };
 }
 
-export function deltaAlerts(a: AccountInput): AlertResult {
-  const { total, counted, skipped } = totalDeltaShares(a.positions);
-  const notes: string[] = [];
-  if (skipped > 0 && counted > 0)
-    notes.push(
-      `Delta total skips ${skipped} position(s) with no delta saved yet.`,
-    );
-  if (counted === 0 && a.positions.length > 0)
-    notes.push('No Greeks saved yet, so the delta check was skipped.');
+// Dollar delta of the option positions: delta x quantity x 100 x stock price, negated for short.
+export function dollarDelta(positions: TtPosition[]): {
+  total: number;
+  counted: number;
+  skipped: number;
+} {
+  let total = 0;
+  let counted = 0;
+  let skipped = 0;
+  for (const p of positions) {
+    if (!isOption(p)) continue;
+    const shares = positionDeltaShares(p);
+    const price = toNum(p.underlying_price);
+    if (shares === null || price === null || !(price > 0)) {
+      skipped++;
+      continue;
+    }
+    total += shares * price;
+    counted++;
+  }
+  return { total, counted, skipped };
+}
+
+export function dollarDeltaAlerts(a: AccountInput): AlertResult {
+  const options = a.positions.filter(isOption);
+  if (options.length === 0) return { alerts: [], notes: [] };
+  const { total, counted, skipped } = dollarDelta(a.positions);
   const alerts: Alert[] = [];
-  if (counted > 0 && Math.abs(total) > DELTA_LIMIT_SHARES)
+  const base = {
+    id: `dollardelta-${a.account.id}`,
+    rule: 'dollardelta' as const,
+    symbol: 'Dollar delta',
+    account: a.account.account_last4,
+  };
+  // Not a clear: say the check could not run yet.
+  if (counted === 0)
+    return {
+      alerts: [
+        {
+          ...base,
+          severity: 'info',
+          message: 'Dollar delta check: waiting for underlying price data.',
+        },
+      ],
+      notes: [],
+    };
+  const netLiq = toNum(a.balance.net_liq);
+  if (netLiq === null || !(netLiq > 0))
+    return {
+      alerts: [
+        {
+          ...base,
+          severity: 'info',
+          message:
+            'Dollar delta check: no net liquidation value to compare to.',
+        },
+      ],
+      notes: [],
+    };
+  const pct = (Math.abs(total) / netLiq) * 100;
+  if (pct > DOLLAR_DELTA_PCT)
     alerts.push({
-      id: `delta-${a.account.id}`,
-      rule: 'delta',
+      ...base,
       severity: 'warn',
-      symbol: 'Total delta',
-      account: a.account.account_last4,
-      message: `Total delta is ${total >= 0 ? '+' : ''}${total.toFixed(1)} shares, beyond the ±${DELTA_LIMIT_SHARES} limit.`,
+      message: `Dollar delta is ${total < 0 ? '−' : '+'}${usd(Math.abs(total))}, ${pct.toFixed(0)}% of net liq ${usd(netLiq)} (limit ${DOLLAR_DELTA_PCT}%).`,
     });
+  const notes =
+    skipped > 0
+      ? [
+          `Dollar delta skips ${skipped} option position(s) with no delta or underlying price saved yet.`,
+        ]
+      : [];
   return { alerts, notes };
+}
+
+// --- Rule 6: total defined risk across open journal trades ---------------
+
+export function openRiskAlerts(
+  a: AccountInput,
+  trades: TtTrade[],
+): AlertResult {
+  let total = 0;
+  let n = 0;
+  for (const t of trades) {
+    if (t.status !== 'open') continue;
+    if (t.account_id && t.account_id !== a.account.id) continue;
+    const loss = toNum(t.max_loss);
+    if (loss === null) continue;
+    total += Math.abs(loss);
+    n++;
+  }
+  if (n === 0 || total <= OPEN_RISK_LIMIT_USD) return { alerts: [], notes: [] };
+  const netLiq = toNum(a.balance.net_liq);
+  const pctText =
+    netLiq !== null && netLiq > 0
+      ? `, ${((total / netLiq) * 100).toFixed(0)}% of net liq ${usd(netLiq)}`
+      : '';
+  return {
+    alerts: [
+      {
+        id: `risk-${a.account.id}`,
+        rule: 'risk',
+        severity: 'warn',
+        symbol: 'Defined risk',
+        account: a.account.account_last4,
+        message: `Max loss across ${n} open trade${n === 1 ? '' : 's'} is ${usd(total)}${pctText} (limit ${usd(OPEN_RISK_LIMIT_USD)}).`,
+      },
+    ],
+    notes: [],
+  };
 }
 
 // --- Rule 3: 50% of max profit reached -----------------------------------
@@ -377,13 +470,16 @@ export function evaluateAlerts(input: {
     add(staleAlerts(a, input.now));
     add(buyingPowerAlerts(a));
     add(shortStrikeAlerts(a, input.prices));
-    add(deltaAlerts(a));
-    if (input.trades) add(profitTargetAlerts(a, input.trades));
+    add(dollarDeltaAlerts(a));
+    if (input.trades) {
+      add(profitTargetAlerts(a, input.trades));
+      add(openRiskAlerts(a, input.trades));
+    }
     add(dteAlerts(a, input.now));
   }
   if (!input.trades)
     notes.add(
-      'Could not read the trade journal, so the profit target check was skipped.',
+      'Could not read the trade journal, so the profit target and defined risk checks were skipped.',
     );
   alerts.sort(
     (x, y) => SEVERITY_ORDER[x.severity] - SEVERITY_ORDER[y.severity],
@@ -394,10 +490,11 @@ export function evaluateAlerts(input: {
 // One line per rule for the collapsible "Rules" list, built from the constants above.
 export const RULE_LINES: string[] = [
   `Short strike near price: warn within ${STRIKE_NEAR_PCT}% of the stock price, red if in the money.`,
-  `Delta limit: warn when total delta is beyond ±${DELTA_LIMIT_SHARES} shares-equivalent (delta × quantity × 100).`,
+  `Dollar delta: warn when delta × quantity × 100 × stock price (short negated) is beyond ${DOLLAR_DELTA_PCT}% of net liq.`,
   `Profit target: consider closing an open journal trade at ${PROFIT_TARGET_PCT}% of max profit.`,
   `Expiration: warn at ${DTE_WARN_DAYS} days or fewer, red at ${DTE_CRITICAL_DAYS} or fewer (Denver time).`,
   `Buying power: warn under ${BP_WARN_PCT}% of net liq, red under ${BP_CRITICAL_PCT}%.`,
+  `Defined risk: warn when max loss across open journal trades is over ${usd(OPEN_RISK_LIMIT_USD)}.`,
   `Stale data: note when the newest snapshot is over ${STALE_HOURS} hours old.`,
 ];
 

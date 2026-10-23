@@ -40,6 +40,8 @@ export type TtPosition = {
   theta: number | string | null;
   vega: number | string | null;
   iv: number | string | null;
+  // Stock price at snapshot time; the column may not exist yet, so it can be missing.
+  underlying_price?: number | string | null;
 };
 
 export type TtAccountData = {
@@ -75,12 +77,23 @@ export async function fetchTastytrade(): Promise<TtState> {
       .maybeSingle();
     if (bErr) return { status: 'none', reason: bErr.message };
     if (!bal) continue;
-    const { data: pos, error: pErr } = await supabase
+    const posCols =
+      'id, snapshot_id, symbol, underlying, instrument_type, quantity, direction, expiration, strike, option_type, avg_open_price, mark, delta, gamma, theta, vega, iv';
+    const first = await supabase
       .from('tt_position_snapshots')
-      .select(
-        'id, snapshot_id, symbol, underlying, instrument_type, quantity, direction, expiration, strike, option_type, avg_open_price, mark, delta, gamma, theta, vega, iv',
-      )
+      .select(`${posCols}, underlying_price`)
       .eq('snapshot_id', bal.id);
+    let pos: unknown[] | null = first.data;
+    let pErr = first.error;
+    // underlying_price is a newer column; fall back to the old list until it exists.
+    if (pErr && /underlying_price/.test(pErr.message)) {
+      const retry = await supabase
+        .from('tt_position_snapshots')
+        .select(posCols)
+        .eq('snapshot_id', bal.id);
+      pos = retry.data;
+      pErr = retry.error;
+    }
     if (pErr) return { status: 'none', reason: pErr.message };
     out.push({
       account,
