@@ -6,11 +6,30 @@ import CardTitle from '@/components/CardTitle';
 import StatusPill from '@/components/StatusPill';
 import { AccountBadge, ExampleLabel } from '@/components/tastytrade/TT';
 import { cardTiles } from '@/lib/tastytrade-placeholders';
-import { useTastytrade, money, asOfDenver, envLabel } from '@/lib/tastytrade';
+import {
+  useTastytrade,
+  useBalanceHistory,
+  dayPnl,
+  money,
+  asOfDenver,
+  envLabel,
+} from '@/lib/tastytrade';
+import { greekTotals } from '@/lib/tastytrade-alerts';
+
+const signed = (n: number, d: number) =>
+  `${n >= 0 ? '+' : '−'}${Math.abs(n).toFixed(d)}`;
 
 export default function TastytradeCard() {
   const tt = useTastytrade();
   const live = tt.status === 'live' ? tt.accounts[0] : null;
+  const history = useBalanceHistory(live ? [live.account.id] : []);
+  const pnl =
+    history.status === 'ready' && live
+      ? dayPnl(history.byAccount[live.account.id] ?? [])
+      : null;
+  const g = live ? greekTotals(live.positions) : null;
+  const hasGreeks = !!g && g.counted > 0;
+  const noPositions = !!live && live.positions.length === 0;
 
   const tiles = live
     ? [
@@ -20,9 +39,29 @@ export default function TastytradeCard() {
           value: money(live.balance.buying_power_derivative),
         },
         { label: 'Stock BP', value: money(live.balance.buying_power_equity) },
-        { label: 'Day P&L', value: '—' },
-        { label: 'Portfolio Δ', value: '—' },
-        { label: 'Portfolio Θ', value: '—' },
+        {
+          label: 'Day P&L',
+          value:
+            pnl === null
+              ? '—'
+              : `${pnl < 0 ? '−' : '+'}${money(Math.abs(pnl))}`,
+        },
+        {
+          label: 'Portfolio Δ',
+          value: hasGreeks
+            ? signed(g.totals.delta, 1)
+            : noPositions
+              ? '0.0'
+              : '—',
+        },
+        {
+          label: 'Portfolio Θ',
+          value: hasGreeks
+            ? `${signed(g.totals.theta, 2)}/day`
+            : noPositions
+              ? '0.00'
+              : '—',
+        },
       ]
     : cardTiles;
 
