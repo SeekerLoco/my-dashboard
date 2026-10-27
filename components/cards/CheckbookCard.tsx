@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import { getLocalDateString } from '@/lib/dates';
 import { useCountUp } from '@/lib/useCountUp';
+import { fetchProjectedBalances } from '@/lib/checkbook-projection';
 import Card from '@/components/Card';
 import CardTitle from '@/components/CardTitle';
 import StatusPill from '@/components/StatusPill';
@@ -33,33 +34,10 @@ export default function CheckbookCard() {
     }
   }
 
-  // Reads Supabase table daily_balances (projected_balance for the next 90 days)
-  async function fetchProjection() {
-    const today = getLocalDateString();
-    const end = new Date();
-    end.setDate(end.getDate() + 90);
-    const endStr = getLocalDateString(end);
-
-    const { data } = await supabase
-      .from('daily_balances')
-      .select('calendar_date, projected_balance')
-      .gte('calendar_date', today)
-      .lte('calendar_date', endStr)
-      .order('calendar_date');
-
-    if (data) {
-      setProjection(
-        data.map((row) => ({
-          date: row.calendar_date,
-          balance: row.projected_balance,
-        })),
-      );
-    }
-  }
-
   useEffect(() => {
     fetchCheckbookBalance();
-    fetchProjection();
+    // Default range (3M / 90 days) matches fetchProjectedBalances()'s default.
+    fetchProjectedBalances().then(setProjection);
   }, []);
 
   return (

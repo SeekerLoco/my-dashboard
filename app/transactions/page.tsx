@@ -7,6 +7,7 @@ import PageHeader from '@/components/PageHeader';
 import { getLocalDateString } from '@/lib/dates';
 import { formatUSD } from '@/lib/format';
 import DateRangeFilter from '@/components/DateRangeFilter';
+import CheckbookProjectionPanel from '@/components/checkbook/CheckbookProjectionPanel';
 
 type Transaction = {
   id: string;
@@ -137,6 +138,8 @@ export default function TransactionsPage() {
     <main className="min-h-screen text-white p-6">
       <div className="max-w-4xl mx-auto">
         <PageHeader title="Transactions" icon="💵" accent="teal" />
+
+        <CheckbookProjectionPanel />
 
         {/* Add form */}
         <form onSubmit={addTransaction} className="panel mb-8 p-4">
