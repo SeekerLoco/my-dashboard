@@ -259,8 +259,20 @@ function CumulativeChart({ interest }: { interest: InterestRow[] }) {
     pts.push([end, total]);
     return pts;
   }
+  // Net cost basis over time: buys add their cost; sells remove the sold shares'
+  // average cost (same math as getPositions, so the line ends at the gauge's total).
+  const held = new Map<string, { shares: number; cost: number }>();
   const costPts = steps(
-    lots.map((l) => ({ date: l.date, amount: l.shares >= 0 ? lotCost(l) : 0 })),
+    lots.map((l) => {
+      const h = held.get(l.ticker) ?? { shares: 0, cost: 0 };
+      let amount = 0;
+      if (l.shares >= 0) amount = lotCost(l);
+      else if (h.shares > 0) amount = (h.cost / h.shares) * l.shares;
+      h.cost += amount;
+      h.shares += l.shares;
+      held.set(l.ticker, h);
+      return { date: l.date, amount };
+    }),
   );
   const intPts = steps(interest);
   const max = Math.max(
@@ -279,11 +291,10 @@ function CumulativeChart({ interest }: { interest: InterestRow[] }) {
     <div className="mt-5">
       <div className="flex items-center gap-4 text-xs text-slate-400 mb-1">
         <span className="flex items-center gap-1">
-          <span className="w-3 h-0.5 bg-violet-400 inline-block" /> Cumulative
-          cost
+          <span className="w-3 h-0.5 bg-violet-400 inline-block" /> Net cost
         </span>
         <span className="flex items-center gap-1">
-          <span className="w-3 h-0.5 bg-emerald-400 inline-block" /> Cumulative
+          <span className="w-3 h-0.5 bg-emerald-400 inline-block" /> Net
           interest
         </span>
       </div>
