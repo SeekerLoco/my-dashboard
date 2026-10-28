@@ -294,7 +294,7 @@ function CumulativeChart({ interest }: { interest: InterestRow[] }) {
           <span className="w-3 h-0.5 bg-violet-400 inline-block" /> Net cost
         </span>
         <span className="flex items-center gap-1">
-          <span className="w-3 h-0.5 bg-emerald-400 inline-block" /> Net
+          <span className="w-3 h-0.5 bg-emerald-400 inline-block" /> Cumulative
           interest
         </span>
       </div>
