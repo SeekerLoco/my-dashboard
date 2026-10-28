@@ -104,6 +104,13 @@ export const LOTS: Lot[] = [
     shares: 1,
     price: 144.925,
   },
+  {
+    ticker: 'SPCX',
+    account: 'Trust',
+    date: '2026-10-28',
+    shares: -4,
+    price: 143.88,
+  },
   // SPCX - IRA
   {
     ticker: 'SPCX',
@@ -183,6 +190,14 @@ export const LOTS: Lot[] = [
     date: '2026-10-16',
     shares: 9,
     price: 81.345,
+  },
+  // BA - Trust
+  {
+    ticker: 'BA',
+    account: 'Trust',
+    date: '2026-10-28',
+    shares: 3,
+    price: 165.96,
   },
 ];
 
