@@ -8,9 +8,11 @@ import {
   useTradeJournal,
   money,
   dateDenver,
+  asOfDenver,
   denverLocalToIso,
   type TtAccountData,
   type TtLeg,
+  type TtPosition,
   type TtState,
   type TtTrade,
   type TtTradeInput,
@@ -46,6 +48,43 @@ function pnlClass(v: number | string | null): string {
   const n = Number(v);
   if (v === null || !Number.isFinite(n) || n === 0) return '';
   return n > 0 ? 'text-emerald-300' : 'text-red-300';
+}
+
+// Live P&L for an open trade from the latest hourly snapshot marks (mid prices).
+// Each leg is matched to a snapshot position by account, expiration, strike and type;
+// P&L = sum over legs of (mark − open price) for longs and (open − mark) for shorts, × qty × 100.
+type LivePnl = { pnl: number; pctMax: number | null; asOf: string | null };
+
+function livePnl(trade: TtTrade, accounts: TtAccountData[]): LivePnl | null {
+  if (trade.status !== 'open' || !trade.legs?.length) return null;
+  const acct = accounts.find((a) => a.account.id === trade.account_id);
+  const pool: TtPosition[] = acct
+    ? acct.positions
+    : accounts.flatMap((a) => a.positions);
+  let pnl = 0;
+  for (const l of trade.legs) {
+    const p = pool.find(
+      (x) =>
+        (x.underlying ?? '').toUpperCase() ===
+          (trade.underlying ?? '').toUpperCase() &&
+        x.expiration === l.expiration &&
+        Number(x.strike) === Number(l.strike) &&
+        (x.option_type ?? '').toLowerCase() === l.option_type,
+    );
+    if (!p || p.mark === null || p.avg_open_price === null) return null;
+    const diff = Number(p.mark) - Number(p.avg_open_price);
+    pnl += (l.direction === 'sell' ? -diff : diff) * Number(l.quantity) * 100;
+  }
+  pnl = Math.round(pnl * 100) / 100;
+  const max = Number(trade.max_profit);
+  return {
+    pnl,
+    pctMax:
+      trade.max_profit !== null && max > 0
+        ? Math.round((pnl / max) * 1000) / 10
+        : null,
+    asOf: acct?.balance.as_of ?? null,
+  };
 }
 
 function legLabel(l: TtLeg): string {
@@ -415,9 +454,11 @@ function AddTradeForm({
 
 function TradeRow({
   trade,
+  live,
   onSave,
 }: {
   trade: TtTrade;
+  live: LivePnl | null;
   onSave: (
     id: string,
     n: { thesis: string | null; lesson: string | null },
@@ -476,6 +517,26 @@ function TradeRow({
           'Realized P&L',
           money(trade.realized_pnl),
           pnlClass(trade.realized_pnl),
+        )}
+        {trade.status === 'open' && (
+          <>
+            {stat(
+              'Current P&L',
+              live ? money(live.pnl) : '—',
+              live ? pnlClass(live.pnl) : '',
+            )}
+            {stat(
+              '% of max profit',
+              live?.pctMax != null ? `${live.pctMax}%` : '—',
+              live ? pnlClass(live.pnl) : '',
+            )}
+            {stat('Max profit', money(trade.max_profit))}
+            <div className="text-white/50 text-xs self-end">
+              {live
+                ? `Mid marks as of ${live.asOf ? asOfDenver(live.asOf) : '—'}`
+                : 'No matching snapshot legs'}
+            </div>
+          </>
         )}
       </div>
       {trade.legs?.length ? (
@@ -587,7 +648,12 @@ export default function TradeJournal({ tt }: { tt: TtState }) {
       ) : (
         <ul className="space-y-3">
           {state.trades.map((t) => (
-            <TradeRow key={t.id} trade={t} onSave={updateNotes} />
+            <TradeRow
+              key={t.id}
+              trade={t}
+              live={livePnl(t, accounts)}
+              onSave={updateNotes}
+            />
           ))}
         </ul>
       )}

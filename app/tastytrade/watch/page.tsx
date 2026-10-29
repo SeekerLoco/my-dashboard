@@ -28,6 +28,13 @@ export default function WatchPage() {
           accent="blue"
           className="lg:col-span-2"
           example={!live}
+          collapsible
+          defaultOpen={false}
+          summary={
+            live
+              ? `${live.reduce((n, a) => n + a.positions.length, 0)} legs`
+              : undefined
+          }
         >
           {live ? (
             live.every((a) => a.positions.length === 0) ? (

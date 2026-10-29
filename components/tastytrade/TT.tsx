@@ -1,5 +1,7 @@
+'use client';
+
 // Shared tastytrade placeholder pieces: account badge, example label, sections, and the not-enabled banner.
-import type { ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import Card, { type Accent } from '@/components/Card';
 import type { AccountKind } from '@/lib/tastytrade-placeholders';
 
@@ -30,21 +32,53 @@ export function Section({
   accent,
   example = true,
   className,
+  collapsible = false,
+  defaultOpen = true,
+  summary,
   children,
 }: {
   title: string;
   accent: Accent;
   example?: boolean;
   className?: string;
+  // When collapsible, the title toggles the body; summary shows while collapsed.
+  collapsible?: boolean;
+  defaultOpen?: boolean;
+  summary?: ReactNode;
   children: ReactNode;
 }) {
+  const [open, setOpen] = useState(defaultOpen);
+  const shown = !collapsible || open;
   return (
     <Card accent={accent} className={className}>
-      <div className="flex items-center justify-between gap-2 mb-3">
-        <h2 className="font-semibold">{title}</h2>
+      <div
+        className={`flex items-center justify-between gap-2 ${shown ? 'mb-3' : ''}`}
+      >
+        {collapsible ? (
+          <button
+            type="button"
+            onClick={() => setOpen((o) => !o)}
+            aria-expanded={open}
+            className="flex items-center gap-2 font-semibold hover:text-white/80"
+          >
+            <span
+              className={`inline-block transition-transform ${open ? 'rotate-90' : ''}`}
+            >
+              ▸
+            </span>
+            {title}
+            {!open && summary && (
+              <span className="text-xs font-normal text-white/60">
+                {summary}
+              </span>
+            )}
+          </button>
+        ) : (
+          <h2 className="font-semibold">{title}</h2>
+        )}
         {example && <ExampleLabel />}
       </div>
-      {children}
+      {shown && children}
     </Card>
   );
 }
