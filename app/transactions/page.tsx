@@ -1,4 +1,4 @@
-// Transactions page: add, edit, and delete checkbook transactions within a date window.
+// Transactions page: edit and delete checkbook transactions within a date window.
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -8,6 +8,7 @@ import { getLocalDateString } from '@/lib/dates';
 import { formatUSD } from '@/lib/format';
 import DateRangeFilter from '@/components/DateRangeFilter';
 import CheckbookProjectionPanel from '@/components/checkbook/CheckbookProjectionPanel';
+import RecurringTransactionForm from '@/components/checkbook/RecurringTransactionForm';
 
 type Transaction = {
   id: string;
@@ -21,25 +22,10 @@ type Transaction = {
 export default function TransactionsPage() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
-  const [newTx, setNewTx] = useState({
-    Transaction_Date: '',
-    Category: '',
-    Type: 'Debit',
-    Amount: '',
-    Status: 'Verified',
-  });
   const [categories, setCategories] = useState<string[]>([]);
   const [editingAmountId, setEditingAmountId] = useState<string | null>(null);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-
-  // Set today's date only on the client
-  useEffect(() => {
-    setNewTx((prev) => ({
-      ...prev,
-      Transaction_Date: getLocalDateString(),
-    }));
-  }, []);
 
   // Default the date window to one week before and after today
   useEffect(() => {
@@ -100,40 +86,6 @@ export default function TransactionsPage() {
     loadTransactions();
   }
 
-  // Inserts a new row into Supabase table Checkbook_Transactions
-  async function addTransaction(e: React.FormEvent) {
-    e.preventDefault();
-    let amount = parseFloat(newTx.Amount);
-    if (!newTx.Category || isNaN(amount)) return;
-
-    // Normalize sign based on Type
-    if (newTx.Type === 'Debit' && amount > 0) {
-      amount = amount * -1;
-    }
-    if (newTx.Type === 'Credit' && amount < 0) {
-      amount = amount * -1;
-    }
-
-    const { error } = await supabase.from('Checkbook_Transactions').insert({
-      Transaction_Date: newTx.Transaction_Date,
-      Category: newTx.Category,
-      Type: newTx.Type,
-      Amount: amount,
-      Status: newTx.Status,
-    });
-
-    if (!error) {
-      setNewTx({
-        Transaction_Date: getLocalDateString(),
-        Category: '',
-        Type: 'Debit',
-        Amount: '',
-        Status: 'Verified',
-      });
-      loadTransactions();
-    }
-  }
-
   return (
     <main className="min-h-screen text-white p-6">
       <div className="max-w-4xl mx-auto">
@@ -141,62 +93,10 @@ export default function TransactionsPage() {
 
         <CheckbookProjectionPanel />
 
-        {/* Add form */}
-        <form onSubmit={addTransaction} className="panel mb-8 p-4">
-          <div className="font-semibold mb-3">Add transaction</div>
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-            <input
-              type="date"
-              value={newTx.Transaction_Date}
-              onChange={(e) =>
-                setNewTx({ ...newTx, Transaction_Date: e.target.value })
-              }
-              className="bg-white/5 border border-white/10 rounded px-3 py-2 text-sm"
-            />
-            <select
-              value={newTx.Category}
-              onChange={(e) => setNewTx({ ...newTx, Category: e.target.value })}
-              className="bg-white/5 border border-white/10 rounded px-3 py-2 text-sm"
-            >
-              <option value="">Category</option>
-              {categories.map((cat) => (
-                <option key={cat} value={cat}>
-                  {cat}
-                </option>
-              ))}
-            </select>
-            <select
-              value={newTx.Type}
-              onChange={(e) => setNewTx({ ...newTx, Type: e.target.value })}
-              className="bg-white/5 border border-white/10 rounded px-3 py-2 text-sm"
-            >
-              <option>Debit</option>
-              <option>Credit</option>
-            </select>
-            <input
-              type="number"
-              step="0.01"
-              placeholder="Amount"
-              value={newTx.Amount}
-              onChange={(e) => setNewTx({ ...newTx, Amount: e.target.value })}
-              className="bg-white/5 border border-white/10 rounded px-3 py-2 text-sm"
-            />
-            <select
-              value={newTx.Status}
-              onChange={(e) => setNewTx({ ...newTx, Status: e.target.value })}
-              className="bg-white/5 border border-white/10 rounded px-3 py-2 text-sm"
-            >
-              <option>Verified</option>
-              <option>Expected</option>
-            </select>
-          </div>
-          <button
-            type="submit"
-            className="mt-3 px-4 py-2 bg-indigo-500/70 hover:bg-indigo-500 rounded text-sm"
-          >
-            Add
-          </button>
-        </form>
+        <RecurringTransactionForm
+          categories={categories}
+          onAdded={loadTransactions}
+        />
 
         <DateRangeFilter
           startDate={startDate}

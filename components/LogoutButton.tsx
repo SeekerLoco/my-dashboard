@@ -19,7 +19,9 @@ export default function LogoutButton() {
         <span className="hidden sm:inline text-sm text-white/60">{email}</span>
       )}
       <button
-        onClick={() => supabase.auth.signOut()}
+        onClick={() => {
+          if (confirm('Log out of the dashboard?')) supabase.auth.signOut();
+        }}
         className="px-3 py-1.5 rounded-xl text-sm bg-white/10 border border-white/10 hover:bg-white/20 transition"
       >
         Log out
