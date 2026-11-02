@@ -10,6 +10,7 @@ import SoccerCard from '@/components/cards/SoccerCard';
 import TelegraphCard from '@/components/cards/TelegraphCard';
 import JournalCard from '@/components/cards/JournalCard';
 import TastytradeCard from '@/components/cards/TastytradeCard';
+import BotUsageCard from '@/components/cards/BotUsageCard';
 import LogoutButton from '@/components/LogoutButton';
 
 export default function Home() {
@@ -56,6 +57,9 @@ export default function Home() {
 
         {/* tastytrade card */}
         <TastytradeCard />
+
+        {/* Usage by Bot card */}
+        <BotUsageCard />
       </div>
     </main>
   );
