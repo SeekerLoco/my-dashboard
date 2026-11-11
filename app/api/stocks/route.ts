@@ -16,6 +16,7 @@ const SYMBOLS = [
   { symbol: 'CSCO', name: 'CSCO' },
   { symbol: 'SMCI', name: 'SMCI' },
   { symbol: 'BA', name: 'Boeing' },
+  { symbol: 'HIMS', name: 'HIMS' },
 ];
 
 // Reads Yahoo Finance chart data for each symbol (cached 15 minutes)
