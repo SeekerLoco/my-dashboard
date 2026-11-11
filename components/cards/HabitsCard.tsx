@@ -144,6 +144,14 @@ export default function HabitsCard() {
           })
         )}
       </div>
+
+      {/* Link to the Physical Therapy tracker page */}
+      <a
+        href="/physical-therapy"
+        className="mt-4 inline-block text-sm text-blue-400 hover:underline"
+      >
+        🦵 Physical Therapy →
+      </a>
     </Card>
   );
 }
