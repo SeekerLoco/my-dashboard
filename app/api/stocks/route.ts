@@ -38,14 +38,20 @@ async function fetchQuotes(
 
       if (meta?.regularMarketPrice) {
         const price = meta.regularMarketPrice;
-        const prev = meta.chartPreviousClose || price;
-        const change = price - prev;
-        const changePercent = (change / prev) * 100;
 
-        // Clean the closes array (remove nulls) for the sparkline
+        // Clean the closes array (remove nulls) for the 5-day sparkline
         const history = closes.filter(
           (c: number | null) => c != null,
         ) as number[];
+
+        // Day change vs the previous session's close (the second-to-last daily close).
+        // chartPreviousClose is the close before the whole 5-day window, so it's only a fallback.
+        const prev =
+          (history.length >= 2 ? history[history.length - 2] : null) ||
+          meta.chartPreviousClose ||
+          price;
+        const change = price - prev;
+        const changePercent = (change / prev) * 100;
 
         results.push({
           ...(withSymbol ? { symbol: item.symbol } : {}),

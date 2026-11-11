@@ -64,6 +64,13 @@ export default function MarketsCard() {
         <div className="text-sm opacity-70">Loading...</div>
       ) : (
         <div className="space-y-2 text-sm">
+          <div className="flex justify-between items-center text-xs opacity-60">
+            <span />
+            <div className="flex items-center">
+              <span className="text-right">Day</span>
+              <span className="ml-2 w-[60px] text-center">5-day</span>
+            </div>
+          </div>
           {stocks.map((s) => (
             <div key={s.name} className="flex justify-between items-center">
               <span className="font-medium">{s.name}</span>
@@ -83,7 +90,13 @@ export default function MarketsCard() {
                     {s.change.toFixed(2)} ({s.changePercent.toFixed(2)}%)
                   </div>
                 </div>
-                <Sparkline data={s.history} positive={s.change >= 0} />
+                <Sparkline
+                  data={s.history}
+                  positive={
+                    s.history.length < 2 ||
+                    s.history[s.history.length - 1] >= s.history[0]
+                  }
+                />
               </div>
             </div>
           ))}
