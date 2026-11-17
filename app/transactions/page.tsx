@@ -106,7 +106,9 @@ export default function TransactionsPage() {
         />
 
         {/* List */}
-        {loading ? (
+        {/* Only show Loading when there's nothing to show yet, so a reload after an edit
+            keeps the list on screen and the page doesn't jump back to the top */}
+        {loading && transactions.length === 0 ? (
           <div>Loading...</div>
         ) : transactions.length === 0 ? (
           <div className="opacity-70">No transactions in this window.</div>
