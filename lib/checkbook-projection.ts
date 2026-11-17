@@ -11,6 +11,7 @@ export const PROJECTION_RANGE_DAYS = {
   '3M': 90,
   '6M': 180,
   '1Y': 365,
+  '2Y': 730,
   All: null,
 } as const;
 
