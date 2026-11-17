@@ -207,6 +207,14 @@ export const LOTS: Lot[] = [
     shares: 4,
     price: 18.625,
   },
+  // NVDA - IRA
+  {
+    ticker: 'NVDA',
+    account: 'IRA',
+    date: '2026-11-17',
+    shares: 1,
+    price: 157.8945,
+  },
 ];
 
 // Lot amount in dollars, rounded half-up to cents (integer math avoids float errors like 144.925 → 144.92).
