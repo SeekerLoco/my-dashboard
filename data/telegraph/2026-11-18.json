@@ -1,67 +1,22 @@
 {
-  "edition_date": "2026-11-11",
+  "edition_date": "2026-11-18",
   "editor": "Thaddeus Pendelton",
   "sections": {
-    "front_page": {
-      "status": "complete",
-      "stories": [
-        {
-          "headline": "Bridge collapse derails freight train in Russia's Arkhangelsk region",
-          "summary": "A span of a rail bridge over the Viled River collapsed early Tuesday, derailing freight cars and stranding at least eight long-distance passenger trains; no one was hurt and investigators are looking into the cause.",
-          "source_name": "The Moscow Times",
-          "source_url": "https://www.themoscowtimes.com/2026/11/10/freight-train-derails-in-arkhangelsk-region-following-bridge-collapse-a94220",
-          "published_at": "2026-11-10",
-          "from_section": "us_world"
-        },
-        {
-          "headline": "No. 5 Michigan State beats No. 2 Duke 79-73 in the Champions Classic",
-          "summary": "Jeremy Fears Jr. had 18 points and 11 assists and the Spartans led wire to wire at the United Center to improve to 3-0; Jordan Scott blocked a career-high six shots.",
-          "source_name": "Michigan State Athletics",
-          "source_url": "https://msuspartans.com/news/2026/11/10/mens-basketball-fears-helps-lead-no-5-michigan-state-past-no-2-duke-79-73-in-champions-classic",
-          "published_at": "2026-11-10T22:30:00-05:00",
-          "from_section": "sports"
-        },
-        {
-          "headline": "Children's Hospital plans a youth mental health crisis unit in Highlands Ranch",
-          "summary": "Douglas County is putting $3.4 million in opioid settlement money toward a five- or six-bed psychiatric crisis unit at Children's Hospital Colorado's South Campus, expected to open in October 2027.",
-          "source_name": "Axios Denver",
-          "source_url": "https://www.axios.com/local/douglas/2026/11/10/childrens-hospital-youth-mental-health-crisis-unit",
-          "published_at": "2026-11-10",
-          "location": "Highlands Ranch",
-          "impact": "Medium",
-          "composite_score": 15,
-          "from_section": "local"
-        },
-        {
-          "headline": "House votes to effectively end the impeachment effort against Pete Hegseth",
-          "summary": "The House voted Tuesday to effectively shut down the push to impeach the Defense Secretary.",
-          "source_name": "NPR",
-          "source_url": "https://www.npr.org/2026/11/10/nx-s1-6036813/house-votes-to-effectively-end-the-impeachment-effort-against-pete-hegseth",
-          "published_at": "2026-11-10T18:43:11-05:00",
-          "from_section": "us_world"
-        }
-      ]
-    },
     "markets": {
       "status": "complete",
-      "as_of_close": "2026-11-10",
+      "as_of_close": "2026-11-17",
       "table": [
         {
           "name": "S&P 500",
           "symbol": "^GSPC",
-          "last_close": 7520.93,
-          "pct_day": -0.38,
-          "pct_week": -0.63,
-          "pct_month": -3.72,
-          "pct_ytd": 9.87,
-          "vs_40wk_sma": "Above",
-          "rsi_14": 44.5,
+          "last_close": 7340.53,
+          "pct_day": -1.03,
+          "pct_week": -2.4,
+          "pct_month": -4.16,
+          "pct_ytd": 7.23,
+          "vs_40wk_sma": "Below",
+          "rsi_14": 37.2,
           "rsi_series": [
-            48.1,
-            49.6,
-            54.8,
-            59,
-            62.3,
             60.3,
             56.2,
             59.9,
@@ -86,39 +41,19 @@
             33.5,
             35.1,
             45.8,
-            44.5
+            44.5,
+            49.7,
+            48.4,
+            46.8,
+            40.2,
+            37.2
           ],
           "macd": {
-            "macd": -58.366,
-            "signal": -38.078,
-            "histogram": -20.288
+            "macd": -64.455,
+            "signal": -47.643,
+            "histogram": -16.812
           },
           "macd_series": [
-            {
-              "macd": 10.113,
-              "signal": 11.916,
-              "histogram": -1.803
-            },
-            {
-              "macd": 8.136,
-              "signal": 11.16,
-              "histogram": -3.024
-            },
-            {
-              "macd": 10.983,
-              "signal": 11.125,
-              "histogram": -0.141
-            },
-            {
-              "macd": 17.176,
-              "signal": 12.335,
-              "histogram": 4.841
-            },
-            {
-              "macd": 25.419,
-              "signal": 14.952,
-              "histogram": 10.468
-            },
             {
               "macd": 30.22,
               "signal": 18.005,
@@ -243,25 +178,45 @@
               "macd": -58.366,
               "signal": -38.078,
               "histogram": -20.288
+            },
+            {
+              "macd": -49.64,
+              "signal": -40.39,
+              "histogram": -9.25
+            },
+            {
+              "macd": -44.39,
+              "signal": -41.19,
+              "histogram": -3.2
+            },
+            {
+              "macd": -42.222,
+              "signal": -41.396,
+              "histogram": -0.826
+            },
+            {
+              "macd": -51.616,
+              "signal": -43.44,
+              "histogram": -8.175
+            },
+            {
+              "macd": -64.455,
+              "signal": -47.643,
+              "histogram": -16.812
             }
           ]
         },
         {
           "name": "Dow Jones Industrial Average",
           "symbol": "^DJI",
-          "last_close": 52231.89,
-          "pct_day": -0.3,
-          "pct_week": 0.86,
-          "pct_month": 1.12,
-          "pct_ytd": 8.67,
-          "vs_40wk_sma": "Above",
-          "rsi_14": 51.2,
+          "last_close": 50759.42,
+          "pct_day": -1.64,
+          "pct_week": -2.82,
+          "pct_month": -2.39,
+          "pct_ytd": 5.61,
+          "vs_40wk_sma": "Below",
+          "rsi_14": 39.4,
           "rsi_series": [
-            35.1,
-            35.5,
-            39.4,
-            40.8,
-            44.6,
             40.8,
             41.6,
             48,
@@ -286,39 +241,19 @@
             45,
             43.2,
             52.5,
-            51.2
+            51.2,
+            53.2,
+            51.5,
+            51.9,
+            45.5,
+            39.4
           ],
           "macd": {
-            "macd": 24.174,
-            "signal": 42.943,
-            "histogram": -18.769
+            "macd": -96.56,
+            "signal": 15.579,
+            "histogram": -112.139
           },
           "macd_series": [
-            {
-              "macd": -458.685,
-              "signal": -375.036,
-              "histogram": -83.649
-            },
-            {
-              "macd": -483.444,
-              "signal": -396.718,
-              "histogram": -86.726
-            },
-            {
-              "macd": -477.358,
-              "signal": -412.846,
-              "histogram": -64.512
-            },
-            {
-              "macd": -459.896,
-              "signal": -422.256,
-              "histogram": -37.64
-            },
-            {
-              "macd": -420.76,
-              "signal": -421.957,
-              "histogram": 1.197
-            },
             {
               "macd": -412.539,
               "signal": -420.073,
@@ -443,25 +378,45 @@
               "macd": 24.174,
               "signal": 42.943,
               "histogram": -18.769
+            },
+            {
+              "macd": 52.069,
+              "signal": 44.768,
+              "histogram": 7.301
+            },
+            {
+              "macd": 58.222,
+              "signal": 47.459,
+              "histogram": 10.763
+            },
+            {
+              "macd": 66.404,
+              "signal": 51.248,
+              "histogram": 15.156
+            },
+            {
+              "macd": 13.076,
+              "signal": 43.614,
+              "histogram": -30.537
+            },
+            {
+              "macd": -96.56,
+              "signal": 15.579,
+              "histogram": -112.139
             }
           ]
         },
         {
           "name": "Nasdaq Composite",
           "symbol": "^IXIC",
-          "last_close": 25065.87,
+          "last_close": 24328.38,
           "pct_day": -0.74,
-          "pct_week": -1.21,
-          "pct_month": -8.41,
-          "pct_ytd": 7.85,
+          "pct_week": -2.94,
+          "pct_month": -6.93,
+          "pct_ytd": 4.67,
           "vs_40wk_sma": "Below",
-          "rsi_14": 40.9,
+          "rsi_14": 35.7,
           "rsi_series": [
-            56.4,
-            56.6,
-            62.1,
-            66.3,
-            67.9,
             66.2,
             57.4,
             60.3,
@@ -486,39 +441,19 @@
             30.1,
             33.9,
             42.4,
-            40.9
+            40.9,
+            45.5,
+            44.6,
+            42.4,
+            37.1,
+            35.7
           ],
           "macd": {
-            "macd": -469.571,
-            "signal": -357.175,
-            "histogram": -112.396
+            "macd": -478.059,
+            "signal": -410.335,
+            "histogram": -67.725
           },
           "macd_series": [
-            {
-              "macd": 190.167,
-              "signal": 164.284,
-              "histogram": 25.883
-            },
-            {
-              "macd": 185.018,
-              "signal": 168.431,
-              "histogram": 16.587
-            },
-            {
-              "macd": 204.343,
-              "signal": 175.613,
-              "histogram": 28.73
-            },
-            {
-              "macd": 240.006,
-              "signal": 188.492,
-              "histogram": 51.514
-            },
-            {
-              "macd": 274.982,
-              "signal": 205.79,
-              "histogram": 69.192
-            },
             {
               "macd": 294.377,
               "signal": 223.507,
@@ -643,25 +578,45 @@
               "macd": -469.571,
               "signal": -357.175,
               "histogram": -112.396
+            },
+            {
+              "macd": -431.547,
+              "signal": -372.049,
+              "histogram": -59.498
+            },
+            {
+              "macd": -404.824,
+              "signal": -378.604,
+              "histogram": -26.219
+            },
+            {
+              "macd": -397.606,
+              "signal": -382.405,
+              "histogram": -15.202
+            },
+            {
+              "macd": -437.399,
+              "signal": -393.403,
+              "histogram": -43.995
+            },
+            {
+              "macd": -478.059,
+              "signal": -410.335,
+              "histogram": -67.725
             }
           ]
         },
         {
           "name": "Gold (COMEX futures, GC=F)",
           "symbol": "GC=F",
-          "last_close": 4030.2,
-          "pct_day": -2.05,
-          "pct_week": 2.28,
-          "pct_month": -4.41,
-          "pct_ytd": -7.16,
+          "last_close": 3864.2,
+          "pct_day": 0.29,
+          "pct_week": -4.12,
+          "pct_month": -7.58,
+          "pct_ytd": -10.99,
           "vs_40wk_sma": "Below",
-          "rsi_14": 44.3,
+          "rsi_14": 35.3,
           "rsi_series": [
-            34.9,
-            36.7,
-            34.1,
-            33.8,
-            37.6,
             34.3,
             36.4,
             43.5,
@@ -686,39 +641,19 @@
             50,
             47.2,
             50.3,
-            44.3
+            44.3,
+            42.4,
+            35.8,
+            35.9,
+            34.2,
+            35.3
           ],
           "macd": {
-            "macd": -43.849,
-            "signal": -57.691,
-            "histogram": 13.842
+            "macd": -73.171,
+            "signal": -61.811,
+            "histogram": -11.36
           },
           "macd_series": [
-            {
-              "macd": -54.938,
-              "signal": -25.926,
-              "histogram": -29.013
-            },
-            {
-              "macd": -58.321,
-              "signal": -32.405,
-              "histogram": -25.916
-            },
-            {
-              "macd": -63.497,
-              "signal": -38.623,
-              "histogram": -24.874
-            },
-            {
-              "macd": -67.268,
-              "signal": -44.352,
-              "histogram": -22.916
-            },
-            {
-              "macd": -67.038,
-              "signal": -48.889,
-              "histogram": -18.149
-            },
             {
               "macd": -69.796,
               "signal": -53.07,
@@ -843,25 +778,45 @@
               "macd": -43.849,
               "signal": -57.691,
               "histogram": 13.842
+            },
+            {
+              "macd": -45.152,
+              "signal": -55.183,
+              "histogram": 10.032
+            },
+            {
+              "macd": -54.848,
+              "signal": -55.116,
+              "histogram": 0.269
+            },
+            {
+              "macd": -61.739,
+              "signal": -56.441,
+              "histogram": -5.298
+            },
+            {
+              "macd": -69.092,
+              "signal": -58.971,
+              "histogram": -10.121
+            },
+            {
+              "macd": -73.171,
+              "signal": -61.811,
+              "histogram": -11.36
             }
           ]
         },
         {
           "name": "Silver (COMEX futures, SI=F)",
           "symbol": "SI=F",
-          "last_close": 51.1,
-          "pct_day": -2.78,
-          "pct_week": 3.05,
-          "pct_month": -15.77,
-          "pct_ytd": -27.14,
+          "last_close": 47.29,
+          "pct_day": 1.08,
+          "pct_week": -7.46,
+          "pct_month": -17.03,
+          "pct_ytd": -32.57,
           "vs_40wk_sma": "Below",
-          "rsi_14": 36.9,
+          "rsi_14": 31.1,
           "rsi_series": [
-            36.3,
-            38.9,
-            36.9,
-            40.8,
-            42,
             38.3,
             36,
             43,
@@ -886,39 +841,19 @@
             38.6,
             37.6,
             40.7,
-            36.9
+            36.9,
+            40.1,
+            35.4,
+            33.3,
+            29,
+            31.1
           ],
           "macd": {
-            "macd": -2.352,
-            "signal": -2.51,
-            "histogram": 0.158
+            "macd": -2.62,
+            "signal": -2.46,
+            "histogram": -0.16
           },
           "macd_series": [
-            {
-              "macd": -0.883,
-              "signal": -0.227,
-              "histogram": -0.656
-            },
-            {
-              "macd": -1.016,
-              "signal": -0.385,
-              "histogram": -0.631
-            },
-            {
-              "macd": -1.169,
-              "signal": -0.542,
-              "histogram": -0.627
-            },
-            {
-              "macd": -1.204,
-              "signal": -0.674,
-              "histogram": -0.53
-            },
-            {
-              "macd": -1.194,
-              "signal": -0.778,
-              "histogram": -0.416
-            },
             {
               "macd": -1.273,
               "signal": -0.877,
@@ -1043,25 +978,45 @@
               "macd": -2.352,
               "signal": -2.51,
               "histogram": 0.158
+            },
+            {
+              "macd": -2.223,
+              "signal": -2.452,
+              "histogram": 0.23
+            },
+            {
+              "macd": -2.249,
+              "signal": -2.412,
+              "histogram": 0.163
+            },
+            {
+              "macd": -2.319,
+              "signal": -2.393,
+              "histogram": 0.074
+            },
+            {
+              "macd": -2.526,
+              "signal": -2.42,
+              "histogram": -0.107
+            },
+            {
+              "macd": -2.62,
+              "signal": -2.46,
+              "histogram": -0.16
             }
           ]
         },
         {
           "name": "SPCX",
           "symbol": "SPCX",
-          "last_close": 143.09,
-          "pct_day": 0.72,
-          "pct_week": 1.26,
-          "pct_month": -11.98,
+          "last_close": 141.7,
+          "pct_day": 3.16,
+          "pct_week": -0.97,
+          "pct_month": -2.97,
           "pct_ytd": null,
           "vs_40wk_sma": null,
-          "rsi_14": 49.2,
+          "rsi_14": 49.1,
           "rsi_series": [
-            56.5,
-            53.2,
-            62.4,
-            69.6,
-            70,
             65,
             57.7,
             59.1,
@@ -1086,39 +1041,19 @@
             33.1,
             42.7,
             48.5,
-            49.2
+            49.2,
+            46.9,
+            47,
+            46.4,
+            45,
+            49.1
           ],
           "macd": {
-            "macd": -3.922,
-            "signal": -3.497,
-            "histogram": -0.425
+            "macd": -2.805,
+            "signal": -3.287,
+            "histogram": 0.482
           },
           "macd_series": [
-            {
-              "macd": 2.353,
-              "signal": 3.024,
-              "histogram": -0.671
-            },
-            {
-              "macd": 2.093,
-              "signal": 2.838,
-              "histogram": -0.744
-            },
-            {
-              "macd": 2.734,
-              "signal": 2.817,
-              "histogram": -0.083
-            },
-            {
-              "macd": 4.173,
-              "signal": 3.088,
-              "histogram": 1.085
-            },
-            {
-              "macd": 5.319,
-              "signal": 3.534,
-              "histogram": 1.785
-            },
             {
               "macd": 5.812,
               "signal": 3.99,
@@ -1243,25 +1178,45 @@
               "macd": -3.922,
               "signal": -3.497,
               "histogram": -0.425
+            },
+            {
+              "macd": -3.671,
+              "signal": -3.532,
+              "histogram": -0.139
+            },
+            {
+              "macd": -3.416,
+              "signal": -3.509,
+              "histogram": 0.092
+            },
+            {
+              "macd": -3.245,
+              "signal": -3.456,
+              "histogram": 0.211
+            },
+            {
+              "macd": -3.213,
+              "signal": -3.407,
+              "histogram": 0.195
+            },
+            {
+              "macd": -2.805,
+              "signal": -3.287,
+              "histogram": 0.482
             }
           ]
         },
         {
           "name": "CCJ",
           "symbol": "CCJ",
-          "last_close": 72.87,
-          "pct_day": -3.32,
-          "pct_week": 0.43,
-          "pct_month": -17.25,
-          "pct_ytd": -20.35,
+          "last_close": 64.51,
+          "pct_day": -2.24,
+          "pct_week": -11.47,
+          "pct_month": -20.87,
+          "pct_ytd": -29.49,
           "vs_40wk_sma": "Below",
-          "rsi_14": 38.6,
+          "rsi_14": 29.9,
           "rsi_series": [
-            34.4,
-            32.8,
-            32,
-            39.3,
-            52.4,
             45,
             41.8,
             43.8,
@@ -1286,39 +1241,19 @@
             25.7,
             33.2,
             41.9,
-            38.6
+            38.6,
+            41.5,
+            38.1,
+            36.7,
+            31.4,
+            29.9
           ],
           "macd": {
-            "macd": -4.081,
-            "signal": -3.83,
-            "histogram": -0.252
+            "macd": -4.552,
+            "signal": -4.039,
+            "histogram": -0.513
           },
           "macd_series": [
-            {
-              "macd": -2.812,
-              "signal": -1.963,
-              "histogram": -0.848
-            },
-            {
-              "macd": -2.966,
-              "signal": -2.164,
-              "histogram": -0.802
-            },
-            {
-              "macd": -3.095,
-              "signal": -2.35,
-              "histogram": -0.744
-            },
-            {
-              "macd": -2.977,
-              "signal": -2.476,
-              "histogram": -0.501
-            },
-            {
-              "macd": -2.408,
-              "signal": -2.462,
-              "histogram": 0.054
-            },
             {
               "macd": -2.25,
               "signal": -2.42,
@@ -1443,25 +1378,45 @@
               "macd": -4.081,
               "signal": -3.83,
               "histogram": -0.252
+            },
+            {
+              "macd": -3.852,
+              "signal": -3.834,
+              "histogram": -0.017
+            },
+            {
+              "macd": -3.83,
+              "signal": -3.833,
+              "histogram": 0.003
+            },
+            {
+              "macd": -3.854,
+              "signal": -3.837,
+              "histogram": -0.016
+            },
+            {
+              "macd": -4.206,
+              "signal": -3.911,
+              "histogram": -0.295
+            },
+            {
+              "macd": -4.552,
+              "signal": -4.039,
+              "histogram": -0.513
             }
           ]
         },
         {
           "name": "NVDA",
           "symbol": "NVDA",
-          "last_close": 168.89,
-          "pct_day": -5.47,
-          "pct_week": -18.29,
-          "pct_month": -26.34,
-          "pct_ytd": -9.44,
+          "last_close": 155.46,
+          "pct_day": -0.44,
+          "pct_week": -7.95,
+          "pct_month": -27.4,
+          "pct_ytd": -16.64,
           "vs_40wk_sma": "Below",
-          "rsi_14": 23.9,
+          "rsi_14": 22.5,
           "rsi_series": [
-            57.7,
-            60.1,
-            62.9,
-            66.9,
-            67.2,
             64.3,
             54.5,
             53,
@@ -1486,39 +1441,19 @@
             25.4,
             30.8,
             27.4,
-            23.9
+            23.9,
+            28.7,
+            26,
+            24.9,
+            22.7,
+            22.5
           ],
           "macd": {
-            "macd": -11.295,
-            "signal": -7.017,
-            "histogram": -4.278
+            "macd": -16.158,
+            "signal": -12.163,
+            "histogram": -3.995
           },
           "macd_series": [
-            {
-              "macd": 2.803,
-              "signal": 2.301,
-              "histogram": 0.502
-            },
-            {
-              "macd": 3.069,
-              "signal": 2.455,
-              "histogram": 0.614
-            },
-            {
-              "macd": 3.489,
-              "signal": 2.661,
-              "histogram": 0.827
-            },
-            {
-              "macd": 4.173,
-              "signal": 2.964,
-              "histogram": 1.209
-            },
-            {
-              "macd": 4.688,
-              "signal": 3.309,
-              "histogram": 1.38
-            },
             {
               "macd": 4.898,
               "signal": 3.626,
@@ -1643,48 +1578,73 @@
               "macd": -11.295,
               "signal": -7.017,
               "histogram": -4.278
+            },
+            {
+              "macd": -12.127,
+              "signal": -8.039,
+              "histogram": -4.088
+            },
+            {
+              "macd": -13.242,
+              "signal": -9.08,
+              "histogram": -4.162
+            },
+            {
+              "macd": -14.231,
+              "signal": -10.11,
+              "histogram": -4.121
+            },
+            {
+              "macd": -15.38,
+              "signal": -11.164,
+              "histogram": -4.216
+            },
+            {
+              "macd": -16.158,
+              "signal": -12.163,
+              "histogram": -3.995
             }
           ]
         }
       ],
       "breadth": {
         "label": "Percent of S&P 500 stocks above 50-day MA",
-        "value": 69.1,
-        "prior_value": 69.3,
+        "value": 57.9,
+        "prior_value": 65.1,
         "direction": "falling",
         "reading": "neutral",
-        "note": "Below 30 bullish, above 70 bearish. Computed by Thaddeus from Yahoo Finance daily closes for 501 of 503 current S&P 500 constituents at the Nov. 10 close (mimics MMFI). Roughly unchanged from 69.3%, still just under the 70 line."
+        "note": "Below 30 bullish, above 70 bearish. Computed by Thaddeus from Yahoo Finance daily closes for 501 of 503 current S&P 500 constituents at the Nov. 17 close (mimics MMFI). Down from 65.1%."
       },
       "fear_greed": {
-        "score": 33,
+        "score": 25,
         "rating": "fear",
-        "previous_close": 33,
-        "previous_1_week": 34,
-        "previous_1_month": 44,
-        "previous_1_year": 30,
-        "as_of": "2026-11-11T01:00:00+00:00",
+        "previous_close": 25,
+        "previous_1_week": 36,
+        "previous_1_month": 18,
+        "previous_1_year": 9,
+        "as_of": "2026-11-18T01:00:00+00:00",
         "source_name": "CNN Fear & Greed Index",
         "source_url": "https://www.cnn.com/markets/fear-and-greed",
-        "commentary": "Fear & Greed held at 33 (fear), basically unchanged from Monday and a week ago, and well below 44 a month ago, so the rebound hasn't turned into real confidence."
+        "commentary": "Fear & Greed slipped to 25 (fear) from 31 on Monday and 36 a week ago, right at the edge of extreme fear, as the AI-led sell-off deepened; it is still above 18 a month ago."
       },
-      "summary": "Stocks slipped Tuesday after October CPI came in hotter than expected: headline prices rose 0.4% and core 0.3%, versus forecasts of 0.3% and 0.2%. The S&P 500 fell 0.38% to 7,520.93, the Dow 0.30% to 52,231.89 and the Nasdaq 0.74% to 25,065.87, which put the Nasdaq back below its 40-week average. Small caps held up better, with the Russell 2000 off 0.68% at 2,821.38 and still just above its 40-week average. Rates jumped, with the 10-year Treasury yield up about nine basis points to roughly 4.99% after Fed Governor Waller said he leans toward a December hike and would consider a half-point move. Gold futures fell 2.05% to $4,030.20 and silver futures 2.78% to $51.10, both well below their 40-week averages. Nvidia fell 5.47% to $168.89 as the probe into CEO Jensen Huang widened, while breadth held near 69% and Fear & Greed stayed at 33.",
+      "summary": "Wall Street fell for a fourth straight session as AI and chip stocks sold off ahead of Nvidia's report. The S&P 500 slid 1.0% to 7,340.53, its lowest close since July, the Dow dropped 1.6% to 50,759.42 and the Nasdaq 0.7% to 24,328.38, and all three now sit below their 40-week averages. Small caps fell as well, with the Russell 2000 down 1.5% to 2,701.87 and below its 40-week average. The 10-year Treasury yield eased to about 5.10%, though markets still price a likely Fed hike in December. Gold futures edged up 0.3% to about $3,864 and silver futures rose 1.1% to about $47.29 after Monday's sharp losses, but both remain well below their 40-week averages and near one-year lows. After the bell, Nvidia beat estimates with $115.8 billion in revenue and guided next quarter to about $130 billion, and the stock rose more than 3% in extended trading, a potential relief for tech on Wednesday.",
       "portfolio_news": [
         {
           "symbol": "NVDA",
           "stories": [
             {
-              "headline": "Nvidia stock falls again in fallout from alleged CEO China spy affair",
-              "summary": "Shares dropped 5.47% after a 4% fall Monday; Trump said the FBI is investigating, and a shareholder class action was filed in San Jose. Dan Ives expects the board probe to take four to six weeks and weigh on the stock until then.",
+              "headline": "Nvidia (NVDA) Q3 2027 earnings report: live updates",
+              "summary": "Nvidia beat on profit and revenue ($2.68 adjusted EPS vs. $2.48 expected; $115.84 billion vs. $109.10 billion) and guided to about $130 billion next quarter; the stock rose more than 3% after hours in its first report since Jensen Huang's resignation as CEO.",
               "source_name": "CNBC",
-              "source_url": "https://www.cnbc.com/2026/11/10/nvidia-nvda-jensen-huang-affair-chinese-spy.html",
-              "published_at": "2026-11-10"
+              "source_url": "https://www.cnbc.com/2026/11/17/nvidia-nvda-earnings-report-q3-2027.html",
+              "published_at": "2026-11-17"
             },
             {
-              "headline": "Alleged spy plot targeting CEO Jensen Huang raises questions about Nvidia's future",
-              "summary": "AP looks at reputational risk, the lack of a clear successor and new scrutiny from shareholders and lawmakers; Trump says Huang had no idea the woman was a spy.",
-              "source_name": "AP News",
-              "source_url": "https://apnews.com/article/nvidia-jensen-huang-investigation-china-spy-4116755e690472eef677772ec55b856d",
-              "published_at": "2026-11-10"
+              "headline": "NVIDIA Announces Financial Results for Third Quarter Fiscal 2027",
+              "summary": "Revenue of $115.8 billion was up 20% from the prior quarter and 103% from a year ago, with a Q4 outlook of $130 billion plus or minus 3% that assumes no China data center compute revenue.",
+              "source_name": "NVIDIA Investor Relations",
+              "source_url": "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Announces-Financial-Results-for-Third-Quarter-Fiscal-2027/default.aspx",
+              "published_at": "2026-11-17"
             }
           ]
         },
@@ -1692,167 +1652,71 @@
           "symbol": "SPCX",
           "stories": [
             {
-              "headline": "SpaceX sets date for Starship Flight 15, plans first tower catch of the ship",
-              "summary": "SPCX rose 0.72% to $143.09, a three-day advance, after SpaceX announced the next Starship flight and its first planned ship catch.",
-              "source_name": "Investor's Business Daily",
-              "source_url": "https://www.investors.com/news/spacex-starship-flight-15-date-tower-catch-super-heavy-elon-musk-spcx-stock/",
-              "published_at": "2026-11-10"
-            },
-            {
-              "headline": "Why is Space Exploration Technologies stock gaining today?",
-              "summary": "Investors are still reacting to NASA naming SpaceX one of eight CLPS-2 lunar providers and a 2028 Starship task order, while Stifel kept its Buy and $190 target.",
-              "source_name": "Investing.com",
-              "source_url": "https://www.investing.com/news/stock-market-news/why-is-space-exploration-technologies-stock-gaining-today-93CH-5016150",
-              "published_at": "2026-11-10"
-            },
-            {
-              "headline": "SpaceX must face sex-bias claims after appeals court rejects arbitration request",
-              "summary": "The 9th Circuit let eight former engineers' lawsuit proceed in court rather than private arbitration; SpaceX denies the allegations.",
-              "source_name": "Reuters via Investing.com",
-              "source_url": "https://www.investing.com/news/stock-market-news/spacex-must-face-sexbias-claims-after-appeals-court-rejects-arbitration-request-5016579",
-              "published_at": "2026-11-10"
-            }
-          ]
-        },
-        {
-          "symbol": "CCJ",
-          "stories": [
-            {
-              "headline": "Cameco excited, but cautious, about power demand from Big Tech",
-              "summary": "CEO Tim Gitzel said AI data-center demand is meaningful upside but not the foundation of the nuclear thesis. CCJ fell 3.32% to $72.87.",
-              "source_name": "The Canadian Press via ConstructConnect",
-              "source_url": "https://canada.constructconnect.com/dcn/news/resource/2026/11/cameco-excited-but-cautious-about-power-demand-from-big-tech",
-              "published_at": "2026-11-10"
+              "headline": "SpaceX stock rises 3.2% after CFO outlines AI plans",
+              "summary": "SPCX closed at $141.70, up 3.16%, as CFO Bret Johnsen discussed moving AI data centers into space at the TomorrowX Summit and said much of the buildout can be self-funded, while noting customer concentration and heavy spending as risks.",
+              "source_name": "Gotrade",
+              "source_url": "https://www.heygotrade.com/en/news/spacex-spcx-stock-news-november-18-2026/",
+              "published_at": "2026-11-17"
             }
           ]
         }
       ],
       "headlines": [
         {
-          "headline": "Stocks fall after a hotter-than-expected inflation report",
-          "summary": "The S&P 500 lost 0.4%, the Dow 0.3% and the Nasdaq 0.7% after October consumer prices rose more than economists forecast.",
+          "headline": "How major US stock indexes fared Tuesday 11/17/2026",
+          "summary": "Nvidia and other jittery AI stocks led widespread losses, with the S&P 500 down 1% after swinging between nearly flat and a 1.7% loss.",
           "source_name": "AP News",
-          "source_url": "https://apnews.com/article/wall-street-stocks-dow-nasdaq-a97eb31c415811065561f2c2ac552cd7",
-          "published_at": "2026-11-10"
+          "source_url": "https://apnews.com/article/wall-street-stocks-dow-nasdaq-ff6caef4d9289cf7f1e6ee48a706eddc",
+          "published_at": "2026-11-17"
         },
         {
-          "headline": "US close: Stocks head south following hotter-than-expected CPI reading",
-          "summary": "Treasury yields rose as Fed Governor Waller said further tightening is on the table, with the 10-year settling near 4.99%.",
-          "source_name": "Sharecast",
-          "source_url": "https://www.sharecast.com/news/market-report-us-close/wall-street-nyse-dow-jones-nasdaq-stocks-equities--24118290.html",
-          "published_at": "2026-11-10"
+          "headline": "Dow drops more than 800 points, S&P 500 posts lowest close since July",
+          "summary": "Chip stocks were sold ahead of Nvidia's earnings, and reports of a National Security Agency network outage added to jitters; the Nasdaq hit its lowest level in about seven months.",
+          "source_name": "CNBC",
+          "source_url": "https://www.cnbc.com/2026/11/16/stock-market-today-live-updates.html",
+          "published_at": "2026-11-17"
         },
         {
-          "headline": "Gold, silver plunge as hotter U.S. inflation raises prospect of larger Fed rate hike",
-          "summary": "Spot gold fell about 2.6% to near $4,032 and silver about 3.6% to near $51.41 as yields and the dollar rose.",
+          "headline": "Gold struggles near one-year lows, silver rebounds as stocks slide, Fed hike bets persist",
+          "summary": "Spot gold was little changed near $3,853 while silver rebounded about 1% to roughly $47.33 on weaker economic data and lower Treasury yields.",
           "source_name": "Kitco News",
-          "source_url": "https://www.kitco.com/news/article/2026-11-10/gold-silver-plunge-hotter-us-inflation-raises-prospect-larger-fed-rate-hike",
-          "published_at": "2026-11-10"
+          "source_url": "https://www.kitco.com/news/article/2026-11-17/gold-struggles-near-one-year-lows-silver-rebounds-stocks-slide-fed-hike",
+          "published_at": "2026-11-17"
         }
       ]
-    },
-    "local": {
-      "status": "complete",
-      "stories": [
-        {
-          "headline": "Children's Hospital plans a youth mental health crisis unit in Highlands Ranch",
-          "summary": "Douglas County is putting $3.4 million in opioid settlement money toward a five- or six-bed psychiatric crisis unit at Children's Hospital Colorado's South Campus, expected to open in October 2027.",
-          "source_name": "Axios Denver",
-          "source_url": "https://www.axios.com/local/douglas/2026/11/10/childrens-hospital-youth-mental-health-crisis-unit",
-          "published_at": "2026-11-10",
-          "location": "Highlands Ranch",
-          "impact": "Medium",
-          "composite_score": 15
-        },
-        {
-          "headline": "CU Denver offers direct admission to Douglas County students with a 3.0 GPA",
-          "summary": "A new partnership gives Douglas County School District graduates with a cumulative 3.0 GPA or higher guaranteed admission to CU Denver.",
-          "source_name": "CU Denver News",
-          "source_url": "https://news.ucdenver.edu/cu-denver-and-douglas-county-school-district-establish-direct-admissions-partnership/",
-          "published_at": "2026-11-10",
-          "location": "Douglas County",
-          "impact": "Medium",
-          "composite_score": 12
-        }
-      ]
-    },
-    "us_world": {
-      "status": "complete",
-      "stories": [
-        {
-          "headline": "Bridge collapse derails freight train in Russia's Arkhangelsk region",
-          "summary": "A span of a rail bridge over the Viled River collapsed early Tuesday, derailing freight cars and stranding at least eight long-distance passenger trains; no one was hurt and investigators are looking into the cause.",
-          "source_name": "The Moscow Times",
-          "source_url": "https://www.themoscowtimes.com/2026/11/10/freight-train-derails-in-arkhangelsk-region-following-bridge-collapse-a94220",
-          "published_at": "2026-11-10"
-        },
-        {
-          "headline": "House votes to effectively end the impeachment effort against Pete Hegseth",
-          "summary": "The House voted Tuesday to effectively shut down the push to impeach the Defense Secretary.",
-          "source_name": "NPR",
-          "source_url": "https://www.npr.org/2026/11/10/nx-s1-6036813/house-votes-to-effectively-end-the-impeachment-effort-against-pete-hegseth",
-          "published_at": "2026-11-10T18:43:11-05:00"
-        },
-        {
-          "headline": "Republican-led committee says the federal government failed to hold Epstein accountable",
-          "summary": "A House committee report faults federal authorities for how they handled Jeffrey Epstein.",
-          "source_name": "NPR",
-          "source_url": "https://www.npr.org/2026/11/10/nx-s1-6036135/federal-government-failed-to-hold-epstein-accountable-republican-committee-says",
-          "published_at": "2026-11-10T20:51:23-05:00"
-        },
-        {
-          "headline": "Supreme Court seems split over agencies' power to fine for law violations",
-          "summary": "The justices appeared divided in arguments over whether federal agencies can impose fines for violations of the law.",
-          "source_name": "NPR",
-          "source_url": "https://www.npr.org/2026/11/10/nx-s1-6034950/2026-11-10-nx-s1-6034950-supreme-court-seems-divided-over-federal-agencies-ability-to-fine-for-law-violations",
-          "published_at": "2026-11-10T18:27:32-05:00"
-        }
-      ]
-    },
-    "sports": {
-      "status": "complete",
-      "stories": [
-        {
-          "headline": "No. 5 Michigan State beats No. 2 Duke 79-73 in the Champions Classic",
-          "summary": "Jeremy Fears Jr. had 18 points and 11 assists and the Spartans led wire to wire at the United Center to improve to 3-0; Jordan Scott blocked a career-high six shots.",
-          "source_name": "Michigan State Athletics",
-          "source_url": "https://msuspartans.com/news/2026/11/10/mens-basketball-fears-helps-lead-no-5-michigan-state-past-no-2-duke-79-73-in-champions-classic",
-          "published_at": "2026-11-10T22:30:00-05:00"
-        }
-      ],
-      "scoreboard": []
     },
     "irreverent": {
       "status": "complete",
       "stories": [
         {
-          "headline": "All Nations Agree To Replace Fighter Jets With Old WW2 Planes To Make Dogfights Way Cooler",
-          "summary": "Satire: the world's militaries trade modern jets for vintage warbirds in the name of better dogfights.",
+          "headline": "Trump Tells Philippines Their Book Of The Bible Is His Favorite",
+          "summary": "Satire: a diplomatic compliment that confuses a nation with a book of Scripture.",
           "source_name": "The Babylon Bee",
-          "source_url": "https://babylonbee.com/news/all-nations-agree-to-replace-fighter-jets-with-old-ww2-planes-to-make-dogfights-way-cooler/",
-          "published_at": "2026-11-10T15:25:07-05:00"
+          "source_url": "https://babylonbee.com/news/trump-tells-philippines-their-book-of-the-bible-is-his-favorite/",
+          "published_at": "2026-11-17"
         },
         {
-          "headline": "Colin Kaepernick Briefly Gets Hopes Up Before Realizing Incoming Call Is About His Car's Extended Warranty",
-          "summary": "Satire: the hoped-for NFL call turns out to be a robocall.",
+          "headline": "Mamdani Says City-Owned Grocery Stores Won't Carry Luxury Items Such As Food",
+          "summary": "Satire: New York's municipal grocery plan trims the inventory down to the essentials, minus the food.",
           "source_name": "The Babylon Bee",
-          "source_url": "https://babylonbee.com/news/colin-kaepernick-briefly-gets-hopes-up-before-realizing-incoming-call-is-about-his-cars-extended-warranty/",
-          "published_at": "2026-11-10T17:15:20-05:00"
+          "source_url": "https://babylonbee.com/news/mamdani-says-city-owned-grocery-stores-wont-carry-luxury-items-such-as-food/",
+          "published_at": "2026-11-17"
         },
         {
-          "headline": "Theologians Announce That All Of Creation Declares The Glory Of God Except For New Jersey",
-          "summary": "Satire: scholars carve out one Garden State exception.",
+          "headline": "9 Easy Ways To Show Generosity This Holiday Season",
+          "summary": "Satire: a holiday-season listicle of generosity tips, Bee style.",
           "source_name": "The Babylon Bee",
-          "source_url": "https://babylonbee.com/news/theologians-announce-that-all-of-creation-declares-the-glory-of-god-except-for-new-jersey/",
-          "published_at": "2026-11-10T11:59:05-05:00"
+          "source_url": "https://babylonbee.com/news/9-easy-ways-to-show-generosity-this-holiday-season/",
+          "published_at": "2026-11-17"
         }
       ]
     },
     "weather": {
       "status": "complete",
-      "summary": "A strong cold front sweeps from the Midwest to the East Coast Wednesday and Thursday, with a few damaging-wind storms possible in the Ohio and Tennessee Valleys and the season's coldest air so far behind it, including first freezes for many areas and a hard freeze reaching into the South this weekend. A coastal low brings rain, wind and minor coastal flooding to the Mid-Atlantic and Northeast Thursday, while the West stays unseasonably warm with near-record highs possible in the Northwest and Great Basin.",
+      "summary": "A slow-moving upper low over the Gulf and Southeast will keep training thunderstorms going along eastern Florida through Thursday, with a Moderate Risk of flash flooding on the Space and Treasure Coasts. Out West, a Pacific trough and atmospheric river bring periods of heavy rain and a Slight Risk of flash flooding to central and southern California. Heavy mountain snow hits the Sierra through Thursday, and accumulating snow spreads into parts of the Intermountain West and Rockies.",
       "source_name": "NWS Weather Prediction Center",
       "source_url": "https://www.wpc.ncep.noaa.gov/discussions/hpcdiscussions.php?disc=pmdspd",
+      "published_at": "2026-11-18",
       "maps": [
         {
           "title": "NWS national forecast chart, Day 1",
@@ -1867,13 +1731,111 @@
           "source_url": "https://www.wpc.ncep.noaa.gov/national_forecast/natfcst.php"
         },
         {
-          "title": "Day 1 precipitation forecast",
-          "image_url": "https://www.wpc.ncep.noaa.gov/qpf/fill_94qwbg.gif",
+          "title": "NWS national forecast chart, Day 3",
+          "image_url": "https://www.wpc.ncep.noaa.gov/noaa/noaad3.gif",
           "source_name": "NWS Weather Prediction Center",
-          "source_url": "https://www.wpc.ncep.noaa.gov/qpf/qpf2.shtml"
+          "source_url": "https://www.wpc.ncep.noaa.gov/national_forecast/natfcst.php"
+        }
+      ]
+    },
+    "sports": {
+      "status": "partial",
+      "stories": [
+        {
+          "headline": "No. 14 Tennessee hands No. 2 Michigan State its first loss, 61-46",
+          "summary": "The Spartans jumped out to an early 10-point lead in Knoxville, then shot just 9-of-50 from the field; Tennessee led 27-25 at the half and pulled away after the break. Jeremy Fears Jr. scored 16 for MSU.",
+          "source_name": "Michigan State Athletics",
+          "source_url": "https://msuspartans.com/news/2026/11/18/mens-basketball-michigan-state-loses-first-game-of-the-season-at-tennessee",
+          "published_at": "2026-11-18"
+        }
+      ],
+      "scoreboard": []
+    },
+    "local": {
+      "status": "complete",
+      "stories": [
+        {
+          "headline": "New I-25 Crystal Valley interchange in Castle Rock set to fully open",
+          "summary": "Exit 179 at Crystal Valley Parkway was slated to fully open over the weekend, serving a fast-growing south Castle Rock where Douglas County's population has grown almost 24% in a decade.",
+          "source_name": "CBS Colorado",
+          "source_url": "https://www.cbsnews.com/colorado/news/new-i-25-interchange-colorado-open-crystal-valley-castle-rock/",
+          "published_at": "2026-11-13",
+          "location": "Castle Rock",
+          "impact": "Medium",
+          "composite_score": 9
+        }
+      ]
+    },
+    "us_world": {
+      "status": "complete",
+      "stories": [
+        {
+          "headline": "CN Rail train plunges into Skeena River near Terrace, B.C.",
+          "summary": "A rockslide sent a locomotive and five cars into the river on Nov. 17; two people were hospitalized in serious but stable condition, and CN says no dangerous goods were aboard.",
+          "source_name": "CBC News",
+          "source_url": "https://www.cbc.ca/news/canada/british-columbia/cn-rail-highway-16-terrace-prince-rupert-9.7425535",
+          "published_at": "2026-11-17"
+        },
+        {
+          "headline": "A week of major outages hits Microsoft, FAA, Chase and the NSA",
+          "summary": "At least five major US systems failed in a week, stoking sabotage fears, though cybersecurity researchers say brittle systems may be a simpler explanation.",
+          "source_name": "NBC News",
+          "source_url": "https://www.nbcnews.com/tech/security/microsoft-faa-chase-nsa-week-major-outages-tech-plan-conspiracy-down-rcna609876",
+          "published_at": "2026-11-17"
+        },
+        {
+          "headline": "Russia hits Kyiv bridges as Ukraine strikes Crimean bridge again",
+          "summary": "Strikes on the North and South bridges cut water, power and parts of the metro in Kyiv, while Ukraine says it seriously damaged the Crimean bridge in retaliation.",
+          "source_name": "Reuters (via Devdiscourse)",
+          "source_url": "https://www.devdiscourse.com/article/international/4008327-reuters-world-news-summary",
+          "published_at": "2026-11-17"
+        },
+        {
+          "headline": "Lawmakers demand answers on recent tech outages",
+          "summary": "Members of Congress are pressing the administration for explanations after the string of Microsoft, FAA and JPMorgan disruptions.",
+          "source_name": "POLITICO",
+          "source_url": "https://www.politico.com/news/2026/11/17/lawmaker-response-outages-microsoft-faa-jpmorgan-01170188",
+          "published_at": "2026-11-17"
+        }
+      ]
+    },
+    "front_page": {
+      "status": "complete",
+      "stories": [
+        {
+          "headline": "CN Rail train plunges into Skeena River near Terrace, B.C.",
+          "summary": "A rockslide sent a locomotive and five cars into the river on Nov. 17; two people were hospitalized in serious but stable condition, and CN says no dangerous goods were aboard.",
+          "source_name": "CBC News",
+          "source_url": "https://www.cbc.ca/news/canada/british-columbia/cn-rail-highway-16-terrace-prince-rupert-9.7425535",
+          "published_at": "2026-11-17",
+          "from_section": "us_world"
+        },
+        {
+          "headline": "A week of major outages hits Microsoft, FAA, Chase and the NSA",
+          "summary": "At least five major US systems failed in a week, stoking sabotage fears, though cybersecurity researchers say brittle systems may be a simpler explanation.",
+          "source_name": "NBC News",
+          "source_url": "https://www.nbcnews.com/tech/security/microsoft-faa-chase-nsa-week-major-outages-tech-plan-conspiracy-down-rcna609876",
+          "published_at": "2026-11-17",
+          "from_section": "us_world"
+        },
+        {
+          "headline": "Russia hits Kyiv bridges as Ukraine strikes Crimean bridge again",
+          "summary": "Strikes on the North and South bridges cut water, power and parts of the metro in Kyiv, while Ukraine says it seriously damaged the Crimean bridge in retaliation.",
+          "source_name": "Reuters (via Devdiscourse)",
+          "source_url": "https://www.devdiscourse.com/article/international/4008327-reuters-world-news-summary",
+          "published_at": "2026-11-17",
+          "from_section": "us_world"
+        },
+        {
+          "headline": "No. 14 Tennessee hands No. 2 Michigan State its first loss, 61-46",
+          "summary": "The Spartans jumped out to an early 10-point lead in Knoxville, then shot just 9-of-50 from the field; Tennessee led 27-25 at the half and pulled away after the break. Jeremy Fears Jr. scored 16 for MSU.",
+          "source_name": "Michigan State Athletics",
+          "source_url": "https://msuspartans.com/news/2026/11/18/mens-basketball-michigan-state-loses-first-game-of-the-season-at-tennessee",
+          "published_at": "2026-11-18",
+          "from_section": "sports"
         }
       ]
     }
   },
-  "generated_at": "2026-11-10T23:45:41-07:00"
+  "generated_at": "2026-11-17T23:45:24-07:00"
 }
