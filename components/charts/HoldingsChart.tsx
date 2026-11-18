@@ -146,7 +146,8 @@ export default function HoldingsChart() {
               </div>
             </div>
             <div className="mt-1 text-xs text-slate-400">
-              Cost basis {formatUSD(r.cost)}
+              Cost basis {formatUSD(r.cost)} · {formatUSD(r.cost / r.shares)}
+              /sh
             </div>
           </div>
         ))}
