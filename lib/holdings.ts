@@ -215,6 +215,14 @@ export const LOTS: Lot[] = [
     shares: 1,
     price: 157.8945,
   },
+  // SNDK - Trust
+  {
+    ticker: 'SNDK',
+    account: 'Trust',
+    date: '2026-11-27',
+    shares: 4,
+    price: 81.665,
+  },
 ];
 
 // Lot amount in dollars, rounded half-up to cents (integer math avoids float errors like 144.925 → 144.92).
