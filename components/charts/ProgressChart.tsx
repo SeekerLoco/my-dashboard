@@ -5,7 +5,6 @@
 
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { addMonths, parseLocalDate } from '@/lib/dates';
-import { formatUSD } from '@/lib/format';
 
 export type ChartRow = {
   'End of Month': string;
@@ -376,15 +375,26 @@ function ProgressChartInner({ data }: { data: ChartRow[] }) {
             </text>
             <text x={10} y={32} fontSize="11" fill="#60a5fa">
               {`Actual  ${
-                active.actual !== undefined ? formatUSD(active.actual) : '—'
+                active.actual !== undefined
+                  ? formatWholeUSD(active.actual)
+                  : '—'
               }`}
             </text>
             <text x={10} y={46} fontSize="11" fill="#a78bfa">
-              {`Trend   ${formatUSD(active.trend)}`}
+              {`Trend   ${formatWholeUSD(active.trend)}`}
             </text>
           </g>
         </g>
       )}
     </svg>
   );
+}
+
+// Tooltip dollars rounded to the nearest whole dollar, e.g. 12345.67 → "$12,346".
+function formatWholeUSD(value: number): string {
+  return Math.round(value).toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    maximumFractionDigits: 0,
+  });
 }
