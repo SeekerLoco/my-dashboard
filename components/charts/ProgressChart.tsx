@@ -1,4 +1,4 @@
-// SDLT progress line chart: running actual value vs. the goal line, with a
+// SDLT progress line chart: actual account value (IRA + Trust) vs. the goal line, with a
 // straight-line trend out to the end date. Year ticks and a hover/touch
 // readout show Actual and Trend at each month.
 'use client';
@@ -8,7 +8,7 @@ import { addMonths, parseLocalDate } from '@/lib/dates';
 
 export type ChartRow = {
   'End of Month': string;
-  running_actual: number;
+  account_value: number;
 };
 
 // Savings goal shown as the red dashed line.
@@ -69,7 +69,7 @@ function ProgressChartInner({ data }: { data: ChartRow[] }) {
     for (const row of data) {
       actualByMonth.set(
         monthIndexOf(parseMonth(row['End of Month']), firstDate),
-        row.running_actual,
+        row.account_value,
       );
     }
 
@@ -79,15 +79,15 @@ function ProgressChartInner({ data }: { data: ChartRow[] }) {
           parseMonth(d['End of Month']),
           firstDate,
         );
-        return `${toX(monthIndex)},${toY(d.running_actual)}`;
+        return `${toX(monthIndex)},${toY(d.account_value)}`;
       })
       .join(' ');
 
     // Straight-line (least-squares) fit through the actual values, extended to the end date
     const n = data.length;
     const sumX = data.reduce((s, _, i) => s + i, 0);
-    const sumY = data.reduce((s, d) => s + d.running_actual, 0);
-    const sumXY = data.reduce((s, d, i) => s + i * d.running_actual, 0);
+    const sumY = data.reduce((s, d) => s + d.account_value, 0);
+    const sumXY = data.reduce((s, d, i) => s + i * d.account_value, 0);
     const sumXX = data.reduce((s, _, i) => s + i * i, 0);
     const slope = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
     const intercept = (sumY - slope * sumX) / n;

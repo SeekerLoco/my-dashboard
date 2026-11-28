@@ -26,12 +26,12 @@ export default function ProgressPage() {
     null,
   );
 
-  // Reads Supabase view sdlt_progress_summary (running total up to today) for the chart
+  // Reads Supabase view sdlt_progress_summary (IRA + Trust value, combined_value, up to today) for the chart
   async function loadChart() {
     const today = getLocalDateString();
     const { data } = await supabase
       .from('sdlt_progress_summary')
-      .select('"End of Month", running_actual')
+      .select('"End of Month", account_value:combined_value')
       .lte('End of Month', today)
       .order('End of Month');
     if (data) setChartRows(data);
